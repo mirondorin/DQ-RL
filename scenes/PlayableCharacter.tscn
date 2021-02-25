@@ -12,16 +12,6 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "land",
@@ -31,18 +21,29 @@ animations = [ {
 "loop": true,
 "name": "hit",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 42.1337
-height = 5.39966
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 29.53, 41.5921 )
 
 [node name="PlayableCharacter" type="KinematicBody2D"]
-position = Vector2( 399.815, 202.965 )
+position = Vector2( 402.565, 202.715 )
 scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_horizontal_guides_": [ 231.853 ],
+"_edit_vertical_guides_": [ 462.169 ]
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -55,3 +56,7 @@ frame = 3
 position = Vector2( -3.51978, 28.5693 )
 scale = Vector2( 0.84, 1 )
 shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )

@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
-export var SPEED = 50
-const GRAVITY = 200.0
+export var SPEED = 100
+export var JUMPSPEED = 80
+const GRAVITY = 500.0
 var screen_size # Size of the game window
 
 func _ready():
@@ -16,7 +17,7 @@ var jump_intensity
 var in_jump = false
 
 func jump(time):
-	var speed = -SPEED/20
+	var speed = -JUMPSPEED/20
 	
 	if is_on_floor():
 		in_jump = true
