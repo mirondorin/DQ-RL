@@ -1,152 +1,99 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://assets/Caves/mainlev_build.png" type="Texture" id=1]
+[ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/PlayableCharacter.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/Caves/background4b.png" type="Texture" id=3]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 48, 64, 0, 64, 0, 0, 48, 0 )
+[sub_resource type="VisualShaderNodeColorOp" id=1]
+operator = 2
 
-[sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( 16, 64, 16, 64, 0, 64, 0, 0, 48, 0, 48, 64, 32, 64, 32, 16, 16, 16 )
+[sub_resource type="VisualShaderNodeColorConstant" id=2]
+constant = Color( 0.0546875, 0.586609, 0.875, 1 )
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
-points = PoolVector2Array( 176, 16, 0, 16, 0, 0, 176, 0 )
+[sub_resource type="VisualShaderNodeInput" id=3]
+input_name = "screen_texture"
 
-[sub_resource type="ConvexPolygonShape2D" id=4]
-points = PoolVector2Array( 176, 16, 0, 16, 0, 0, 176, 0 )
+[sub_resource type="CameraTexture" id=4]
 
-[sub_resource type="TileSet" id=5]
-7/name = "mainlev_build.png 7"
-7/texture = ExtResource( 1 )
-7/tex_offset = Vector2( 0, 0 )
-7/modulate = Color( 1, 1, 1, 1 )
-7/region = Rect2( 32, 160, 128, 48 )
-7/tile_mode = 1
-7/autotile/bitmask_mode = 0
-7/autotile/bitmask_flags = [  ]
-7/autotile/icon_coordinate = Vector2( 0, 0 )
-7/autotile/tile_size = Vector2( 16, 16 )
-7/autotile/spacing = 0
-7/autotile/occluder_map = [  ]
-7/autotile/navpoly_map = [  ]
-7/autotile/priority_map = [  ]
-7/autotile/z_index_map = [  ]
-7/occluder_offset = Vector2( 0, 0 )
-7/navigation_offset = Vector2( 0, 0 )
-7/shape_offset = Vector2( 0, 0 )
-7/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-7/shape_one_way = false
-7/shape_one_way_margin = 0.0
-7/shapes = [  ]
-7/z_index = 0
-9/name = "dark log"
-9/texture = ExtResource( 1 )
-9/tex_offset = Vector2( 0, 0 )
-9/modulate = Color( 1, 1, 1, 1 )
-9/region = Rect2( 752, 48, 176, 16 )
-9/tile_mode = 0
-9/occluder_offset = Vector2( 0, 0 )
-9/navigation_offset = Vector2( 0, 0 )
-9/shape_offset = Vector2( 0, 0 )
-9/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-9/shape = SubResource( 4 )
-9/shape_one_way = false
-9/shape_one_way_margin = 1.0
-9/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 4 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-9/z_index = 0
-10/name = "something"
-10/texture = ExtResource( 1 )
-10/tex_offset = Vector2( 0, 0 )
-10/modulate = Color( 1, 1, 1, 1 )
-10/region = Rect2( 960, 16, 48, 64 )
-10/tile_mode = 0
-10/occluder_offset = Vector2( 0, 0 )
-10/navigation_offset = Vector2( 0, 0 )
-10/shape_offset = Vector2( 0, 0 )
-10/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-10/shape = SubResource( 1 )
-10/shape_one_way = false
-10/shape_one_way_margin = 1.0
-10/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 1 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-10/z_index = 0
-11/name = "doorway"
-11/texture = ExtResource( 1 )
-11/tex_offset = Vector2( 0, 0 )
-11/modulate = Color( 1, 1, 1, 1 )
-11/region = Rect2( 960, 112, 48, 64 )
-11/tile_mode = 0
-11/occluder_offset = Vector2( 0, 0 )
-11/navigation_offset = Vector2( 0, 0 )
-11/shape_offset = Vector2( 0, 0 )
-11/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-11/shape = SubResource( 2 )
-11/shape_one_way = false
-11/shape_one_way_margin = 1.0
-11/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 2 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-11/z_index = 0
-12/name = "mainlev_build.png 12"
-12/texture = ExtResource( 1 )
-12/tex_offset = Vector2( 0, 0 )
-12/modulate = Color( 1, 1, 1, 1 )
-12/region = Rect2( 752, 16, 176, 16 )
-12/tile_mode = 0
-12/occluder_offset = Vector2( 0, 0 )
-12/navigation_offset = Vector2( 0, 0 )
-12/shape_offset = Vector2( 0, 0 )
-12/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-12/shape = SubResource( 3 )
-12/shape_one_way = false
-12/shape_one_way_margin = 1.0
-12/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 3 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-12/z_index = 0
-13/name = "background4b.png 13"
-13/texture = ExtResource( 3 )
-13/tex_offset = Vector2( 0, 0 )
-13/modulate = Color( 1, 1, 1, 1 )
-13/region = Rect2( 0, 224, 960, 256 )
-13/tile_mode = 0
-13/occluder_offset = Vector2( 0, 0 )
-13/navigation_offset = Vector2( 0, 0 )
-13/shape_offset = Vector2( 0, 0 )
-13/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-13/shape_one_way = false
-13/shape_one_way_margin = 0.0
-13/shapes = [  ]
-13/z_index = 0
+[sub_resource type="VisualShaderNodeTexture" id=5]
+source = 2
+texture = SubResource( 4 )
 
-[node name="TileMap" type="TileMap"]
+[sub_resource type="VisualShader" id=6]
+code = "shader_type canvas_item;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Color:5
+	vec3 n_out5p0 = vec3(0.054688, 0.586609, 0.875000);
+	float n_out5p1 = 1.000000;
+
+// Input:6
+
+// Texture:7
+	vec3 n_out7p0;
+	float n_out7p1;
+	{
+		vec4 _tex_read = texture(TEXTURE , UV.xy);
+		n_out7p0 = _tex_read.rgb;
+		n_out7p1 = _tex_read.a;
+	}
+
+// ColorOp:2
+	vec3 n_out2p0 = min(n_out5p0, n_out7p0);
+
+// Output:0
+	COLOR.rgb = n_out2p0;
+	COLOR.a = n_out7p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -703, -54 )
+mode = 1
+flags/light_only = false
+nodes/fragment/2/node = SubResource( 1 )
+nodes/fragment/2/position = Vector2( 60, 120 )
+nodes/fragment/5/node = SubResource( 2 )
+nodes/fragment/5/position = Vector2( -220, 140 )
+nodes/fragment/6/node = SubResource( 3 )
+nodes/fragment/6/position = Vector2( -580, 300 )
+nodes/fragment/7/node = SubResource( 5 )
+nodes/fragment/7/position = Vector2( -260, 240 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 5, 0, 2, 0, 6, 0, 7, 2, 7, 0, 2, 1, 7, 1, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=7]
+render_priority = 1
+shader = SubResource( 6 )
+
+[node name="Node" type="Node"]
+
+[node name="Background" type="TileMap" parent="."]
+material = SubResource( 7 )
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 196605, 13, 0 )
+
+[node name="Obstacles" type="TileMap" parent="."]
 position = Vector2( 113.156, 570.699 )
-tile_set = SubResource( 5 )
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 64, 0, 1, 64, 0, 0 )
 collision_use_kinematic = true
 format = 1
-tile_data = PoolIntArray( -1572846, 10, 0, -1572843, 10, 0, -1572840, 10, 0, -1441807, 13, 0, -1507328, 8, 0, -1245186, 9, 0, -1310707, 11, 0, -1310704, 9, 0, -1310693, 12, 0, -1245184, 8, 0, -983047, 9, 0, -1048569, 9, 0, -720894, 9, 0, -524275, 9, 0, -393231, 1610612749, 0, -393212, 3, 0, -196604, 3, 0, -131072, 0, 0, -131069, 1, 0, -65532, 0, 0, 65536, 0, 0 )
+tile_data = PoolIntArray( -1769496, 12, 0, -1507328, 8, 0, -1376259, 12, 0, -1310707, 11, 0, -1310704, 12, 0, -1310691, 12, 0, -1245184, 8, 0, -983047, 12, 0, -1048569, 12, 0, -589823, 12, 0, -524275, 9, 0, -393212, 3, 0, -262125, 12, 0, -196604, 3, 0, -131072, 0, 0, -131069, 1, 0, -65532, 0, 0, 131056, 12, 0, 65536, 0, 0 )
+__meta__ = {
+"_editor_description_": ""
+}
 
-[node name="PlayableCharacter" parent="." instance=ExtResource( 2 )]
+[node name="PlayableCharacter" parent="Obstacles" instance=ExtResource( 2 )]
 position = Vector2( -21.5122, -274.955 )
