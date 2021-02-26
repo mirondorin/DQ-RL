@@ -4,6 +4,7 @@ export var SPEED = 100
 export var JUMPSPEED = 80
 const GRAVITY = 500.0
 var screen_size # Size of the game window
+var health = 100
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -68,6 +69,17 @@ func solve_animation(velocity,delta):
 		else:
 			$AnimatedSprite.play()
 
+func lose_hp(velocity, delta):
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision and collision.collider.name == 'Mob':
+			health -= 10
+			$DebugCollision.text = 'MOB'
+			$AnimatedSprite.animation='hit'
+			$AnimatedSprite.play()
+		elif collision and  collision.collider.name != 'Obstacle':
+			$DebugCollision.text = 'NOT MOB'
+
 var velocity = Vector2()
 
 func _physics_process(delta):
@@ -96,3 +108,4 @@ func _physics_process(delta):
 	solve_animation(velocity,delta)
 	# move_and_collide(velocity)
 	move_and_slide(velocity,Vector2(0, -1))
+	lose_hp(velocity, delta)

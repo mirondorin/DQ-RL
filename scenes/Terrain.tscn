@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/PlayableCharacter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=3]
 
 [sub_resource type="VisualShaderNodeColorOp" id=1]
 operator = 2
@@ -95,5 +96,8 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="PlayableCharacter" parent="Obstacles" instance=ExtResource( 2 )]
-position = Vector2( -21.5122, -274.955 )
+[node name="PlayableCharacter" parent="." instance=ExtResource( 2 )]
+position = Vector2( 91.6438, 295.744 )
+
+[node name="Mob" parent="." instance=ExtResource( 3 )]
+position = Vector2( 158.023, 298.392 )
