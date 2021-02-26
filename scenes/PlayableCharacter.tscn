@@ -13,19 +13,9 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
 "loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "land",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "Idle",
+"name": "walk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
@@ -33,9 +23,19 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "walk",
+"name": "hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "land",
 "speed": 5.0
 } ]
 
@@ -43,7 +43,6 @@ animations = [ {
 extents = Vector2( 29.53, 41.5921 )
 
 [node name="PlayableCharacter" type="KinematicBody2D"]
-position = Vector2( 402.565, 202.715 )
 scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -66,3 +65,12 @@ shape = SubResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.5, 0.5 )
+
+[node name="DebugCollision" type="Label" parent="."]
+margin_top = -50.0
+margin_right = 76.0
+margin_bottom = -13.0
+text = "PLEASE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
