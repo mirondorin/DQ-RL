@@ -76,6 +76,7 @@ func lose_hp(velocity, delta):
 			health -= 10
 			$DebugCollision.text = 'MOB'
 			$AnimatedSprite.animation='hit'
+			$Health.text = String(health)
 			$AnimatedSprite.play()
 		elif collision and  collision.collider.name != 'Obstacle':
 			$DebugCollision.text = 'NOT MOB'

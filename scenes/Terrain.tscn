@@ -77,6 +77,9 @@ render_priority = 1
 shader = SubResource( 6 )
 
 [node name="Node" type="Node"]
+__meta__ = {
+"_edit_vertical_guides_": [ 18.9732 ]
+}
 
 [node name="Background" type="TileMap" parent="."]
 material = SubResource( 7 )
@@ -91,7 +94,7 @@ cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 64, 0, 1, 64, 0, 0 )
 collision_use_kinematic = true
 format = 1
-tile_data = PoolIntArray( -1769496, 12, 0, -1507328, 8, 0, -1376259, 12, 0, -1310707, 11, 0, -1310704, 12, 0, -1310691, 12, 0, -1245184, 8, 0, -983047, 12, 0, -1048569, 12, 0, -589823, 12, 0, -524275, 9, 0, -393212, 3, 0, -262125, 12, 0, -196604, 3, 0, -131072, 0, 0, -131069, 1, 0, -65532, 0, 0, 131056, 12, 0, 65536, 0, 0 )
+tile_data = PoolIntArray( -1769496, 12, 0, -1441805, 12, 0, -1507328, 8, 0, -1310707, 11, 0, -1310704, 12, 0, -1310691, 12, 0, -1245184, 8, 0, -983053, 12, 0, -983043, 12, 0, -1048569, 12, 0, -655380, 12, 0, -720895, 12, 0, -524275, 9, 0, -393225, 12, 0, -393212, 3, 0, -262125, 12, 0, -196604, 3, 0, -131072, 0, 0, -131069, 1, 0, -65532, 0, 0, 131056, 12, 0, 65536, 0, 0 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -100,4 +103,4 @@ __meta__ = {
 position = Vector2( 91.6438, 295.744 )
 
 [node name="Mob" parent="." instance=ExtResource( 3 )]
-position = Vector2( 158.023, 298.392 )
+position = Vector2( 242.991, 298.049 )
