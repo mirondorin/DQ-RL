@@ -103,6 +103,8 @@ func _physics_process(delta):
 	if Input.is_action_pressed("ui_up"):
 		velocity.y += jump(delta)
 		
+	if Input.is_action_pressed("ui_attack"):
+		$DebugCollision.text += ' ATTACK'
 	#if is_on_floor():
 	
 	walk(velocity.x)
