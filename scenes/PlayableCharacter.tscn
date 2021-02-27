@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -10,19 +10,10 @@
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_run_anim_f0.png" type="Texture" id=8]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f3.png" type="Texture" id=9]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_run_anim_f3.png" type="Texture" id=10]
+[ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "hit",
@@ -36,6 +27,16 @@ animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "land",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk",
 "speed": 5.0
 } ]
 
@@ -67,10 +68,24 @@ current = true
 zoom = Vector2( 0.5, 0.5 )
 
 [node name="DebugCollision" type="Label" parent="."]
+margin_left = -26.0
 margin_top = -50.0
 margin_right = 76.0
 margin_bottom = -13.0
+custom_fonts/font = ExtResource( 11 )
 text = "PLEASE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="."]
+margin_left = -26.0
+margin_top = -81.0
+margin_right = 16.0
+margin_bottom = -14.0
+custom_fonts/font = ExtResource( 11 )
+custom_colors/font_color = Color( 0.196078, 1, 0, 1 )
+text = "100"
 __meta__ = {
 "_edit_use_anchors_": false
 }
