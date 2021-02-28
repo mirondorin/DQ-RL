@@ -39,6 +39,17 @@ func jump(time):
 func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		$AnimatedSprite.flip_h = velocity.x < 0
+		$Weapon/AnimatedSprite.flip_h = velocity.x < 0
+		
+		if velocity.x < 0:
+			$Weapon.rotation_degrees = -180
+			if $Weapon.position.x > 0:
+				$Weapon.position.x = -$Weapon.position.x
+		elif velocity.x > 0:
+			$Weapon.rotation_degrees = 0
+			if $Weapon.position.x < 0:
+				$Weapon.position.x = -$Weapon.position.x
+			
 	
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
 		$AnimatedSprite.animation='jump'
@@ -86,6 +97,7 @@ func take_damage(value):
 	health -= value
 	on_lose_hp()
 
+
 func solve_input(delta):
 	$DebugAction.text = 'action'
 	
@@ -100,9 +112,8 @@ func solve_input(delta):
 		
 	if Input.is_action_pressed("ui_attack"):
 		$DebugAction.text = 'ATTACK'
+		$Weapon.attack()
 	
-
-
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
 

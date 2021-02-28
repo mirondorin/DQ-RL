@@ -6,6 +6,8 @@ onready var GRAVITY = get_node('../GlobalSettings').GRAVITY
 onready var player = $'../PlayableCharacter'
 onready var attack_timer = $'AttackCooldown'
 
+var health = 20
+
 var velocity = Vector2()
 var follow = false
 var direction = 1
@@ -63,6 +65,16 @@ func _physics_process(delta):
 		if collision and collision.collider.name == 'PlayableCharacter' and follow:
 			attack_player(collision.collider)
 			
+
+func take_damage(value):
+	health -= value
+	if health > 0:
+		$HealthLabel.text = String(health)
+	else:
+		$HealthLabel.text = "dead"
+	
+	follow = false
+	attack_timer.start()
 
 func _on_DetectArea_body_entered(body):
 	if body == player:
