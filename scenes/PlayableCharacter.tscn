@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -11,12 +11,18 @@
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f3.png" type="Texture" id=9]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_run_anim_f3.png" type="Texture" id=10]
 [ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=11]
+[ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=12]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ) ],
@@ -29,11 +35,6 @@ animations = [ {
 "name": "land",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
@@ -44,6 +45,7 @@ animations = [ {
 extents = Vector2( 29.53, 41.5921 )
 
 [node name="PlayableCharacter" type="KinematicBody2D"]
+position = Vector2( 0, -0.187286 )
 scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -56,6 +58,7 @@ __meta__ = {
 scale = Vector2( 5, 5 )
 frames = SubResource( 1 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -95,10 +98,14 @@ __meta__ = {
 margin_left = -26.0
 margin_top = -49.0
 margin_right = 16.0
-margin_bottom = -14.0
+margin_bottom = -13.0
 custom_fonts/font = ExtResource( 11 )
 custom_colors/font_color = Color( 0.196078, 1, 0, 1 )
 text = "100"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Weapon" parent="." instance=ExtResource( 12 )]
+position = Vector2( 46.6849, 49.3108 )
+rotation = 0.0
