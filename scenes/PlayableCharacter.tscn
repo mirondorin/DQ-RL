@@ -14,14 +14,14 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "Idle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
@@ -55,8 +55,8 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 5, 5 )
 frames = SubResource( 1 )
-animation = "walk"
-frame = 1
+animation = "idle"
+playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -3.51978, 28.5693 )
@@ -69,18 +69,31 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="DebugCollision" type="Label" parent="."]
 margin_left = -26.0
-margin_top = -50.0
+margin_top = -115.0
 margin_right = 76.0
 margin_bottom = -13.0
 custom_fonts/font = ExtResource( 11 )
-text = "PLEASE"
+text = "collision
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DebugAction" type="Label" parent="."]
+margin_left = -26.0
+margin_top = -82.0
+margin_right = 76.0
+margin_bottom = -13.0
+custom_fonts/font = ExtResource( 11 )
+text = "action
+"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Health" type="Label" parent="."]
 margin_left = -26.0
-margin_top = -81.0
+margin_top = -49.0
 margin_right = 16.0
 margin_bottom = -14.0
 custom_fonts/font = ExtResource( 11 )

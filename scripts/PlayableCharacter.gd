@@ -2,20 +2,21 @@ extends KinematicBody2D
 
 export var SPEED = 100
 export var JUMPSPEED = 80
-const GRAVITY = 500.0
+onready var GRAVITY = get_node('../GlobalSettings').GRAVITY
 var screen_size # Size of the game window
-var health = 100
-
-func _ready():
-	screen_size = get_viewport_rect().size
-
-func walk(velocity_x):
-	if velocity_x != 0:
-		$AnimatedSprite.flip_h = velocity_x < 0
+var velocity = Vector2()
 
 var start_time = -100
 var jump_intensity
 var in_jump = false
+var did_move = false
+var landing = false
+
+var health = 100
+
+
+func _ready():
+	screen_size = get_viewport_rect().size
 
 func jump(time):
 	var speed = -JUMPSPEED/20
@@ -35,9 +36,10 @@ func jump(time):
 	speed*=jump_intensity
 	return speed
 
-var did_move = false
-var landing = false
 func solve_animation(velocity,delta):
+	if velocity.x != 0:
+		$AnimatedSprite.flip_h = velocity.x < 0
+	
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
 		$AnimatedSprite.animation='jump'
 		landing=false
@@ -68,20 +70,38 @@ func solve_animation(velocity,delta):
 			$AnimatedSprite.stop()
 		else:
 			$AnimatedSprite.play()
+	
+	
 
-func lose_hp(velocity, delta):
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision and collision.collider.name == 'Mob':
-			health -= 10
-			$DebugCollision.text = 'MOB'
-			$AnimatedSprite.animation='hit'
-			$Health.text = String(health)
-			$AnimatedSprite.play()
-		elif collision and  collision.collider.name != 'Obstacle':
-			$DebugCollision.text = 'NOT MOB'
+func on_lose_hp():
+	$AnimatedSprite.animation='hit'
+	$Health.text = String(health)
+	$AnimatedSprite.play()
+	
+	if health <= 0:
+		$Health.text = 'dead!'
+		$Health.add_color_override("font_color", Color(255, 0, 0))
 
-var velocity = Vector2()
+func take_damage(value):
+	health -= value
+	on_lose_hp()
+
+func solve_input(delta):
+	$DebugAction.text = 'action'
+	
+	if Input.is_action_pressed("ui_left"):
+		velocity.x = -SPEED
+	elif Input.is_action_pressed("ui_right"):
+		velocity.x =  SPEED
+	else:
+		velocity.x=0
+	if Input.is_action_pressed("ui_up"):
+		velocity.y += jump(delta)
+		
+	if Input.is_action_pressed("ui_attack"):
+		$DebugAction.text = 'ATTACK'
+	
+
 
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
@@ -94,21 +114,13 @@ func _physics_process(delta):
 	if is_on_ceiling():
 		velocity.y=max(0,velocity.y)
 		
-	if Input.is_action_pressed("ui_left"):
-		velocity.x = -SPEED
-	elif Input.is_action_pressed("ui_right"):
-		velocity.x =  SPEED
-	else:
-		velocity.x=0
-	if Input.is_action_pressed("ui_up"):
-		velocity.y += jump(delta)
-		
-	if Input.is_action_pressed("ui_attack"):
-		$DebugCollision.text += ' ATTACK'
-	#if is_on_floor():
-	
-	walk(velocity.x)
 	solve_animation(velocity,delta)
+	solve_input(delta)
 	# move_and_collide(velocity)
 	move_and_slide(velocity,Vector2(0, -1))
-	lose_hp(velocity, delta)
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision and collision.collider.name == 'Mob':
+			$DebugCollision.text = 'MOB'
+		elif collision and collision.collider.name != 'Obstacles':
+			$DebugCollision.text = collision.collider.name
