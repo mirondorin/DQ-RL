@@ -1,8 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
-[ext_resource path="res://scenes/PlayableCharacter.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=3]
 
 [sub_resource type="VisualShaderNodeColorOp" id=1]
 operator = 2
@@ -76,10 +74,7 @@ nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 5, 0, 2, 0, 6, 0, 7, 2, 7
 render_priority = 1
 shader = SubResource( 6 )
 
-[node name="Node" type="Node"]
-__meta__ = {
-"_edit_vertical_guides_": [ 18.9732 ]
-}
+[node name="LevelRoot" type="Node2D"]
 
 [node name="Background" type="TileMap" parent="."]
 material = SubResource( 7 )
@@ -98,9 +93,3 @@ tile_data = PoolIntArray( -1769496, 12, 0, -1441805, 12, 0, -1507328, 8, 0, -131
 __meta__ = {
 "_editor_description_": ""
 }
-
-[node name="PlayableCharacter" parent="." instance=ExtResource( 2 )]
-position = Vector2( 91.6438, 295.744 )
-
-[node name="Mob" parent="." instance=ExtResource( 3 )]
-position = Vector2( 242.991, 298.049 )

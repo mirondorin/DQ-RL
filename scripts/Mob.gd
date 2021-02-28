@@ -1,26 +1,20 @@
 extends KinematicBody2D
 
-export var SPEED = 100
+export var SPEED = 90
 export var JUMPSPEED = 80
-const GRAVITY = 500.0
-var velocity = Vector2()
+onready var GRAVITY = get_node('../GlobalSettings').GRAVITY
 onready var player = $'../PlayableCharacter'
+onready var attack_timer = $'AttackCooldown'
+
+var velocity = Vector2()
 var follow = false
 var direction = 1
 
-var time_start = 0
-var time_now = 0
-
-func attack_cooldown():
-	if time_now - time_start == 2:
-		follow = true
-		return true
-	follow = false
-	return false
-
-func flip_sprite(velocity_x):
-	if velocity_x != 0:
-		$AnimatedSprite.flip_h = velocity_x < 0
+var attack_damage = 10
+var attack_cooldown = 1.5	
+	
+func _ready():
+	attack_timer.wait_time = attack_cooldown	
 
 func follow_player():
 	if position.x < player.position.x:
@@ -28,19 +22,28 @@ func follow_player():
 	else:
 		direction = -1
 	
-	if not follow and not attack_cooldown():
+	if not follow:
 		direction = 0
-	else:
-		time_start = 0
-		time_now = 0
+
+func attack_player(collider):
+	collider.call("take_damage", attack_damage)
+	move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
+	follow = false
+	attack_timer.start()
+
+func solve_animation(velocity,delta):
+	if velocity.x != 0:
+		$AnimatedSprite.flip_h = velocity.x < 0
+		$AnimatedSprite.animation = 'walk'
+	
+	if velocity.x == 0:
+		$AnimatedSprite.animation = 'idle'
 
 func _physics_process(delta):
-	time_now = OS.get_unix_time()
-	
 	follow_player()
-	flip_sprite(velocity.x)
 	velocity.y += delta * GRAVITY
 	velocity.x = SPEED * direction
+	solve_animation(velocity, delta)
 	
 	if is_on_floor():
 		velocity.y=0
@@ -58,9 +61,8 @@ func _physics_process(delta):
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision and collision.collider.name == 'PlayableCharacter' and follow:
-			move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
-			time_start = OS.get_unix_time()
-			follow = false
+			attack_player(collision.collider)
+			
 
 func _on_DetectArea_body_entered(body):
 	if body == player:
@@ -69,3 +71,6 @@ func _on_DetectArea_body_entered(body):
 func _on_DetectArea_body_exited(body):
 	if body == player:
 		follow = false
+
+func _on_AttackCooldown_timeout():
+	follow = true
