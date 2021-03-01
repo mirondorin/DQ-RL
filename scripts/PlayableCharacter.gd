@@ -12,7 +12,7 @@ var in_jump = false
 var did_move = false
 var landing = false
 
-var health = 100
+export var health = 100
 
 
 func _ready():
@@ -39,18 +39,9 @@ func jump(time):
 func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		$AnimatedSprite.flip_h = velocity.x < 0
-		$Weapon/AnimatedSprite.flip_h = velocity.x < 0
-		
-		if velocity.x < 0:
-			$Weapon.rotation_degrees = -180
-			if $Weapon.position.x > 0:
-				$Weapon.position.x = -$Weapon.position.x
-		elif velocity.x > 0:
-			$Weapon.rotation_degrees = 0
-			if $Weapon.position.x < 0:
-				$Weapon.position.x = -$Weapon.position.x
-			
+		$Weapon.update_orientation(self)
 	
+			
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
 		$AnimatedSprite.animation='jump'
 		landing=false
@@ -93,10 +84,18 @@ func on_lose_hp():
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 
+func on_gain_health():
+	#if health >= 100:
+	#	health = 100
+	$Health.text = String(health)
+
 func take_damage(value):
 	health -= value
 	on_lose_hp()
 
+func gain_health(value):
+	health += value
+	on_gain_health()
 
 func solve_input(delta):
 	$DebugAction.text = 'action'

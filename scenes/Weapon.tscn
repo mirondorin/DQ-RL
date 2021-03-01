@@ -22,7 +22,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( -4.7622, 0 ), Vector2( 41.074, 0 ), Vector2( 33.885, 0 ), Vector2( 0, 0 ) ]
 }
 
-[node name="root" type="Node2D"]
+[node name="Weapon" type="Node2D"]
 rotation = -0.00989461
 script = ExtResource( 2 )
 

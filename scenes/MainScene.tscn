@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PlayableCharacter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/GlobalSettings.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ItemPickup.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=6]
 
-[node name="Node" type="Node"]
+[node name="MainScene" type="Node"]
 __meta__ = {
 "_edit_vertical_guides_": [ 18.9732 ]
 }
@@ -20,5 +22,12 @@ position = Vector2( 91.6438, 295.744 )
 
 [node name="Mob" parent="." instance=ExtResource( 3 )]
 position = Vector2( 242.991, 298.049 )
+
+[node name="Item" parent="." instance=ExtResource( 5 )]
+position = Vector2( 293.013, 306.569 )
+
+[node name="EnemySpawner" parent="." instance=ExtResource( 6 )]
+position = Vector2( 391.391, 237.874 )
+enemyscene = ExtResource( 3 )
 
 [editable path="Level"]
