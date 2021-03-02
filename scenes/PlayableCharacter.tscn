@@ -20,9 +20,9 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
-"name": "hit",
+"name": "jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
@@ -30,14 +30,14 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "land",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "jump",
 "speed": 5.0
 } ]
 
@@ -58,6 +58,7 @@ __meta__ = {
 scale = Vector2( 5, 5 )
 frames = SubResource( 1 )
 animation = "idle"
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -108,3 +109,4 @@ __meta__ = {
 [node name="Weapon" parent="." instance=ExtResource( 12 )]
 position = Vector2( 46.6849, 49.3108 )
 rotation = 0.0
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

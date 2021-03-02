@@ -40,23 +40,15 @@ func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		$AnimatedSprite.flip_h = velocity.x < 0
 		$Weapon.update_orientation(self)
-	
 			
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
 		$AnimatedSprite.animation='jump'
 		landing=false
-	elif $AnimatedSprite.animation=='land':
-		if($AnimatedSprite.frame!=0):
-			landing=false
-		if not landing and $AnimatedSprite.frame==0:
-			$AnimatedSprite.animation='walk'
 			
 	elif is_on_floor():
 		if $AnimatedSprite.animation=='jump':
-			$AnimatedSprite.animation='land'
-			$AnimatedSprite.frame=0
+			$AnimatedSprite.play('land')
 			landing = true
-			did_move = true
 		else:
 			$AnimatedSprite.animation='walk'
 	if velocity.length()!=0:
@@ -64,16 +56,6 @@ func solve_animation(velocity,delta):
 			$AnimatedSprite.stop()
 		else:
 			$AnimatedSprite.play()
-		did_move = true
-	else:
-		if($AnimatedSprite.frame!=0):
-			did_move=false
-		if($AnimatedSprite.frame==0 and not did_move):
-			$AnimatedSprite.stop()
-		else:
-			$AnimatedSprite.play()
-	
-	
 
 func on_lose_hp():
 	$AnimatedSprite.animation='hit'
@@ -134,3 +116,13 @@ func _physics_process(delta):
 			$DebugCollision.text = 'MOB'
 		elif collision and collision.collider.name != 'Obstacles':
 			$DebugCollision.text = collision.collider.name
+
+
+
+
+func _on_AnimatedSprite_animation_finished():
+	if $AnimatedSprite.animation=='landing':
+		landing=false
+		$AnimatedSprite.play('walk')
+	$AnimatedSprite.stop()
+	pass # Replace with function body.
