@@ -14,6 +14,7 @@ var landing = false
 
 export var health = 100
 
+var start_position = Vector2(91, 295) # aici e hardcodata, ar trebuii luata de undeva
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -121,7 +122,8 @@ func _physics_process(delta):
 		elif collision and collision.collider.name != 'Obstacles':
 			$DebugCollision.text = collision.collider.name
 
-
+func out_of_bounds():
+	position = start_position
 
 
 func _on_AnimatedSprite_animation_finished():
