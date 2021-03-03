@@ -38,8 +38,9 @@ func jump(time):
 
 func solve_animation(velocity,delta):
 	if velocity.x != 0:
-		$AnimatedSprite.flip_h = velocity.x < 0
-		$Weapon.update_orientation(self)
+		if $AnimationPlayer.current_animation != 'special-attack':
+			$AnimatedSprite.flip_h = velocity.x < 0
+			$Weapon.update_orientation(self)
 			
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
 		$AnimatedSprite.animation='jump'
@@ -94,6 +95,9 @@ func solve_input(delta):
 	if Input.is_action_pressed("ui_attack"):
 		$DebugAction.text = 'ATTACK'
 		$Weapon.attack()
+	if Input.is_action_pressed("special_attack"):
+		$DebugAction.text = 'SPECIAL-ATTACK'
+		$AnimationPlayer.play('special-attack')
 	
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
