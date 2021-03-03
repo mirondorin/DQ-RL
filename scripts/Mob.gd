@@ -52,7 +52,6 @@ func out_of_bounds():
 	
 func _physics_process(delta):
 	follow_player()
-	# delete_if_falling()
 	velocity.y += delta * GRAVITY
 	velocity.x = SPEED * direction
 	solve_animation(velocity, delta)
