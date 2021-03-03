@@ -15,6 +15,9 @@ func attack():
 		#		mob.call("take_damage", attack_damage)
 	#	can_attack=false
 
+func special_attack():
+	$AnimationPlayer.play("special-attack")
+
 func update_orientation(parent_obj):
 	$AnimatedSprite.flip_h = parent_obj.velocity.x < 0
 		
