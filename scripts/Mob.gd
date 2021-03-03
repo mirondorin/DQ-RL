@@ -17,8 +17,10 @@ var attack_cooldown = 1.5
 	
 func _ready():
 	attack_timer.wait_time = attack_cooldown	
+	
 
 func follow_player():
+	
 	if position.x < player.position.x:
 		direction = 1
 	else:
@@ -41,8 +43,16 @@ func solve_animation(velocity,delta):
 	if velocity.x == 0:
 		$AnimatedSprite.animation = 'idle'
 
+func out_of_bounds():
+	# we can add invisible objects, boundaries, and 
+	# _on_Area2D_body_entered => direction *= -1
+	# to ensure that the enemy patrols only one zone
+	get_node("../EnemySpawner").spawn() #remove this
+	queue_free()
+	
 func _physics_process(delta):
 	follow_player()
+	# delete_if_falling()
 	velocity.y += delta * GRAVITY
 	velocity.x = SPEED * direction
 	solve_animation(velocity, delta)
