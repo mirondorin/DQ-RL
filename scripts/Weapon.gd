@@ -18,14 +18,15 @@ func attack():
 func special_attack():
 	$AnimationPlayer.play("special-attack")
 
-func update_orientation(parent_obj):
-	$AnimatedSprite.flip_h = parent_obj.velocity.x < 0
+func update_orientation(orientation):
+	
+	$AnimatedSprite.flip_h = orientation
 		
-	if parent_obj.velocity.x < 0:
+	if orientation:
 		self.rotation_degrees = -180
 		if self.position.x > 0:
 			self.position.x = -self.position.x
-	elif parent_obj.velocity.x > 0:
+	else:
 		self.rotation_degrees = 0
 		if self.position.x < 0:
 			self.position.x = -self.position.x
