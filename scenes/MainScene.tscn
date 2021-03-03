@@ -6,7 +6,7 @@
 [ext_resource path="res://scripts/GlobalSettings.gd" type="Script" id=4]
 [ext_resource path="res://scenes/ItemPickup.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/WorldBoundary.gd" type="Script" id=7]
+[ext_resource path="res://scripts/WorldBoundary.gd" type="Script" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1000, 10 )

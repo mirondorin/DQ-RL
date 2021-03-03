@@ -41,18 +41,4 @@ func _on_Area2D_body_entered(body):
 	var overlapping_bodies = $Area2D.get_overlapping_bodies()
 	for body in overlapping_bodies:
 		if 'Mob' in body.name:
-			mobs_in_area.append(body)
 			body.call("take_damage", attack_damage)
-
-func _on_AnimationPlayer_animation_finished(anim_name):
-	pass
-
-
-func _on_Area2D_body_exited(body):
-	var overlapping_bodies = $Area2D.get_overlapping_bodies()
-	for body in overlapping_bodies:
-		if 'Mob' in body.name:
-			var mob_ind = mobs_in_area.find(body)
-			mobs_in_area.remove(mob_ind)
-			
-	pass # Replace with function body.

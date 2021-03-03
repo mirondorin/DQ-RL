@@ -11,13 +11,19 @@ var jump_intensity
 var in_jump = false
 var did_move = false
 var landing = false
+var in_dash = false
+var cooldowns = {
+	"can_light_attack" : true, 
+	"can_special_attack" : true, 
+	"can_utility" : true
+				}
 
 export var health = 100
-
-var start_position = Vector2(91, 295) # aici e hardcodata, ar trebuii luata de undeva
+var start_position
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	start_position = position
 
 func jump(time):
 	var speed = -JUMPSPEED/20
@@ -36,6 +42,16 @@ func jump(time):
 	jump_intensity*=0.80
 	speed*=jump_intensity
 	return speed
+
+func dash(delta):
+	if not in_dash:
+		return
+	var direction = 0
+	if velocity.x != 0:
+		direction = 1 if velocity.x > 0 else -1
+	else:
+		direction = 1 if $AnimatedSprite.flip_h == false else -1
+	velocity.x += 400 * direction
 
 func solve_animation(velocity,delta):
 	if velocity.x != 0:
@@ -93,12 +109,23 @@ func solve_input(delta):
 	if Input.is_action_pressed("ui_up"):
 		velocity.y += jump(delta)
 		
-	if Input.is_action_pressed("ui_attack"):
+	if Input.is_action_pressed("ui_attack") and cooldowns['can_light_attack']:
 		$DebugAction.text = 'ATTACK'
 		$Weapon.attack()
-	if Input.is_action_pressed("special_attack"):
+		$Cooldown_Root/LightAttack_CD.start()
+		cooldowns['can_light_attack'] = false
+	elif Input.is_action_pressed("special_attack") and cooldowns['can_special_attack']:
 		$DebugAction.text = 'SPECIAL-ATTACK'
 		$AnimationPlayer.play('special-attack')
+		$Cooldown_Root/SpecialAttack_CD.start()
+		cooldowns['can_special_attack'] = false
+	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
+		$DebugAction.text = 'UTILITY'
+		$Cooldown_Root/Utility_CD.start()
+		cooldowns['can_utility'] = false
+		in_dash = true
+		yield(get_tree().create_timer(0.2), "timeout")
+		in_dash = false
 	
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
@@ -113,7 +140,7 @@ func _physics_process(delta):
 		
 	solve_animation(velocity,delta)
 	solve_input(delta)
-	# move_and_collide(velocity)
+	dash(delta)
 	move_and_slide(velocity,Vector2(0, -1))
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
@@ -132,3 +159,12 @@ func _on_AnimatedSprite_animation_finished():
 		$AnimatedSprite.play('walk')
 	$AnimatedSprite.stop()
 	pass # Replace with function body.
+
+func _on_LightAttack_CD_timeout():
+	cooldowns['can_light_attack'] = true
+
+func _on_SpecialAttack_CD_timeout():
+	cooldowns['can_special_attack'] = true
+
+func _on_Utility_CD_timeout():
+	cooldowns['can_utility'] = true
