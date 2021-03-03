@@ -41,7 +41,7 @@ func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		if $AnimationPlayer.current_animation != 'special-attack':
 			$AnimatedSprite.flip_h = velocity.x < 0
-			$Weapon.update_orientation(self)
+	$Weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
 		$AnimatedSprite.animation='jump'
