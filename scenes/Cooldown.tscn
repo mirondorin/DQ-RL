@@ -1,0 +1,12 @@
+[gd_scene format=2]
+
+[node name="Cooldown_Root" type="Node2D"]
+
+[node name="LightAttack_CD" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="SpecialAttack_CD" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Utility_CD" type="Timer" parent="."]
+wait_time = 4.0

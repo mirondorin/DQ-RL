@@ -7,6 +7,7 @@ onready var player = $'../PlayableCharacter'
 onready var attack_timer = $'AttackCooldown'
 
 export var health = 20
+var is_dead = false
 
 var velocity = Vector2()
 export var follow = true
@@ -69,19 +70,23 @@ func _physics_process(delta):
 	
 	move_and_slide(velocity, Vector2(0, -1))
 		
+	var previous = get_slide_count()
 	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision and collision.collider.name == 'PlayableCharacter' and follow:
-			attack_player(collision.collider)
+		if get_slide_count() > i:
+			var collision = get_slide_collision(i)
+			if collision and collision.collider.name == 'PlayableCharacter' and follow:
+				attack_player(collision.collider)
 			
 
 func on_take_damage():
-	if health > 0:
-		$HealthLabel.text = String(health)
-	else:
-		get_node("../EnemySpawner").spawn() #remove this
-		queue_free()
-	
+	if not is_dead:
+		if health > 0:
+			$HealthLabel.text = String(health)
+		else:
+			is_dead = true
+			queue_free()
+			get_node("../EnemySpawner").spawn()
+
 	follow = false
 	attack_timer.start()
 

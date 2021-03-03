@@ -26,7 +26,7 @@ func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
 		var inst = enemy.instance()
 		inst.position = self.position
-		mainscene.add_child(inst)
+		mainscene.call_deferred("add_child",inst)
 		current_spawns += 1
 
 func start_spawner():
