@@ -31,7 +31,7 @@ radius = 45.9074
 height = 152.841
 
 [node name="Mob" type="KinematicBody2D"]
-position = Vector2( 0.264862, -1.05946 )
+position = Vector2( 0.264862, -0.61401 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
@@ -40,7 +40,6 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -57,6 +56,8 @@ rotation = 1.5708
 shape = SubResource( 3 )
 
 [node name="AttackCooldown" type="Timer" parent="."]
+
+[node name="JumpCooldown" type="Timer" parent="."]
 
 [node name="HealthLabel" type="Label" parent="."]
 margin_left = -9.0
@@ -75,3 +76,4 @@ __meta__ = {
 [connection signal="body_entered" from="DetectArea" to="." method="_on_DetectArea_body_entered"]
 [connection signal="body_exited" from="DetectArea" to="." method="_on_DetectArea_body_exited"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_AttackCooldown_timeout"]
+[connection signal="timeout" from="JumpCooldown" to="." method="_on_JumpCooldown_timeout"]
