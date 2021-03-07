@@ -6,8 +6,9 @@ onready var mainscene = get_parent()
 export(PackedScene) var enemyscene
 onready var enemy = load(enemyscene.get_path())
 export var max_spawns = 3 #use 0 to spawn infinitely
-export var use_timer = false
+export var start_enabled = false
 export var spawn_delay = 1
+export var spawn_continously = false
 
 var current_spawns = 0
 
@@ -20,14 +21,16 @@ func _ready():
 		$CollisionShape2D.queue_free()
 		
 		$Timer.wait_time = spawn_delay
-		if use_timer:
+		if start_enabled:
 			$Timer.start()
 		
 func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
 		var inst = enemy.instance()
+		mainscene.add_child(inst)
 		inst.position = self.position
-		mainscene.call_deferred("add_child",inst)
+		inst.velocity.x = 0
+		inst.velocity.y = 0
 		current_spawns += 1
 
 func start_spawner():
@@ -38,4 +41,6 @@ func stop_spawner():
 
 func _on_Timer_timeout():
 	spawn()
+	if spawn_continously:
+		$Timer.start()
 	

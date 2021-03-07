@@ -8,7 +8,7 @@ func _ready():
 	pass 
 
 func attack():
-	$AnimationPlayer.play('attack')
+	#$AnimationPlayer.play('attack')
 	var bullet_inst = bullet.instance()
 	add_child(bullet_inst)
 	bullet_inst.attack_damage = attack_damage

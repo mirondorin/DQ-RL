@@ -44,6 +44,9 @@ position = Vector2( 293.013, 306.569 )
 position = Vector2( 439.445, 229.198 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1000000
+start_enabled = true
+spawn_delay = 3
+spawn_continously = true
 [connection signal="body_entered" from="Level/WorldBoundary/Area2D" to="Level/WorldBoundary" method="_on_Area2D_body_entered"]
 
 [editable path="Level"]
