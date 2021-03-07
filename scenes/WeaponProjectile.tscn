@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/weapon_golden_sword.png" type="Texture" id=1]
-[ext_resource path="res://scripts/Weapon.gd" type="Script" id=2]
+[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/weapon_red_magic_staff.png" type="Texture" id=1]
+[ext_resource path="res://scripts/WeaponProjectile.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack"
@@ -135,7 +135,7 @@ tracks/3/keys = {
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 5.05209, 12.3614 )
 
-[node name="Weapon" type="Node2D"]
+[node name="WeaponProjectile" type="Node2D"]
 rotation = -0.00989461
 scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
@@ -162,4 +162,3 @@ input_pickable = false
 position = Vector2( 0.317, -13.203 )
 shape = SubResource( 4 )
 disabled = true
-[connection signal="area_entered" from="Hurtbox" to="." method="_on_Area2D_area_entered"]

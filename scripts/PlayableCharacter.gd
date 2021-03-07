@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+onready var current_weapon = $Weapon
+
 export var SPEED = 100
 export var JUMPSPEED = 80
 onready var GRAVITY = get_node('../GlobalSettings').GRAVITY
@@ -57,7 +59,7 @@ func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		if $AnimationPlayer.current_animation != 'special-attack':
 			$AnimatedSprite.flip_h = velocity.x < 0
-	$Weapon.update_orientation($AnimatedSprite.flip_h)
+	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
 		$AnimatedSprite.animation='jump'
@@ -111,7 +113,7 @@ func solve_input(delta):
 		
 	if Input.is_action_pressed("ui_attack") and cooldowns['can_light_attack']:
 		$DebugAction.text = 'ATTACK'
-		$Weapon.attack()
+		current_weapon.attack()
 		$Cooldown_Root/LightAttack_CD.start()
 		cooldowns['can_light_attack'] = false
 	elif Input.is_action_pressed("special_attack") and cooldowns['can_special_attack']:
@@ -126,6 +128,8 @@ func solve_input(delta):
 		in_dash = true
 		yield(get_tree().create_timer(0.2), "timeout")
 		in_dash = false
+	if Input.is_action_pressed("debug_switch_weapon"):
+		switch_weapon()
 	
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
@@ -149,10 +153,17 @@ func _physics_process(delta):
 		elif collision and collision.collider.name != 'Obstacles':
 			$DebugCollision.text = collision.collider.name
 
+func switch_weapon():
+	current_weapon.queue_free()
+	var projwep = load("res://scenes/WeaponProjectile.tscn")
+	var inst = projwep.instance()
+	current_weapon = inst
+	add_child(inst)
+	
+	
 func out_of_bounds():
 	position = start_position
-
-
+	
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation=='landing':
 		landing=false

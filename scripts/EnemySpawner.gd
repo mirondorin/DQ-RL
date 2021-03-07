@@ -17,10 +17,11 @@ func _ready():
 			$Label.text = "spawner\n"+ enemyscene.get_path()
 	else:
 		$Label.queue_free()
+		$CollisionShape2D.queue_free()
 		
-	$Timer.wait_time = spawn_delay
-	if use_timer:
-		$Timer.start()
+		$Timer.wait_time = spawn_delay
+		if use_timer:
+			$Timer.start()
 		
 func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
