@@ -21,7 +21,7 @@ var jump_intensity = 0
 var start_time = -100
 var attack_damage = 10
 var attack_cooldown = 1.5	
-var jump_cooldown = 5
+var jump_cooldown = 4
 
 func _ready():
 	attack_timer.wait_time = attack_cooldown	
@@ -73,8 +73,10 @@ func out_of_bounds():
 	# we can add invisible objects, boundaries, and 
 	# _on_Area2D_body_entered => direction *= -1
 	# to ensure that the enemy patrols only one zone
-	get_node("../EnemySpawner").spawn() #remove this
+	is_dead = true
 	queue_free()
+	if spawner != null:
+		spawner.decrease_spawned()
 	
 func _physics_process(delta):
 	follow_player()
@@ -87,7 +89,7 @@ func _physics_process(delta):
 	if is_on_ceiling():
 		velocity.y=max(0,velocity.y)
 		
-	if can_jump and follow and position.y >= player.position.y:
+	if can_jump and follow and position.y >= player.position.y - 5:
 		velocity.y += jump(delta)
 		can_jump = false
 	
