@@ -30,7 +30,7 @@ extents = Vector2( 10, 14.8159 )
 extents = Vector2( 10, 14.4904 )
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 45.9074
+radius = 100.0
 height = 152.841
 
 [node name="Mob" type="KinematicBody2D"]
@@ -43,7 +43,7 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
