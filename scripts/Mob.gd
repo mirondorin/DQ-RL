@@ -54,10 +54,11 @@ func follow_player():
 		direction = 0
 
 func attack_player(collider):
-	collider.call("take_damage", attack_damage)
-	move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
-	can_attack = false
-	attack_timer.start()
+	if can_attack:
+		collider.call("take_damage", attack_damage)
+		move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
+		can_attack = false
+		attack_timer.start()
 
 func solve_animation(velocity,delta):
 	if velocity.x != 0:
@@ -118,9 +119,8 @@ func on_take_damage():
 	attack_timer.start()
 
 func take_damage(value):
-	if follow:
-		health -= value
-		on_take_damage()
+	health -= value
+	on_take_damage()
 
 func _on_DetectArea_body_entered(body):
 	if body == player:

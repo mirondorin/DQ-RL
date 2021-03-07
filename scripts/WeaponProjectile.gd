@@ -2,21 +2,20 @@ extends Node2D
 
 export var attack_damage = 10
 var can_attack = true
-var mobs_in_area = []
+const bullet = preload("res://scenes/WeaponProjectile_bullet.tscn")
 
 func _ready():
 	pass 
 
 func attack():
 	$AnimationPlayer.play('attack')
-	#if can_attack:
-		#for mob in mobs_in_area:
-		#	if mob!=null:
-		#		mob.call("take_damage", attack_damage)
-	#	can_attack=false
+	var bullet_inst = bullet.instance()
+	add_child(bullet_inst)
+	bullet_inst.attack_damage = attack_damage
+	bullet_inst.direction = -1 if int($AnimatedSprite.flip_h) else 1
 
-func special_attack():
-	$AnimationPlayer.play("special-attack")
+#func special_attack():
+#	$AnimationPlayer.play("special-attack")
 
 func update_orientation(orientation):
 	
@@ -37,8 +36,3 @@ func update_orientation(orientation):
 #func _physics_process(delta):
 #	pass	
 
-func _on_Area2D_area_entered(area):
-	if area.is_in_group("hitbox"):
-		var owner = area.get_owner()
-		if 'Mob' in owner.name:
-			owner.take_damage(attack_damage)
