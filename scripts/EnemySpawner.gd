@@ -27,11 +27,15 @@ func _ready():
 func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
 		var inst = enemy.instance()
+		inst.spawner = self
 		mainscene.add_child(inst)
 		inst.position = self.position
 		inst.velocity.x = 0
 		inst.velocity.y = 0
 		current_spawns += 1
+
+func decrease_spawned():
+	current_spawns -= 1
 
 func start_spawner():
 	$Timer.start()

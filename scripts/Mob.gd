@@ -1,13 +1,13 @@
 extends KinematicBody2D
 
+var spawner = null
+
 export var SPEED = 90
 export var JUMPSPEED = 320
 onready var GRAVITY = $'../GlobalSettings'.GRAVITY
 onready var player = $'../PlayableCharacter'
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
-
-
 export var health = 20
 var is_dead = false
 
@@ -114,7 +114,8 @@ func on_take_damage():
 		else:
 			is_dead = true
 			queue_free()
-			#get_node("../EnemySpawner").spawn()
+			if spawner != null:
+				spawner.decrease_spawned()
 	follow = false
 	
 	attack_timer.start()
