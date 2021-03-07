@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -146,7 +146,12 @@ tracks/5/keys = {
 "values": [ false, true, false, true, false ]
 }
 
-[node name="PlayableCharacter" type="KinematicBody2D"]
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 26.9215, 37.8014 )
+
+[node name="PlayableCharacter" type="KinematicBody2D" groups=[
+"players",
+]]
 position = Vector2( 0, -0.187286 )
 scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
@@ -223,6 +228,14 @@ wait_time = 2.0
 
 [node name="Utility_CD" parent="Cooldown_Root" index="2"]
 wait_time = 1.0
+
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"hitbox",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -3.3371, 28.0316 )
+shape = SubResource( 5 )
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="Cooldown_Root/LightAttack_CD" to="." method="_on_LightAttack_CD_timeout"]
 [connection signal="timeout" from="Cooldown_Root/SpecialAttack_CD" to="." method="_on_SpecialAttack_CD_timeout"]
