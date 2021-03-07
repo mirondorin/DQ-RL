@@ -20,6 +20,7 @@ run/main_scene="res://scenes/MainScene.tscn"
 
 [debug]
 
+shapes/collision/shape_color=Color( 1, 1, 1, 0.501961 )
 shapes/navigation/geometry_color=Color( 1, 1, 1, 0.4 )
 
 [display]
