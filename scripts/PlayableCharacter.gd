@@ -20,6 +20,8 @@ var cooldowns = {
 	"can_utility" : true
 				}
 
+var can_attack = true
+
 export var health = 100
 var start_position
 
@@ -111,16 +113,16 @@ func solve_input(delta):
 	if Input.is_action_pressed("ui_up"):
 		velocity.y += jump(delta)
 		
-	if Input.is_action_pressed("ui_attack") and cooldowns['can_light_attack']:
+	if Input.is_action_pressed("ui_attack") and can_attack:
 		$DebugAction.text = 'ATTACK'
 		current_weapon.attack()
 		$Cooldown_Root/LightAttack_CD.start()
-		cooldowns['can_light_attack'] = false
-	elif Input.is_action_pressed("special_attack") and cooldowns['can_special_attack']:
+		can_attack = false
+	elif Input.is_action_pressed("special_attack") and can_attack:
 		$DebugAction.text = 'SPECIAL-ATTACK'
 		$AnimationPlayer.play('special-attack')
 		$Cooldown_Root/SpecialAttack_CD.start()
-		cooldowns['can_special_attack'] = false
+		can_attack = false
 	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
 		$DebugAction.text = 'UTILITY'
 		$Cooldown_Root/Utility_CD.start()
@@ -172,10 +174,10 @@ func _on_AnimatedSprite_animation_finished():
 	pass # Replace with function body.
 
 func _on_LightAttack_CD_timeout():
-	cooldowns['can_light_attack'] = true
+	can_attack = true
 
 func _on_SpecialAttack_CD_timeout():
-	cooldowns['can_special_attack'] = true
+	can_attack = true
 
 func _on_Utility_CD_timeout():
 	cooldowns['can_utility'] = true
