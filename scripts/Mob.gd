@@ -87,7 +87,7 @@ func _physics_process(delta):
 	if is_on_ceiling():
 		velocity.y=max(0,velocity.y)
 		
-	if can_jump and follow:
+	if can_jump and follow and position.y >= player.position.y:
 		velocity.y += jump(delta)
 		can_jump = false
 	
