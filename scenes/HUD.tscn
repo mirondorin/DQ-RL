@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=1]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="AbilitiesBox" type="MarginContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -137.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AbilitiesBox"]
+margin_right = 1920.0
+margin_bottom = 137.0
+
+[node name="Z" type="Label" parent="AbilitiesBox/HBoxContainer"]
+margin_top = 51.0
+margin_right = 637.0
+margin_bottom = 85.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Z (Light attack)"
+align = 1
+
+[node name="X" type="Label" parent="AbilitiesBox/HBoxContainer"]
+margin_left = 641.0
+margin_top = 51.0
+margin_right = 1278.0
+margin_bottom = 85.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "X (Special Attack)"
+align = 1
+
+[node name="C" type="Label" parent="AbilitiesBox/HBoxContainer"]
+margin_left = 1282.0
+margin_top = 51.0
+margin_right = 1920.0
+margin_bottom = 85.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "C (Utility)"
+align = 1
+
+[node name="Message" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
