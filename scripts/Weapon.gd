@@ -7,7 +7,7 @@ var mobs_in_area = []
 func _ready():
 	pass 
 
-func attack():
+sync func attack():
 	$AnimationPlayer.play('attack')
 	#if can_attack:
 		#for mob in mobs_in_area:
@@ -15,10 +15,10 @@ func attack():
 		#		mob.call("take_damage", attack_damage)
 	#	can_attack=false
 
-func special_attack():
+sync func special_attack():
 	$AnimationPlayer.play("special-attack")
 
-func update_orientation(orientation):
+sync func update_orientation(orientation):
 	
 	$AnimatedSprite.flip_h = orientation
 		

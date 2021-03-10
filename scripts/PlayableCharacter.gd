@@ -6,7 +6,11 @@ export var SPEED = 100
 export var JUMPSPEED = 80
 onready var GRAVITY = get_node('../../GlobalSettings').GRAVITY
 var screen_size # Size of the game window
+
 var velocity = Vector2()
+var player_pos = Vector2()
+puppet var puppet_velocity = Vector2()
+puppet var puppet_pos = Vector2()
 
 var start_time = -100
 var jump_intensity
@@ -31,8 +35,9 @@ func set_player_name(new_name):
 func _ready():
 	screen_size = get_viewport_rect().size
 	start_position = position
+	player_pos = position
 
-func jump(time):
+sync func jump(time):
 	var speed = -JUMPSPEED/20
 	
 	if is_on_floor():
@@ -46,11 +51,11 @@ func jump(time):
 	else:
 		start_time=current_time
 		
-	jump_intensity*=0.80
-	speed*=jump_intensity
+	jump_intensity *= 0.80
+	speed *= jump_intensity
 	return speed
 
-func dash(delta):
+sync func dash(delta):
 	if not in_dash:
 		return
 	var direction = 0
@@ -60,7 +65,7 @@ func dash(delta):
 		direction = 1 if $AnimatedSprite.flip_h == false else -1
 	velocity.x += 400 * direction
 
-func solve_animation(velocity,delta):
+sync func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		if $AnimationPlayer.current_animation != 'special-attack':
 			$AnimatedSprite.flip_h = velocity.x < 0
@@ -82,7 +87,7 @@ func solve_animation(velocity,delta):
 		else:
 			$AnimatedSprite.play()
 
-func on_lose_hp():
+sync func on_lose_hp():
 	$AnimatedSprite.animation='hit'
 	$Health.text = String(health)
 	$AnimatedSprite.play()
@@ -91,16 +96,16 @@ func on_lose_hp():
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 
-func on_gain_health():
+sync func on_gain_health():
 	#if health >= 100:
 	#	health = 100
 	$Health.text = String(health)
 
-func take_damage(value):
+sync func take_damage(value):
 	health -= value
 	on_lose_hp()
 
-func gain_health(value):
+sync func gain_health(value):
 	health += value
 	on_gain_health()
 
@@ -137,28 +142,39 @@ func solve_input(delta):
 		switch_weapon()
 	
 func _physics_process(delta):
-	velocity.y += delta * GRAVITY
+	if is_network_master():
+		velocity.y += delta * GRAVITY
 
-	if is_on_floor():
-		velocity.y=0
-		jump_intensity = 0
-		in_jump=false
+		if is_on_floor():
+			velocity.y=0
+			jump_intensity = 0
+			in_jump=false
 	
-	if is_on_ceiling():
-		velocity.y=max(0,velocity.y)
+		if is_on_ceiling():
+			velocity.y=max(0,velocity.y)
+	
+		solve_input(delta)
+		dash(delta)
+		move_and_slide(velocity,Vector2(0, -1))
 		
+		rset("puppet_velocity", velocity)
+		rset("puppet_pos", position)
+	else:
+		position = puppet_pos
+		velocity = puppet_velocity
+	
 	solve_animation(velocity,delta)
-	solve_input(delta)
-	dash(delta)
-	move_and_slide(velocity,Vector2(0, -1))
 	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision and collision.collider.name == 'Mob':
-			$DebugCollision.text = 'MOB'
-		elif collision and collision.collider.name != 'Obstacles':
-			$DebugCollision.text = collision.collider.name
+			var collision = get_slide_collision(i)
+			if collision and collision.collider.name == 'Mob':
+				$DebugCollision.text = 'MOB'
+			elif collision and collision.collider.name != 'Obstacles':
+				$DebugCollision.text = collision.collider.name
+	
+	if not is_network_master():
+		puppet_pos = position
 
-func switch_weapon():
+sync func switch_weapon():
 	current_weapon.queue_free()
 	var projwep = load("res://scenes/WeaponProjectile.tscn")
 	var inst = projwep.instance()
@@ -166,7 +182,7 @@ func switch_weapon():
 	add_child(inst)
 	
 	
-func out_of_bounds():
+sync func out_of_bounds():
 	position = start_position
 	
 func _on_AnimatedSprite_animation_finished():
