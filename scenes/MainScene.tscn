@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Level.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/PlayableCharacter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/GlobalSettings.gd" type="Script" id=4]
 [ext_resource path="res://scenes/ItemPickup.tscn" type="PackedScene" id=5]
@@ -33,9 +32,6 @@ script = ExtResource( 7 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/WorldBoundary/Area2D"]
 shape = SubResource( 1 )
 
-[node name="PlayableCharacter" parent="." instance=ExtResource( 2 )]
-position = Vector2( 91.6438, 295.744 )
-
 [node name="Mob" parent="." instance=ExtResource( 3 )]
 position = Vector2( 242.991, 298.049 )
 
@@ -49,6 +45,8 @@ max_spawns = 5
 start_enabled = true
 spawn_delay = 3
 spawn_continously = true
+
+[node name="Players" type="Node2D" parent="."]
 [connection signal="body_entered" from="Level/WorldBoundary/Area2D" to="Level/WorldBoundary" method="_on_Area2D_body_entered"]
 
 [editable path="Level"]
