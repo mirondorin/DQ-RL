@@ -24,7 +24,7 @@ func _ready():
 		if start_enabled:
 			$Timer.start()
 		
-func spawn():
+sync func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
 		var inst = enemy.instance()
 		inst.spawner = self
@@ -34,16 +34,16 @@ func spawn():
 		inst.velocity.y = 0
 		current_spawns += 1
 
-func decrease_spawned():
+sync func decrease_spawned():
 	current_spawns -= 1
 
-func start_spawner():
+sync func start_spawner():
 	$Timer.start()
 
-func stop_spawner():
+sync func stop_spawner():
 	$Timer.stop()
 
-func _on_Timer_timeout():
+sync func _on_Timer_timeout():
 	spawn()
 	if spawn_continously:
 		$Timer.start()

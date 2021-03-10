@@ -31,7 +31,7 @@ func _ready():
 	jump_timer.start()
 
 	
-func jump(time):
+sync func jump(time):
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
@@ -47,7 +47,7 @@ func jump(time):
 	speed*=jump_intensity
 	return speed
 
-func follow_player():
+sync func follow_player():
 	if len(in_area) > 0:
 		player = in_area[0]
 		follow = true
@@ -62,14 +62,14 @@ func follow_player():
 	if not follow:
 		direction = 0
 
-func attack_player(collider):
+sync func attack_player(collider):
 	if can_attack:
 		collider.call("take_damage", attack_damage)
 		move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
 		can_attack = false
 		attack_timer.start()
 
-func solve_animation(velocity,delta):
+sync func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		$AnimatedSprite.flip_h = velocity.x < 0
 		$AnimatedSprite.animation = 'walk'
@@ -77,7 +77,7 @@ func solve_animation(velocity,delta):
 	if velocity.x == 0:
 		$AnimatedSprite.animation = 'idle'
 
-func out_of_bounds():
+sync func out_of_bounds():
 	# we can add invisible objects, boundaries, and 
 	# _on_Area2D_body_entered => direction *= -1
 	# to ensure that the enemy patrols only one zone
@@ -117,7 +117,7 @@ func _physics_process(delta):
 				attack_player(collision.collider)
 			
 
-func on_take_damage():
+sync func on_take_damage():
 	if not is_dead:
 		if health > 0:
 			$HealthLabel.text = String(health)
@@ -130,7 +130,7 @@ func on_take_damage():
 	
 	attack_timer.start()
 
-func take_damage(value):
+sync func take_damage(value):
 	health -= value
 	on_take_damage()
 
