@@ -4,7 +4,7 @@ onready var current_weapon = $Weapon
 
 export var SPEED = 100
 export var JUMPSPEED = 80
-onready var GRAVITY = get_node('../GlobalSettings').GRAVITY
+onready var GRAVITY = get_node('../../GlobalSettings').GRAVITY
 var screen_size # Size of the game window
 var velocity = Vector2()
 
@@ -24,6 +24,9 @@ var can_attack = true
 
 export var health = 100
 var start_position
+
+func set_player_name(new_name):
+	name = new_name
 
 func _ready():
 	screen_size = get_viewport_rect().size

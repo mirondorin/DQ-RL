@@ -5,7 +5,7 @@ var spawner = null
 export var SPEED = 90
 export var JUMPSPEED = 320
 onready var GRAVITY = $'../GlobalSettings'.GRAVITY
-onready var player = $'../PlayableCharacter'
+onready var player = $'../Players/PlayableCharacter'
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
 export var health = 20
@@ -22,6 +22,8 @@ var start_time = -100
 var attack_damage = 10
 var attack_cooldown = 1.5	
 var jump_cooldown = 4
+
+var in_area = []
 
 func _ready():
 	attack_timer.wait_time = attack_cooldown	
@@ -46,11 +48,17 @@ func jump(time):
 	return speed
 
 func follow_player():
+	if len(in_area) > 0:
+		player = in_area[0]
+		follow = true
+	else:
+		follow = false
+		direction = 0
+		return 1
 	if position.x < player.position.x:
 		direction = 1
 	else:
 		direction = -1
-	
 	if not follow:
 		direction = 0
 
@@ -127,17 +135,18 @@ func take_damage(value):
 	on_take_damage()
 
 func _on_DetectArea_body_entered(body):
-	if body == player:
-		follow = true
+	if not body in in_area:
+		if body.has_method("set_player_name"):
+			in_area.append(body)
 
 func _on_DetectArea_body_exited(body):
-	if body == player:
-		follow = false
+	if not body in in_area:
+		if body.has_method("set_player_name"):
+			in_area.erase(body)
 
 func _on_AttackCooldown_timeout():
 	can_attack = true
 	follow = true
 	
-
 func _on_JumpCooldown_timeout():
 	can_jump = true
