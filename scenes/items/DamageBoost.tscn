@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/ItemPickup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/items/DamageBoost.gd" type="Script" id=2]
+
+[node name="DamageBoost" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Item" parent="." instance=ExtResource( 1 )]
+
+[editable path="Item"]

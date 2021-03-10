@@ -22,8 +22,11 @@ var cooldowns = {
 
 var can_attack = true
 
-export var health = 100
 var start_position
+var stats = {
+	"damage_modifier" : 0,
+	"health" : 100
+}
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -81,25 +84,21 @@ func solve_animation(velocity,delta):
 
 func on_lose_hp():
 	$AnimatedSprite.animation='hit'
-	$Health.text = String(health)
+	$Health.text = String(stats['health'])
 	$AnimatedSprite.play()
 	
-	if health <= 0:
+	if stats['health'] <= 0:
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 
-func on_gain_health():
+func update_health():
 	#if health >= 100:
 	#	health = 100
-	$Health.text = String(health)
+	$Health.text = String(stats['health'])
 
 func take_damage(value):
-	health -= value
+	stats['health'] -= value
 	on_lose_hp()
-
-func gain_health(value):
-	health += value
-	on_gain_health()
 
 func solve_input(delta):
 	$DebugAction.text = 'action'
@@ -130,7 +129,7 @@ func solve_input(delta):
 		in_dash = true
 		yield(get_tree().create_timer(0.2), "timeout")
 		in_dash = false
-	if Input.is_action_pressed("debug_switch_weapon"):
+	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
 	
 func _physics_process(delta):
@@ -155,10 +154,16 @@ func _physics_process(delta):
 		elif collision and collision.collider.name != 'Obstacles':
 			$DebugCollision.text = collision.collider.name
 
+var weapon = 0 # Delete this later. Only for debug
 func switch_weapon():
+	weapon = 1 - weapon
 	current_weapon.queue_free()
-	var projwep = load("res://scenes/WeaponProjectile.tscn")
-	var inst = projwep.instance()
+	var wep
+	if weapon == 1:
+		wep = load("res://scenes/WeaponProjectile.tscn")
+	else:
+		wep = load("res://scenes/Weapon.tscn")
+	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)
 	
@@ -181,3 +186,10 @@ func _on_SpecialAttack_CD_timeout():
 
 func _on_Utility_CD_timeout():
 	cooldowns['can_utility'] = true
+
+func grab_item():
+	print("Called grab item")
+
+func modify_stats(status, value):
+	stats[status] += value
+	update_health()

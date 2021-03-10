@@ -5,13 +5,14 @@ var can_attack = true
 const bullet = preload("res://scenes/WeaponProjectile_bullet.tscn")
 
 func _ready():
-	pass 
+	position = Vector2(50, 40)
 
 func attack():
 	#$AnimationPlayer.play('attack')
+	
 	var bullet_inst = bullet.instance()
 	add_child(bullet_inst)
-	bullet_inst.attack_damage = attack_damage
+	bullet_inst.attack_damage = attack_damage + get_parent().stats['damage_modifier']
 	bullet_inst.direction = -1 if int($AnimatedSprite.flip_h) else 1
 
 #func special_attack():
