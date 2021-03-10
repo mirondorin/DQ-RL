@@ -5,7 +5,7 @@ var can_attack = true
 var mobs_in_area = []
 
 func _ready():
-	pass 
+	position = Vector2(50, 40)
 
 func attack():
 	$AnimationPlayer.play('attack')
@@ -41,4 +41,4 @@ func _on_Area2D_area_entered(area):
 	if area.is_in_group("hitbox"):
 		var owner = area.get_owner()
 		if 'Mob' in owner.name:
-			owner.take_damage(attack_damage)
+			owner.take_damage(attack_damage + get_parent().stats['damage_modifier'])

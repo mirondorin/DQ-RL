@@ -33,7 +33,9 @@ extents = Vector2( 10, 14.4904 )
 radius = 100.0
 height = 152.841
 
-[node name="Mob" type="KinematicBody2D"]
+[node name="Mob" type="KinematicBody2D" groups=[
+"mobs",
+]]
 position = Vector2( 0.264862, -0.61401 )
 script = ExtResource( 5 )
 __meta__ = {
@@ -43,6 +45,7 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
