@@ -1,6 +1,8 @@
-# Weekly report 2
+# Weekly report 3
 
 ## Ciobanu Sebastian
+ * helped with implementation of item pickups
+ * testing 
 
 ## Miron Dorin
  * Added temporary HUD
