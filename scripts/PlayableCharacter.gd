@@ -19,43 +19,56 @@ var did_move = false
 var landing = false
 var in_dash = false
 var cooldowns = {
-	"can_light_attack" : true, 
-	"can_special_attack" : true, 
+	"can_light_attack" : true,
+	"can_special_attack" : true,
 	"can_utility" : true
-				}
+		}
 
 var can_attack = true
 
 export var health = 100
+puppet var puppet_health = health
+# !! maybe it's not needed, as it doesn't change periodically
+
 var start_position
 
 func set_player_name(new_name):
-	name = new_name
+#	get_node("label").set_text(new_name)
+	$DebugAction.text = new_name
+	pass
 
 func _ready():
 	screen_size = get_viewport_rect().size
 	start_position = position
 	player_pos = position
+	pass
 
-sync func jump(time):
+func jump(time):
+#	This method does not have to be synced
+#	since it only calculates jump speed
+#	client can cheat, but does he really?
 	var speed = -JUMPSPEED/20
-	
 	if is_on_floor():
 		in_jump = true
 		jump_intensity = 20
 		start_time = OS.get_ticks_msec()
-		
 	var current_time = OS.get_ticks_msec()
 	if current_time-start_time>50:
 		jump_intensity = 0
 	else:
 		start_time=current_time
-		
 	jump_intensity *= 0.80
 	speed *= jump_intensity
 	return speed
-
+	pass
+	
 sync func dash(delta):
+#	dash ought to be sync-ed, since it modifies player velocity
+
+#	!! however it could be better to refactor and do all king of motion movement 
+#	in main loop, this method should only return
+
+#	TODO: the above mentioned refactoring
 	if not in_dash:
 		return
 	var direction = 0
@@ -63,9 +76,25 @@ sync func dash(delta):
 		direction = 1 if velocity.x > 0 else -1
 	else:
 		direction = 1 if $AnimatedSprite.flip_h == false else -1
-	velocity.x += 400 * direction
+#	maybe here we should check if is network master, to sync velocity
+	if is_network_master():
+		velocity.x += 400 * direction
+		rset("puppet_velocity", velocity)
+	else:
+		velocity = puppet_velocity
+		puppet_pos = position  # ?? it may avoid jitter, but also it may not
+	pass
 
-sync func solve_animation(velocity,delta):
+func solve_animation(velocity, delta):
+#	I don't really know if animation should be sync or not
+#	future testing is required
+#	an example was: lot of ifs to set new animation
+#	and play it if different from current one
+#	no sync was 
+
+#	doesn't seem to work for us
+
+#	FIXME: when you find out how
 	if velocity.x != 0:
 		if $AnimationPlayer.current_animation != 'special-attack':
 			$AnimatedSprite.flip_h = velocity.x < 0
@@ -86,117 +115,136 @@ sync func solve_animation(velocity,delta):
 			$AnimatedSprite.stop()
 		else:
 			$AnimatedSprite.play()
+	pass
 
-sync func on_lose_hp():
+func on_lose_hp():
+#	solving animation (as I know it) should not require sync
+#	however $Health.text doesn't seem to sync on players. 
+
+#	maybe we could do ??? (a refactoring I suppose, to get all modifications
+#	to be made to [x for x in velocity, position, animations, health] returned
+#	to main loop and do them all there)
+#	!! this ^ is supposed to be done only if it really works
+#	I say it should, but I have to ask the compiler
+
+#	probably we also need a puppet animation var
+#	and maybe a puppet health var
 	$AnimatedSprite.animation='hit'
 	$Health.text = String(health)
 	$AnimatedSprite.play()
-	
 	if health <= 0:
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
+	pass
 
-sync func on_gain_health():
-	#if health >= 100:
-	#	health = 100
+func on_gain_health():
+#	copy paste comments above here
 	$Health.text = String(health)
+	pass
 
-sync func take_damage(value):
-	health -= value
+func take_damage(value):
+#	this has to be sync-ed, or should return modifications made
+
+#	version 1.0.3: this doesn't have to be sync-ed anymore, checking network
+#	master is enough
+#	or is supposed to be enough, testing will prove it (wrong)
+
+#	on further thought, we could have used something like:
+
+#	puppet func take_damage():
+#		takes_damage()
+#	master func damage_control()
+#		rpc("take_damage")
+#		take_damage()
+	if is_network_master():
+		health -= value
+		rset("puppet_health", health)
+	else:
+		health = puppet_health
 	on_lose_hp()
+	pass
 
 sync func gain_health(value):
-	health += value
+#	copy paste comments above here
+	if is_network_master():
+		health += value
+		rset("puppet_health", health)
+	else:
+		health = puppet_health
 	on_gain_health()
+	pass
 
 func solve_input(delta):
-	$DebugAction.text = 'action'
-	
+#	theoretically should not require sync
+#	but we have to find a way to sync weapon attacks and animations
+	var v_x = 0
+	var v_y = velocity.y
 	if Input.is_action_pressed("ui_left"):
-		velocity.x = -SPEED
+		v_x = -SPEED
 	elif Input.is_action_pressed("ui_right"):
-		velocity.x =  SPEED
+		v_x = SPEED
 	else:
-		velocity.x=0
+		v_x = 0
 	if Input.is_action_pressed("ui_up"):
-		velocity.y += jump(delta)
-		
-	if Input.is_action_pressed("ui_attack") and can_attack:
-		$DebugAction.text = 'ATTACK'
-		current_weapon.attack()
-		$Cooldown_Root/LightAttack_CD.start()
-		can_attack = false
-	elif Input.is_action_pressed("special_attack") and can_attack:
-		$DebugAction.text = 'SPECIAL-ATTACK'
-		$AnimationPlayer.play('special-attack')
-		$Cooldown_Root/SpecialAttack_CD.start()
-		can_attack = false
-	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
-		$DebugAction.text = 'UTILITY'
-		$Cooldown_Root/Utility_CD.start()
-		cooldowns['can_utility'] = false
-		in_dash = true
-		yield(get_tree().create_timer(0.2), "timeout")
-		in_dash = false
-	if Input.is_action_pressed("debug_switch_weapon"):
-		switch_weapon()
+		v_y += jump(delta)
+	
+#	FIXME: make this v work
+#	if Input.is_action_pressed("ui_attack") and can_attack:
+#		current_weapon.attack()
+#		$Cooldown_Root/LightAttack_CD.start()
+#		can_attack = false
+#	elif Input.is_action_pressed("special_attack") and can_attack:
+#		$AnimationPlayer.play('special-attack')
+#		$Cooldown_Root/SpecialAttack_CD.start()
+#		can_attack = false
+#	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
+#		$Cooldown_Root/Utility_CD.start()
+#		cooldowns['can_utility'] = false
+#		in_dash = true
+#		yield(get_tree().create_timer(0.2), "timeout")
+#		in_dash = false
+#	if Input.is_action_pressed("debug_switch_weapon"):
+#		switch_weapon()
+	return Vector2(v_x, v_y)
+	pass
 	
 func _physics_process(delta):
 	if is_network_master():
 		velocity.y += delta * GRAVITY
-
 		if is_on_floor():
-			velocity.y=0
+			velocity.y = 0
 			jump_intensity = 0
-			in_jump=false
-	
+			in_jump = false
 		if is_on_ceiling():
-			velocity.y=max(0,velocity.y)
-	
-		solve_input(delta)
-		dash(delta)
+			velocity.y = max(0, velocity.y)
+		velocity = solve_input(delta)
+		dash(delta) # TODO: maybe return a velocity.x from dash
 		move_and_slide(velocity,Vector2(0, -1))
-		
 		rset("puppet_velocity", velocity)
 		rset("puppet_pos", position)
 	else:
 		position = puppet_pos
 		velocity = puppet_velocity
-	
+#	!! TODO: da deci pur si simplu de ce nu se animeaza
 	solve_animation(velocity,delta)
-	for i in get_slide_count():
-			var collision = get_slide_collision(i)
-			if collision and collision.collider.name == 'Mob':
-				$DebugCollision.text = 'MOB'
-			elif collision and collision.collider.name != 'Obstacles':
-				$DebugCollision.text = collision.collider.name
 	
-	if not is_network_master():
-		puppet_pos = position
+	pass
 
 sync func switch_weapon():
-	current_weapon.queue_free()
-	var projwep = load("res://scenes/WeaponProjectile.tscn")
-	var inst = projwep.instance()
-	current_weapon = inst
-	add_child(inst)
+	pass
 	
 	
 sync func out_of_bounds():
-	position = start_position
+	pass
 	
 func _on_AnimatedSprite_animation_finished():
-	if $AnimatedSprite.animation=='landing':
-		landing=false
-		$AnimatedSprite.play('walk')
-	$AnimatedSprite.stop()
-	pass # Replace with function body.
+	pass
 
 func _on_LightAttack_CD_timeout():
-	can_attack = true
+	pass
 
 func _on_SpecialAttack_CD_timeout():
-	can_attack = true
+	pass
 
 func _on_Utility_CD_timeout():
-	cooldowns['can_utility'] = true
+	pass
