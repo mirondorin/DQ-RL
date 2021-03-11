@@ -16,6 +16,7 @@ func _ready():
 func _on_Area2D_body_entered(body):
 	if (body.has_method("out_of_bounds")):
 		body.out_of_bounds()
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
