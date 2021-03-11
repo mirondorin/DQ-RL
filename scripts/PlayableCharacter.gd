@@ -31,6 +31,10 @@ puppet var puppet_health = health
 # !! maybe it's not needed, as it doesn't change periodically
 
 var start_position
+var stats = {
+	"damage_modifier" : 0,
+	"health" : 100
+}
 
 func set_player_name(new_name):
 #	get_node("label").set_text(new_name)
@@ -166,14 +170,14 @@ func on_lose_hp():
 	animate("animation", "hit")
 	$Health.text = String(health)
 	play_animation("")
-	if health <= 0:
+	if stats['health'] <= 0:
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 	pass
 
 func on_gain_health():
 #	copy paste comments above here
-	$Health.text = String(health)
+	$Health.text = String(stats['health'])
 	pass
 
 master func damage_control(value):
@@ -181,7 +185,7 @@ master func damage_control(value):
 	take_damage(value)
 
 puppet func take_damage(value):
-	health -= value
+	stats['health'] -= value
 	on_lose_hp()
 
 #func take_damage(value):
@@ -191,22 +195,23 @@ puppet func take_damage(value):
 ##	master is enough
 ##	or is supposed to be enough, testing will prove it (wrong)
 #	if is_network_master():
-#		health -= value
-#		rset("puppet_health", health)
+#		stats['health'] -= value
+#		rset("puppet_health", stats['health'])
 #	else:
-#		health = puppet_health
+#		stats['health'] = puppet_health
 #	on_lose_hp()
 #	pass
 
 sync func gain_health(value):
 #	copy paste comments above here
 	if is_network_master():
-		health += value
-		rset("puppet_health", health)
+		stats['health'] += value
+		rset("puppet_health", stats['health'])
 	else:
-		health = puppet_health
+		stats['health'] = puppet_health
 	on_gain_health()
 	pass
+
 
 func solve_input(delta):
 #	theoretically should not require sync
@@ -266,12 +271,20 @@ func _physics_process(delta):
 		puppet_pos = position  # To avoid jitter
 	pass
 
-sync func switch_weapon():
-#	i don't know if this should be treated as a sync
-#	or as a master puppet functions
-#	or as a remotesync method
-#	plz work
-	pass
+
+var weapon = 0 # Delete this later. Only for debug
+
+func switch_weapon():
+	weapon = 1 - weapon
+	current_weapon.queue_free()
+	var wep
+	if weapon == 1:
+		wep = load("res://scenes/WeaponProjectile.tscn")
+	else:
+		wep = load("res://scenes/Weapon.tscn")
+	var inst = wep.instance()
+	current_weapon = inst
+	add_child(inst)
 	
 	
 func out_of_bounds():
@@ -314,3 +327,10 @@ func _on_Utility_CD_timeout():
 func _on_Dash_timeout():
 	in_dash = false
 	pass
+
+func grab_item():
+	print("Called grab item")
+
+func modify_stats(status, value):
+	stats[status] += value
+	update_health()

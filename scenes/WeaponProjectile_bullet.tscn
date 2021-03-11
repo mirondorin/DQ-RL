@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/coin_anim_f0.png" type="Texture" id=1]
-[ext_resource path="res://scripts/WeaponProjectile_bullet.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Weapons/WeaponProjectile_bullet.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
