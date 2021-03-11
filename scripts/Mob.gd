@@ -5,7 +5,7 @@ var spawner = null
 export var SPEED = 90
 export var JUMPSPEED = 320
 onready var GRAVITY = $'../GlobalSettings'.GRAVITY
-onready var player = $'../Players/PlayableCharacter'
+var player
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
 
@@ -72,7 +72,9 @@ func follow_player():
 
 func attack_player(collider):
 	if can_attack:
-		collider.call("take_damage", attack_damage)
+		
+		collider.take_damage(attack_damage)
+#		collider.call("take_damage", attack_damage)
 		move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
 		can_attack = false
 		attack_timer.start()
@@ -126,7 +128,7 @@ func _physics_process(delta):
 	for i in get_slide_count():
 		if get_slide_count() > i:
 			var collision = get_slide_collision(i)
-			if collision and collision.collider.name == 'PlayableCharacter' and follow:
+			if collision and collision.collider.is_in_group("players") and follow:
 				attack_player(collision.collider)
 
 func on_take_damage():

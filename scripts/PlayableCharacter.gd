@@ -176,27 +176,27 @@ func on_gain_health():
 	$Health.text = String(health)
 	pass
 
-func take_damage(value):
-#	this has to be sync-ed, or should return modifications made
+master func damage_control(value):
+	rpc("take_damage", value)
+	take_damage(value)
 
-#	version 1.0.3: this doesn't have to be sync-ed anymore, checking network
-#	master is enough
-#	or is supposed to be enough, testing will prove it (wrong)
-
-#	on further thought, we could have used something like:
-
-#	puppet func take_damage():
-#		takes_damage()
-#	master func damage_control()
-#		rpc("take_damage")
-#		take_damage()
-	if is_network_master():
-		health -= value
-		rset("puppet_health", health)
-	else:
-		health = puppet_health
+puppet func take_damage(value):
+	health -= value
 	on_lose_hp()
-	pass
+
+#func take_damage(value):
+##	this has to be sync-ed, or should return modifications made
+#
+##	version 1.0.3: this doesn't have to be sync-ed anymore, checking network
+##	master is enough
+##	or is supposed to be enough, testing will prove it (wrong)
+#	if is_network_master():
+#		health -= value
+#		rset("puppet_health", health)
+#	else:
+#		health = puppet_health
+#	on_lose_hp()
+#	pass
 
 sync func gain_health(value):
 #	copy paste comments above here
@@ -261,7 +261,6 @@ func _physics_process(delta):
 	else:
 		position = puppet_pos
 		velocity = puppet_velocity
-#	!! TODO: da deci pur si simplu de ce nu se animeaza
 	solve_animation(velocity,delta)
 	if not is_network_master():
 		puppet_pos = position  # To avoid jitter

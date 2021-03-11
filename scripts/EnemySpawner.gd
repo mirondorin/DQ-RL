@@ -5,7 +5,7 @@ onready var mainscene = get_parent()
 
 export (PackedScene) var enemyscene
 onready var enemy = load(enemyscene.get_path())
-export var max_spawns = 3 #use 0 to spawn infinitely
+export var max_spawns = 2 #use 0 to spawn infinitely
 export var start_enabled = false
 export var spawn_delay = 1
 export var spawn_continously = false
@@ -25,49 +25,51 @@ func _ready():
 			$Timer.start()
 
 # V 01.master puppet functions
-#puppet func do_spawn():
-#	var inst = enemy.instance()
-##	maybe we should set a name for mobs?
-#	inst.spawner = self
-#	mainscene.add_child(inst)
-#	inst.position = self.position
-#	inst.velocity.x = 0
-#	inst.velocity.y = 0
-#	current_spawns += 1
-#	pass
-#
-#master func spawn():
-#	if current_spawns < max_spawns or max_spawns == 0:
-#		rpc("do_spawn")
-#		do_spawn()
-#	pass
+puppet func do_spawn():
+	var inst = enemy.instance()
+#	maybe we should set a name for mobs?
+	inst.spawner = self
+	mainscene.add_child(inst)
+	inst.position = self.position
+	inst.velocity.x = 0
+	inst.velocity.y = 0
+	current_spawns += 1
+	pass
+
+master func spawn():
+	if current_spawns < max_spawns or max_spawns == 0:
+		rpc("do_spawn")
+		do_spawn()
+	pass
 
 # V 02. sync
 # Godot docs say that "Use sync because it will be called everywhere"
 # I don't think sync works, try remotesync
-sync func spawn():
-	if current_spawns < max_spawns or max_spawns == 0:
-		var inst = enemy.instance()
-		inst.spawner = self
-		mainscene.add_child(inst)
-		inst.position = self.position
-		inst.velocity.x = 0
-		inst.velocity.y = 0
-		current_spawns += 1
+#func spawn():
+#	if current_spawns < max_spawns or max_spawns == 0:
+#		var inst = enemy.instance()
+#		inst.spawner = self
+#		mainscene.add_child(inst)
+#		inst.position = self.position
+#		inst.velocity.x = 0
+#		inst.velocity.y = 0
+#		current_spawns += 1
 
-sync func decrease_spawned():
+func decrease_spawned():
 	current_spawns -= 1
 	pass
 
-sync func start_spawner():
+func start_spawner():
 	$Timer.start()
 
 
-sync func stop_spawner():
+func stop_spawner():
 	$Timer.stop()
 
-sync func _on_Timer_timeout():
-	spawn()
+func _on_Timer_timeout():
+	if is_network_master():
+		spawn()
+	
 	if spawn_continously:
 		$Timer.start()
 	
