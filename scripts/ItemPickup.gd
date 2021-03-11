@@ -13,5 +13,20 @@ func _ready():
 #	pass
 
 
-sync func _on_Area2D_body_entered(body):
+puppet func do_be_picked(body):
+	body.gain_health(10)
+	pass
+
+master func be_picked(body):
+#	rpc("do_be_picked", body) # ! Not working because rpc calls for every player
+	do_be_picked(body)
+	pass
+
+
+func _on_Area2D_body_entered(body):
+	if body.has_method("gain_health"): # maybe replace this with sth else, even though it's good enough as it is
+		be_picked(body)
+		if one_time:
+			queue_free()
+		pass
 	pass
