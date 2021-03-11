@@ -81,9 +81,9 @@ remote func pre_start_game(spawn_points):
 	get_tree().get_root().get_node("Lobby").hide()
 
 	var player_scene = load("res://scenes/PlayableCharacter.tscn")
+	
 
 	for p_id in spawn_points:
-		# TODO: de pus un spawn point
 		print("ok")
 		var sss = world.get_node("Level/SpawnPoints/1")
 		print("okidoki")
@@ -103,11 +103,6 @@ remote func pre_start_game(spawn_points):
 			player.set_player_name(players[p_id])
 
 		world.get_node("Players").add_child(player)
-
-#	# Set up score.
-#	world.get_node("Score").add_player(get_tree().get_network_unique_id(), player_name)
-#	for pn in players:
-#		world.get_node("Score").add_player(pn, players[pn])
 
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start.
