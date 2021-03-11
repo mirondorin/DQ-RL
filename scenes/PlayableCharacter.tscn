@@ -155,6 +155,7 @@ frames = SubResource( 1 )
 animation = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( -3.51978, 28.5693 )
 scale = Vector2( 0.84, 1 )
 shape = SubResource( 2 )
