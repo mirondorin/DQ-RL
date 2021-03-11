@@ -168,7 +168,7 @@ func on_lose_hp():
 #	UPDATE: maybe not
 #	and maybe a puppet health var
 	animate("animation", "hit")
-	$Health.text = String(health)
+	$Health.text = String(stats['health'])
 	play_animation("")
 	if stats['health'] <= 0:
 		$Health.text = 'dead!'
@@ -333,4 +333,4 @@ func grab_item():
 
 func modify_stats(status, value):
 	stats[status] += value
-	update_health()
+	$Health.text = String(stats['health'])

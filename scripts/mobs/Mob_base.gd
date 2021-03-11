@@ -5,8 +5,6 @@ var spawner = null
 export var follow = true
 export var SPEED = 90
 export var JUMPSPEED = 320
-onready var GRAVITY = $'../GlobalSettings'.GRAVITY
-var player
 onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
 # FIXME: player may be null at the very beggining
 onready var player = get_tree().get_root().get_node('MainScene/PlayableCharacter')
@@ -20,7 +18,6 @@ puppet var puppet_health
 var is_dead = false
 
 var velocity = Vector2()
-export var follow = true
 
 puppet var puppet_velocity = Vector2()
 puppet var puppet_pos = Vector2()
@@ -76,15 +73,6 @@ func follow_player():
 		direction = 0
 	pass
 
-#func attack_player(collider):
-#	if can_attack:
-#		
-#		collider.take_damage(attack_damage)
-#		collider.call("take_damage", attack_damage)
-#		move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
-#		can_attack = false
-#		attack_timer.start()
-
 func attack_player(player):
 	pass
 
@@ -110,6 +98,8 @@ func out_of_bounds():
 	
 func _physics_process(delta):
 	follow_player()
+	if (len(in_area) > 0):
+		player = in_area[0]
 	if is_network_master():
 		velocity.y += delta * GRAVITY
 		velocity.x = SPEED * direction
@@ -119,8 +109,8 @@ func _physics_process(delta):
 			in_jump=false
 		if is_on_ceiling():
 			velocity.y=max(0,velocity.y)
-	
-		if can_jump and follow and position.y >= player.position.y - 5:
+		
+		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
 			velocity.y += jump(delta)
 			can_jump = false
 		rset("puppet_pos", position)
@@ -159,13 +149,13 @@ func take_damage(value):
 
 func _on_DetectArea_body_entered(body):
 	if not body in in_area:
-		if body.has_method("set_player_name"):
+		if body.is_in_group("players"):
 			in_area.append(body)
 	pass
 
 func _on_DetectArea_body_exited(body):
 	if not body in in_area:
-		if body.has_method("set_player_name"):
+		if body.is_in_group("players"):
 			in_area.erase(body)
 	pass
 

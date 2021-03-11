@@ -6,19 +6,20 @@ func _init():
 	self.SPEED = 20
 
 func follow_player():
-	if abs(position.x - player.position.x) > 150: #make 150 a variable
+	if len(in_area) > 0:
+		player = in_area[0]
+		if abs(position.x - player.position.x) > 150: #make 150 a variable
+			if position.x < player.position.x:
+				direction = 1
+			else:
+				direction = -1
 		if position.x < player.position.x:
-			direction = 1
+			$AnimatedSprite.flip_h = false
 		else:
-			direction = -1
+			$AnimatedSprite.flip_h = true
 	else:
 		direction = 0
-	
-	if position.x < player.position.x:
-		$AnimatedSprite.flip_h = false
-	else:
-		$AnimatedSprite.flip_h = true
-	
+
 	if not follow:
 		direction = 0
 

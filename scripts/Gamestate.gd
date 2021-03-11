@@ -75,6 +75,7 @@ func unregister_player(id):
 
 remote func pre_start_game(spawn_points):
 	# Change scene.
+	var aa = load("res://scenes/MainScene.tscn")
 	var world = load("res://scenes/MainScene.tscn").instance()
 	get_tree().get_root().add_child(world)
 
@@ -85,14 +86,13 @@ remote func pre_start_game(spawn_points):
 
 	for p_id in spawn_points:
 		print("ok")
-		var sss = world.get_node("Level/SpawnPoints/1")
+#		var sss = world.get_node("Spawn/1")
 		print("okidoki")
-		print(sss)
-		var spawn_pos = world.get_node("Level/SpawnPoints/" + str(spawn_points[p_id])).position
+		var spawn_pos = world.get_node("Spawn/" + str(spawn_points[p_id])).position
 		var player = player_scene.instance()
 
 		player.set_name(str(p_id)) # Use unique ID as node name.
-		player.position=spawn_pos
+		player.position = spawn_pos
 		player.set_network_master(p_id) #set unique id as master.
 
 		if p_id == get_tree().get_network_unique_id():
@@ -103,6 +103,7 @@ remote func pre_start_game(spawn_points):
 			player.set_player_name(players[p_id])
 
 		world.get_node("Players").add_child(player)
+
 
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start.

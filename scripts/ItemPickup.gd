@@ -28,7 +28,7 @@ master func be_picked(body):
 #	if body.has_method("gain_health"): # maybe replace this with sth else, even though it's good enough as it is
 #		be_picked(body)
 func _on_Area2D_body_entered(body):
-	if body.name == 'PlayableCharacter':
+	if body.is_in_group("players"):
 		body.modify_stats(status_name, value)
 		if one_time:
 			queue_free()
