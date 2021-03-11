@@ -1,20 +1,21 @@
-extends Node2D
+extends 'res://scripts/weapons/Weapon_base.gd'
 
-export var attack_damage = 10
-var can_attack = true
-var mobs_in_area = []
+func _init():
+	attack_anim_names['attack'] = 'attack'
+	attack_anim_names['special-attack'] = 'special-attack'
 
 func _ready():
-	pass 
+	position = Vector2(50, 40)
 
-sync func attack():
-	pass
+func attack():
+	play_animation(attack_anim_names['attack'])
 
-sync func special_attack():
-	pass
-
-sync func update_orientation(orientation):
-	pass
+func special_attack():
+	play_animation(attack_anim_names['special-attack'])
 
 func _on_Area2D_area_entered(area):
-	pass
+	if area.is_in_group("hitbox"):
+		var owner = area.get_owner()
+		if owner.is_in_group('mobs'):
+#			owner.take_damage(attack_damage + get_parent().stats['damage_modifier'])
+			owner.take_damage(attack_damage)
