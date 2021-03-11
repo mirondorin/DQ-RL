@@ -8,10 +8,10 @@ func _ready():
 	position = Vector2(50, 40)
 
 func attack():
-	$AnimationPlayer.play(attack_anim_names['attack'])
+	play_animation(attack_anim_names['attack'])
 
 func special_attack():
-	$AnimationPlayer.play(attack_anim_names['special-attack'])
+	play_animation(attack_anim_names['special-attack'])
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("hitbox"):

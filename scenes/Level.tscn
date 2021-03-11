@@ -93,17 +93,3 @@ tile_data = PoolIntArray( -1769496, 12, 0, -1441805, 12, 0, -1507328, 8, 0, -131
 __meta__ = {
 "_editor_description_": ""
 }
-
-[node name="SpawnPoints" type="Node2D" parent="."]
-
-[node name="0" type="Position2D" parent="SpawnPoints"]
-position = Vector2( 65, 300 )
-
-[node name="1" type="Position2D" parent="SpawnPoints"]
-position = Vector2( 20, 300 )
-
-[node name="2" type="Position2D" parent="SpawnPoints"]
-position = Vector2( -10, 300 )
-
-[node name="3" type="Position2D" parent="SpawnPoints"]
-position = Vector2( -45, 300 )
