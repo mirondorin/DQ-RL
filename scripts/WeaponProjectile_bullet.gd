@@ -10,7 +10,7 @@ func _physics_process(delta):
 	move_and_slide(Vector2(speed*direction, 0), Vector2(1, 0))
 	
 func _ready():
-	set_as_toplevel(true)	
+	set_as_toplevel(true)
 
 func _on_Hurtbox_area_entered(area):
 	if area.is_in_group("hitbox"):
