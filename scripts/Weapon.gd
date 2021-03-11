@@ -17,4 +17,5 @@ func _on_Area2D_area_entered(area):
 	if area.is_in_group("hitbox"):
 		var owner = area.get_owner()
 		if owner.is_in_group('mobs'):
-			owner.take_damage(attack_damage + get_parent().stats['damage_modifier'])
+#			owner.take_damage(attack_damage + get_parent().stats['damage_modifier'])
+			owner.take_damage(attack_damage)

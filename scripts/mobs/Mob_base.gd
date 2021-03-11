@@ -6,13 +6,22 @@ export var follow = true
 export var SPEED = 90
 export var JUMPSPEED = 320
 onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
+# FIXME: player may be null at the very beggining
 onready var player = get_tree().get_root().get_node('MainScene/PlayableCharacter')
+
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
+
 export var health = 20
+puppet var puppet_health
+
 var is_dead = false
 
 var velocity = Vector2()
+
+puppet var puppet_velocity = Vector2()
+puppet var puppet_pos = Vector2()
+
 var direction = 1
 var in_jump = false
 var can_jump = false
@@ -23,6 +32,8 @@ var start_time = -100
 var attack_damage = 10
 var attack_cooldown = 1.5	
 var jump_cooldown = 4
+
+var in_area = []
 
 func _ready():
 	attack_timer.wait_time = attack_cooldown	
@@ -41,32 +52,41 @@ func jump(time):
 		jump_intensity = 0
 	else:
 		start_time=current_time
-		
 	jump_intensity*=0.80
 	speed*=jump_intensity
 	return speed
+	pass
 
 func follow_player():
+	if len(in_area) > 0:
+		player = in_area[0]
+		follow = true
+	else:
+		follow = false
+		direction = 0
+		return 1
 	if position.x < player.position.x:
 		direction = 1
 	else:
 		direction = -1
-	
 	if not follow:
 		direction = 0
+	pass
 
 func attack_player(player):
 	pass
 
-func solve_animation(velocity,delta):
+func solve_animation(velocity, delta):
 	if velocity.x != 0:
 		$AnimatedSprite.flip_h = velocity.x < 0
 		$AnimatedSprite.animation = 'walk'
-	
 	if velocity.x == 0:
 		$AnimatedSprite.animation = 'idle'
+	pass
 
 func out_of_bounds():
+#	? TODO: check how to networking
+
 	# we can add invisible objects, boundaries, and 
 	# _on_Area2D_body_entered => direction *= -1
 	# to ensure that the enemy patrols only one zone
@@ -74,37 +94,40 @@ func out_of_bounds():
 	queue_free()
 	if spawner != null:
 		spawner.decrease_spawned()
+	pass
 	
 func _physics_process(delta):
 	follow_player()
-	velocity.y += delta * GRAVITY
-	velocity.x = SPEED * direction
-	if is_on_floor():
-		velocity.y = 0
-		jump_intensity = 0
-		in_jump=false
-	if is_on_ceiling():
-		velocity.y=max(0,velocity.y)
+	if (len(in_area) > 0):
+		player = in_area[0]
+	if is_network_master():
+		velocity.y += delta * GRAVITY
+		velocity.x = SPEED * direction
+		if is_on_floor():
+			velocity.y = 0
+			jump_intensity = 0
+			in_jump=false
+		if is_on_ceiling():
+			velocity.y=max(0,velocity.y)
 		
-	if can_jump and follow and position.y >= player.position.y - 5:
-		velocity.y += jump(delta)
-		can_jump = false
+		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
+			velocity.y += jump(delta)
+			can_jump = false
+		rset("puppet_pos", position)
+		rset("puppet_velocity", velocity)
+	else:
+		position = puppet_pos
+		velocity = puppet_velocity
 	
 	solve_animation(velocity, delta)
-	
-	#solve_animation(velocity,delta)
-	#move_and_collide(velocity)
-	
 	move_and_slide(velocity, Vector2(0, -1))
 	
-		
 	var previous = get_slide_count()
 	for i in get_slide_count():
 		if get_slide_count() > i:
 			var collision = get_slide_collision(i)
-			if collision and collision.collider.name == 'PlayableCharacter' and follow:
+			if collision and collision.collider.is_in_group("players") and follow:
 				attack_player(collision.collider)
-			
 
 func on_take_damage():
 	if not is_dead:
@@ -117,23 +140,31 @@ func on_take_damage():
 				spawner.decrease_spawned()
 	follow = false
 	attack_timer.start()
+	pass
 
 func take_damage(value):
 	health -= value
 	on_take_damage()
+	pass
 
 func _on_DetectArea_body_entered(body):
-	if body == player:
-		follow = true
+	if not body in in_area:
+		if body.is_in_group("players"):
+			in_area.append(body)
+	pass
 
 func _on_DetectArea_body_exited(body):
-	if body == player:
-		follow = false
+	if not body in in_area:
+		if body.is_in_group("players"):
+			in_area.erase(body)
+	pass
 
 func _on_AttackCooldown_timeout():
 	can_attack = true
 	follow = true
+	pass
 	
 func _on_JumpCooldown_timeout():
 	can_jump = true
+	pass
 
