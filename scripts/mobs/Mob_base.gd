@@ -2,23 +2,24 @@ extends KinematicBody2D
 
 var spawner = null
 
+export var follow = true
 export var SPEED = 90
 export var JUMPSPEED = 320
-onready var GRAVITY = $'../GlobalSettings'.GRAVITY
-onready var player = $'../PlayableCharacter'
+onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
+onready var player = get_tree().get_root().get_node('MainScene/PlayableCharacter')
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
 export var health = 20
 var is_dead = false
 
 var velocity = Vector2()
-export var follow = true
 var direction = 1
 var in_jump = false
 var can_jump = false
 var can_attack = true
 var jump_intensity = 0
 var start_time = -100
+
 var attack_damage = 10
 var attack_cooldown = 1.5	
 var jump_cooldown = 4
@@ -54,12 +55,8 @@ func follow_player():
 	if not follow:
 		direction = 0
 
-func attack_player(collider):
-	if can_attack:
-		collider.call("take_damage", attack_damage)
-		move_and_slide(Vector2(velocity.x + 2000*direction*-1, velocity.y), Vector2(0, -1))
-		can_attack = false
-		attack_timer.start()
+func attack_player(player):
+	pass
 
 func solve_animation(velocity,delta):
 	if velocity.x != 0:
@@ -119,7 +116,6 @@ func on_take_damage():
 			if spawner != null:
 				spawner.decrease_spawned()
 	follow = false
-	
 	attack_timer.start()
 
 func take_damage(value):
@@ -138,6 +134,6 @@ func _on_AttackCooldown_timeout():
 	can_attack = true
 	follow = true
 	
-
 func _on_JumpCooldown_timeout():
 	can_jump = true
+
