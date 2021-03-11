@@ -2,15 +2,21 @@ extends Node2D
 
 export var attack_damage = 10
 var can_attack = true
+var offset_position = Vector2(50, 40)
+
+var attack_anim_names = {
+	'attack' : null,
+	'special-attack' : null,
+}
 
 func _ready():
-	position = Vector2(50, 40)
+	position = offset_position
 
 func attack():
-	$AnimationPlayer.play('attack')
+	pass
 
 func special_attack():
-	$AnimationPlayer.play("special-attack")
+	pass
 
 func update_orientation(orientation):	
 	$AnimatedSprite.flip_h = orientation
@@ -24,8 +30,3 @@ func update_orientation(orientation):
 		if self.position.x < 0:
 			self.position.x = -self.position.x
 
-func _on_Area2D_area_entered(area):
-	if area.is_in_group("hitbox"):
-		var owner = area.get_owner()
-		if owner.is_in_group('mobs'):
-			owner.take_damage(attack_damage + get_parent().stats['damage_modifier'])
