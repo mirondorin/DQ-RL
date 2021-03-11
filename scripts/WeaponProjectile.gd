@@ -11,7 +11,8 @@ func attack():
 	#$AnimationPlayer.play('attack')
 	
 	var bullet_inst = bullet.instance()
-	add_child(bullet_inst)
+	get_tree().get_root().add_child(bullet_inst)
+	bullet_inst.global_position = self.global_position
 	bullet_inst.attack_damage = attack_damage + get_parent().stats['damage_modifier']
 	bullet_inst.direction = -1 if int($AnimatedSprite.flip_h) else 1
 
