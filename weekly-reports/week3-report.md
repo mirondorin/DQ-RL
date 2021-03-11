@@ -3,6 +3,10 @@
 ## Ciobanu Sebastian
 
 ## Miron Dorin
+ * Added temporary HUD
+ * Fixed special attack collision
+ * Added template for pickup items
+ * Tested networking & found bugs
 
 ## Paraschiv Tudor
  * Added a projectile mob
