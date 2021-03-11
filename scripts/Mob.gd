@@ -8,6 +8,7 @@ onready var GRAVITY = $'../GlobalSettings'.GRAVITY
 onready var player = $'../Players/PlayableCharacter'
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
+
 export var health = 20
 puppet var puppet_health
 

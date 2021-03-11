@@ -218,6 +218,9 @@ wait_time = 2.0
 [node name="Utility_CD" parent="Cooldown_Root" index="2"]
 wait_time = 1.0
 
+[node name="Dash_CD" type="Timer" parent="Cooldown_Root"]
+wait_time = 0.2
+
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "hitbox",
 ]]
@@ -231,6 +234,7 @@ shape = SubResource( 5 )
 [connection signal="timeout" from="Cooldown_Root/LightAttack_CD" to="." method="_on_LightAttack_CD_timeout"]
 [connection signal="timeout" from="Cooldown_Root/SpecialAttack_CD" to="." method="_on_SpecialAttack_CD_timeout"]
 [connection signal="timeout" from="Cooldown_Root/Utility_CD" to="." method="_on_Utility_CD_timeout"]
+[connection signal="timeout" from="Cooldown_Root/Dash_CD" to="." method="_on_Dash_timeout"]
 
 [editable path="Weapon"]
 
