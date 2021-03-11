@@ -89,36 +89,45 @@ func dash(delta):
 	
 
 puppet func do_animation(what, value):
-#	?? plz work
+#	works!
 	$AnimatedSprite[what] = value
 	pass
 
 master func animate(what, value):
-#	?? plz work
+#	works!
 	rpc("do_animation", what, value)
 	do_animation(what, value)
 	pass
 
 puppet func do_play_animation(what):
+#	works!
 	$AnimatedSprite.play(what)
 	pass
 
 master func play_animation(what):
+#	works!
 	rpc("do_play_animation", what)
 	do_play_animation(what)
 	pass
-	
+
+puppet func do_stop_animation():
+	$AnimatedSprite.stop()
+	pass
+
+master func stop_animation():
+	rpc("do_stop_animation")
+	do_stop_animation()
+	pass
 
 func solve_animation(velocity, delta):
-#	I don't really know if animation should be sync or not
-#	future testing is required
-#	an example was: if cond then new_anim = a elif cond2 then new_anim = b else c
-#	if new_anim != current_anim then current_anim = new_anim
-#	no sync was required
+#	I've solved it for now with master puppet functions
 
+#	an example was: 
+#	if cond then new_anim = a elif cond2 then new_anim = b else c
+#	if new_anim != current_anim then current_anim = new_anim
+#	no sync was required in the example
 #	doesn't seem to work for us
 
-#	FIXME: when you find out how
 	if velocity.x != 0:
 		if $AnimationPlayer.current_animation != 'special-attack':
 			animate("flip_h", velocity.x < 0)
@@ -136,9 +145,9 @@ func solve_animation(velocity, delta):
 			animate("animation", 'walk')
 	if velocity.length() != 0:
 		if $AnimatedSprite.animation == 'jump' and $AnimatedSprite.frame == 2:
-			$AnimatedSprite.stop()
+			stop_animation()
 		else:
-			$AnimatedSprite.play("")
+			play_animation("")
 	pass
 
 func on_lose_hp():
@@ -151,11 +160,12 @@ func on_lose_hp():
 #	!! this ^ is supposed to be done only if it really works
 #	I say it should, but I have to ask the compiler
 
-#	probably we also need a puppet animation var
+#	probably we also need a puppet animation var 
+#	UPDATE: maybe not
 #	and maybe a puppet health var
-	$AnimatedSprite.animation='hit'
+	animate("animation", "hit")
 	$Health.text = String(health)
-	$AnimatedSprite.play()
+	play_animation("")
 	if health <= 0:
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
@@ -213,14 +223,14 @@ func solve_input(delta):
 		v_y += jump(delta)
 	
 #	FIXME: make this v work
-#	if Input.is_action_pressed("ui_attack") and can_attack:
-#		current_weapon.attack()
-#		$Cooldown_Root/LightAttack_CD.start()
-#		can_attack = false
-#	elif Input.is_action_pressed("special_attack") and can_attack:
-#		$AnimationPlayer.play('special-attack')
-#		$Cooldown_Root/SpecialAttack_CD.start()
-#		can_attack = false
+	if Input.is_action_pressed("ui_attack") and can_attack:
+		current_weapon.attack()
+		$Cooldown_Root/LightAttack_CD.start()
+		can_attack = false
+	elif Input.is_action_pressed("special_attack") and can_attack:
+		play_animation('special-attack')
+		$Cooldown_Root/SpecialAttack_CD.start()
+		can_attack = false
 	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
@@ -229,8 +239,8 @@ func solve_input(delta):
 #	! this cannot be used since function returns a Vector2 so yield returns sth else
 #		yield(get_tree().create_timer(0.2), "timeout")
 		
-#	if Input.is_action_pressed("debug_switch_weapon"):
-#		switch_weapon()
+	if Input.is_action_pressed("debug_switch_weapon"):
+		switch_weapon()
 	return Vector2(v_x, v_y)
 	pass
 	
@@ -284,19 +294,22 @@ func _on_AnimatedSprite_animation_finished():
 #	acctually: standard walking animation works, until the player jumps
 #	after jumping, animation stops being sync-ed
 
-#	if $AnimatedSprite.animation == 'land':
-#		landing=false
-#		$AnimatedSprite.play('walk')
-#	$AnimatedSprite.stop()
+	if $AnimatedSprite.animation == 'land':
+		landing = false
+		play_animation('walk')
+	stop_animation()
 	pass
 
 func _on_LightAttack_CD_timeout():
+	can_attack = true
 	pass
 
 func _on_SpecialAttack_CD_timeout():
+	can_attack = true
 	pass
 
 func _on_Utility_CD_timeout():
+	cooldowns['can_utility'] = true
 	pass
 
 func _on_Dash_timeout():
