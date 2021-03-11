@@ -95,7 +95,7 @@ puppet func do_animation(what, value):
 
 master func animate(what, value):
 #	works!
-	rpc("do_animation", what, value)
+#	rpc("do_animation", what, value)
 	do_animation(what, value)
 	pass
 
@@ -106,7 +106,7 @@ puppet func do_play_animation(what):
 
 master func play_animation(what):
 #	works!
-	rpc("do_play_animation", what)
+#	rpc("do_play_animation", what)
 	do_play_animation(what)
 	pass
 
@@ -115,7 +115,7 @@ puppet func do_stop_animation():
 	pass
 
 master func stop_animation():
-	rpc("do_stop_animation")
+#	rpc("do_stop_animation")
 	do_stop_animation()
 	pass
 
