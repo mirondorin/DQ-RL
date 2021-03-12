@@ -105,7 +105,10 @@ master func animate(what, value):
 
 puppet func do_play_animation(what):
 #	works!
-	$AnimatedSprite.play(what)
+	if what =='special-attack':
+		$AnimationPlayer.play("special-attack")
+	else:
+		$AnimatedSprite.play(what)
 	pass
 
 master func play_animation(what):

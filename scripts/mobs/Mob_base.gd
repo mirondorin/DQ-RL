@@ -6,9 +6,7 @@ export var follow = true
 export var SPEED = 90
 export var JUMPSPEED = 320
 onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
-# FIXME: player may be null at the very beggining
-onready var player = get_tree().get_root().get_node('MainScene/PlayableCharacter')
-
+var player
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
 
