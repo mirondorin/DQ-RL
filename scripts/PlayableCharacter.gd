@@ -54,15 +54,16 @@ func jump(time):
 
 func dash(delta):
 	var dir = -1 if $AnimatedSprite.flip_h else 1
-	impulse(300, Vector2(dir, -0.1))
+	self.GRAVITY = 0
+	velocity.y = 0
+	impulse(500, Vector2(dir, -0.001), 10)
 
 func solve_animation(velocity,delta):
-	if velocity.x != 0:
-		if $AnimationPlayer.current_animation != 'special-attack':
-			if x_direction < 0:
-				$AnimatedSprite.flip_h = true
-			elif x_direction > 0:
-				$AnimatedSprite.flip_h = false
+	if $AnimationPlayer.current_animation != 'special-attack':
+		if x_direction < 0:
+			$AnimatedSprite.flip_h = true
+		elif x_direction > 0:
+			$AnimatedSprite.flip_h = false
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
@@ -134,9 +135,13 @@ func solve_input(delta):
 		in_dash = true
 		dash(delta)
 		yield(get_tree().create_timer(0.2), "timeout")
+		self.GRAVITY = get_node('../GlobalSettings').GRAVITY
 		in_dash = false
-#	if Input.is_action_just_pressed("utility"):
-#		impulse(300, Vector2(0.5, -1))
+		self.impulse_force = 0
+		self.impulse_step = 5
+	if Input.is_action_just_pressed("debug_test"): 
+		var dir = (self.position - get_global_mouse_position()).normalized() * -1
+		impulse(400, dir)
 		
 	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
@@ -144,25 +149,28 @@ func solve_input(delta):
 var impulse_force = 0
 var impulse_dir = Vector2(0, 0)
 var in_impulse = false
+var impulse_step = 5
 
-func impulse(force, direction):
-	impulse_force = force
+func impulse(force, direction, step = 5):
+	impulse_force += force
 	impulse_dir = direction
+	impulse_step = step
 	in_impulse = true
 
 func solve_impulse():
-	
 	if impulse_force > 0:
-		impulse_force -= 5
+		impulse_force -= impulse_step
 	if impulse_force <= 0:
 		impulse_dir = Vector2(0, 0)
 		impulse_force = 0
+		impulse_step = 5
 		in_impulse = false
 	
 
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
 	solve_impulse()
+	
 	if is_on_floor():
 		velocity.y=0
 		jump_intensity = 0
@@ -171,19 +179,20 @@ func _physics_process(delta):
 	
 	if is_on_ceiling():
 		velocity.y=max(0,velocity.y)
-		impulse_force = 0
+		impulse_force /= 3
 	
 	if is_on_wall():
-		impulse_force = 0
+		impulse_force /= 3
 
 	solve_animation(velocity,delta)
 	solve_input(delta)
 	#dash(delta)
 	
-	if in_impulse:
-		x_direction = 0
-		
-	var vel = Vector2(self.velocity.x + x_direction * SPEED +  + impulse_dir.x * impulse_force, 
+#	if in_impulse:
+#		x_direction = 0
+	
+	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_force
+	var vel = Vector2(velocity.x, 
 	self.velocity.y + impulse_dir.y * impulse_force )
 	
 	move_and_slide(vel, Vector2(0, -1))
