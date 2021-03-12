@@ -24,6 +24,8 @@ var attack_damage = 10
 var attack_cooldown = 1.5	
 var jump_cooldown = 4
 
+var x_direction = 0
+
 func _ready():
 	attack_timer.wait_time = attack_cooldown	
 	jump_timer.wait_time = jump_cooldown
@@ -74,28 +76,60 @@ func out_of_bounds():
 	queue_free()
 	if spawner != null:
 		spawner.decrease_spawned()
-	
+
+var impulse_force = 0
+var impulse_dir = Vector2(0, 0)
+var in_impulse = false
+var impulse_step = 5
+
+func impulse(force, direction, step = 5):
+	impulse_force += force
+	impulse_dir = direction
+	impulse_step = step
+	in_impulse = true
+
+func solve_impulse():
+	if impulse_force > 0:
+		impulse_force -= impulse_step
+	if impulse_force <= 0:
+		impulse_dir = Vector2(0, 0)
+		impulse_force = 0
+		impulse_step = 5
+		in_impulse = false
+
 func _physics_process(delta):
 	follow_player()
 	velocity.y += delta * GRAVITY
-	velocity.x = SPEED * direction
+	solve_impulse()
+	
 	if is_on_floor():
 		velocity.y = 0
 		jump_intensity = 0
 		in_jump=false
+		impulse_force = 0
+		
 	if is_on_ceiling():
 		velocity.y=max(0,velocity.y)
+		impulse_force /= 3
 		
 	if can_jump and follow and position.y >= player.position.y - 5:
 		velocity.y += jump(delta)
 		can_jump = false
+		impulse_force /= 3
+	
+
+	if in_impulse:
+		direction = 0
+	if Input.is_action_just_pressed("debug_test"): 
+		var dir = (self.position - get_global_mouse_position()).normalized() * -1
+		impulse(400, dir)
 	
 	solve_animation(velocity, delta)
 	
 	#solve_animation(velocity,delta)
 	#move_and_collide(velocity)
-	
-	move_and_slide(velocity, Vector2(0, -1))
+	velocity.x = direction * SPEED + impulse_dir.x * impulse_force
+	move_and_slide(Vector2(velocity.x , velocity.y + impulse_dir.y * impulse_force), Vector2(0, -1))
 	
 		
 	var previous = get_slide_count()
