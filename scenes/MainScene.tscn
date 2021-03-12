@@ -64,7 +64,6 @@ position = Vector2( 483.864, 722.212 )
 
 [node name="Mob" parent="." instance=ExtResource( 3 )]
 position = Vector2( 278.539, 522.079 )
-follow = false
 [connection signal="body_entered" from="Level/WorldBoundary/Area2D" to="Level/WorldBoundary" method="_on_Area2D_body_entered"]
 
 [editable path="Level"]

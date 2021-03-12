@@ -1,18 +1,20 @@
 extends 'res://scripts/mobs/Mob_base.gd'
 
 const bullet = preload("res://scenes/WeaponProjectile_bullet.tscn")
+var max_dist_player = 150
+
 
 func _init():
 	self.SPEED = 20
 
 func follow_player():
-	if abs(position.x - player.position.x) > 150: #make 150 a variable
+	if abs(position.x - player.position.x) > max_dist_player:
 		if position.x < player.position.x:
-			direction = 1
+			x_direction = 1
 		else:
-			direction = -1
+			x_direction = -1
 	else:
-		direction = 0
+		x_direction = 0
 	
 	if position.x < player.position.x:
 		$AnimatedSprite.flip_h = false
@@ -20,7 +22,7 @@ func follow_player():
 		$AnimatedSprite.flip_h = true
 	
 	if not follow:
-		direction = 0
+		x_direction = 0
 
 func attack_player(player): #player will be null here
 	if can_attack:
