@@ -28,6 +28,8 @@ var stats = {
 	"health" : 100
 }
 
+var x_direction = 0
+
 func _ready():
 	screen_size = get_viewport_rect().size
 	start_position = position
@@ -51,19 +53,16 @@ func jump(time):
 	return speed
 
 func dash(delta):
-	if not in_dash:
-		return
-	var direction = 0
-	if velocity.x != 0:
-		direction = 1 if velocity.x > 0 else -1
-	else:
-		direction = 1 if $AnimatedSprite.flip_h == false else -1
-	velocity.x += 400 * direction
+	var dir = -1 if $AnimatedSprite.flip_h else 1
+	impulse(300, Vector2(dir, -0.1))
 
 func solve_animation(velocity,delta):
 	if velocity.x != 0:
 		if $AnimationPlayer.current_animation != 'special-attack':
-			$AnimatedSprite.flip_h = velocity.x < 0
+			if x_direction < 0:
+				$AnimatedSprite.flip_h = true
+			elif x_direction > 0:
+				$AnimatedSprite.flip_h = false
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y>delta*GRAVITY+0.1: #in jump/falling
@@ -100,17 +99,23 @@ func take_damage(value):
 	stats['health'] -= value
 	on_lose_hp()
 
+
+
 func solve_input(delta):
 	$DebugAction.text = 'action'
 	
 	if Input.is_action_pressed("ui_left"):
-		velocity.x = -SPEED
+		x_direction = -1
 	elif Input.is_action_pressed("ui_right"):
-		velocity.x =  SPEED
+		x_direction = 1
 	else:
-		velocity.x=0
+		x_direction = 0
+	
+	print(x_direction)
+		
 	if Input.is_action_pressed("ui_up"):
-		velocity.y += jump(delta)
+		if not in_impulse:
+			velocity.y += jump(delta)
 		
 	if Input.is_action_pressed("ui_attack") and can_attack:
 		$DebugAction.text = 'ATTACK'
@@ -127,26 +132,62 @@ func solve_input(delta):
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
 		in_dash = true
+		dash(delta)
 		yield(get_tree().create_timer(0.2), "timeout")
 		in_dash = false
+#	if Input.is_action_just_pressed("utility"):
+#		impulse(300, Vector2(0.5, -1))
+		
 	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
+
+var impulse_force = 0
+var impulse_dir = Vector2(0, 0)
+var in_impulse = false
+
+func impulse(force, direction):
+	impulse_force = force
+	impulse_dir = direction
+	in_impulse = true
+
+func solve_impulse():
 	
+	if impulse_force > 0:
+		impulse_force -= 5
+	if impulse_force <= 0:
+		impulse_dir = Vector2(0, 0)
+		impulse_force = 0
+		in_impulse = false
+	
+
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
-
+	solve_impulse()
 	if is_on_floor():
 		velocity.y=0
 		jump_intensity = 0
 		in_jump=false
+		impulse_force = 0
 	
 	if is_on_ceiling():
 		velocity.y=max(0,velocity.y)
-		
+		impulse_force = 0
+	
+	if is_on_wall():
+		impulse_force = 0
+
 	solve_animation(velocity,delta)
 	solve_input(delta)
-	dash(delta)
-	move_and_slide(velocity,Vector2(0, -1))
+	#dash(delta)
+	
+	if in_impulse:
+		x_direction = 0
+		
+	var vel = Vector2(self.velocity.x + x_direction * SPEED +  + impulse_dir.x * impulse_force, 
+	self.velocity.y + impulse_dir.y * impulse_force )
+	
+	move_and_slide(vel, Vector2(0, -1))
+	
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision and collision.collider.name == 'Mob':
