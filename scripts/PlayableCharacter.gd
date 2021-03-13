@@ -76,25 +76,17 @@ sync func play_animation( what):
 		$AnimatedSprite.play(what)
 	pass
 
-sync func stop_animation():
-	$AnimatedSprite.stop()
-	pass
-
 func solve_animation(velocity,delta):
 	if not is_network_master():
 		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
-		if x_direction < 0:
-			$AnimatedSprite["flip_h"] = true
-			rpc_unreliable("change_animation", "flip_h", true)
-		elif x_direction > 0:
-			rpc_unreliable("change_animation", "flip_h", false)
+		rpc_unreliable("change_animation", "flip_h", x_direction < 0)
+	
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y > delta * GRAVITY + 0.1: #in jump/falling
 		rpc_unreliable("change_animation", "animation", "jump")
 		landing=false
-			
 	elif is_on_floor():
 		if $AnimatedSprite.animation == 'jump':
 			rpc_unreliable("play_animation", "land")
@@ -109,23 +101,11 @@ func solve_animation(velocity,delta):
 	pass
 
 func on_gain_health():
-#	copy paste comments above here
 	$Health.text = String(stats['health'])
-	pass
-
-master func damage_control(value):
-	rpc("take_damage", value)
-	take_damage(value)
 
 sync func gain_health(value):
-#	copy paste comments above here
-	if is_network_master():
-		stats['health'] += value
-		rset("puppet_health", stats['health'])
-	else:
-		stats['health'] = puppet_health
+	stats['health'] += value
 	on_gain_health()
-	pass
 
 func solve_input(delta):
 #	theoretically should not require sync
@@ -263,7 +243,11 @@ func _on_Dash_timeout():
 
 func grab_item():
 	print("Called grab item")
-
-func modify_stats(status, value):
+	
+sync func do_modify_stats(status, value):
 	stats[status] += value
 	$Health.text = String(stats['health'])
+
+func modify_stats(status, value):
+	if is_network_master():
+		rpc("do_modify_stats", status, value)

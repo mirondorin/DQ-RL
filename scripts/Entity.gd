@@ -51,21 +51,38 @@ func solve_impulse():
 		in_impulse = false
 	
 func take_damage(value):
-	stats['health'] -= value
-	on_lose_hp()
+	if is_network_master():
+		rpc("do_take_damage", value)
 
-func on_lose_hp():
-#	animate("animation", "hit")
+sync func do_take_damage(value):
+	stats['health'] -= value
+	on_take_damage()
+	
+func on_take_damage():
+	change_animation("animation", "hit")
 	$Health.text = String(stats['health'])
-#	play_animation("")
+	play_animation("")
 	if stats['health'] <= 0:
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 	pass
 
+func out_of_bounds():
+	queue_free()
+#	Default is die, to be implemented in derived classes
+	
 sync func set_entity_position(pos, v):
 	position = pos 
 	velocity = v  # do we really need to sync velocity?
+#	TODO: try to not sync velocity or position
 
 sync func change_animation(what, value):
 	$AnimatedSprite[what] = value
+
+sync func play_animation(what):
+#	should be implemented in mob and player if animation is not normalized
+	pass
+	
+sync func stop_animation():
+	$AnimatedSprite.stop()
+

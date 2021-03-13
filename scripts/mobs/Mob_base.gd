@@ -8,9 +8,6 @@ var player
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
 
-export var health = 20
-puppet var puppet_health
-
 var is_dead = false
 
 puppet var puppet_velocity = Vector2()
@@ -27,6 +24,9 @@ var attack_cooldown = 1.5
 var jump_cooldown = 4
 
 var in_area = []
+
+func _init():
+	stats["health"] = 20
 
 func _ready():
 	if is_network_master():
@@ -72,10 +72,10 @@ func attack_player(_player):
 func solve_animation(velocity):
 	if  is_network_master():
 		if velocity.x != 0:
-			rpc_unreliable("change_animation", $AnimatedSprite, "flip_h", velocity.x < 0)
-			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'walk')
+			rpc_unreliable("change_animation", "flip_h", velocity.x < 0)
+			rpc_unreliable("change_animation", "animation", 'walk')
 		if velocity.x == 0:
-			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'idle')
+			rpc_unreliable("change_animation", "animation", 'idle')
 	pass
 
 func out_of_bounds():
@@ -85,7 +85,6 @@ func out_of_bounds():
 	rpc("kill_mob")
 	
 sync func kill_mob():
-#	should execute on all peers
 	is_dead = true
 	queue_free()
 	if spawner != null:
@@ -136,20 +135,14 @@ func _physics_process(delta):
 	
 func on_take_damage():
 	if not is_dead:
-		if health > 0:
-			$HealthLabel.text = String(health)
+		if stats["health"] > 0:
+			$HealthLabel.text = String(stats["health"])
 		else:
-			if is_network_master():
-				rpc("kill_mob")
+#			if is_network_master():
+#				rpc("kill_mob") # on_take_damage is called from all peers
+			kill_mob()
 	follow = false
 	attack_timer.start()
-	pass
-
-func take_damage(value):
-#	I've added rpc call only to kill mob. Another approach would be to add it 
-#	to a health decrease function to be sure that health is sync-ed
-	health -= value
-	on_take_damage()
 	pass
 
 func _on_DetectArea_body_entered(body):
