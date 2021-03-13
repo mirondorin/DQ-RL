@@ -4,7 +4,10 @@ onready var current_weapon = $Weapon
 
 export var SPEED = 100
 export var JUMPSPEED = 80
-onready var GRAVITY = get_node('../../GlobalSettings').GRAVITY
+onready var GRAVITY = get_node('../GlobalSettings').GRAVITY
+export var air_resistance_factor = 11
+export var collision_resistance_factor = 3
+
 var screen_size # Size of the game window
 
 var velocity = Vector2()
@@ -40,6 +43,7 @@ func set_player_name(new_name):
 #	get_node("label").set_text(new_name)
 	$DebugAction.text = new_name
 	pass
+var x_direction = 0
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -67,77 +71,17 @@ func jump(time):
 	pass
 	
 func dash(delta):
-#	dash ought to be sync-ed, since it modifies player velocity
-#	UPDATA: dash does not (probably) need to be synced if network_master is verified 
+	var dir = -1 if $AnimatedSprite.flip_h else 1
+	self.GRAVITY = 0
+	velocity.y = 0
+	impulse(500, Vector2(dir, -0.001), 10, false)
 
-#	!! however it could be better to refactor and do all king of motion movement 
-#	in main loop, this method should only return
-
-#	TODO: the above mentioned refactoring
-	if not in_dash:
-		return
-	var direction = 0
-	if velocity.x != 0:
-		direction = 1 if velocity.x > 0 else -1
-	else:
-		direction = 1 if $AnimatedSprite.flip_h == false else -1
-	print("OK", direction)
-#	maybe here we should check if is network master, to sync velocity
-	if is_network_master():
-		velocity.x += 400 * direction
-		rset("puppet_velocity", velocity)
-	else:
-		velocity = puppet_velocity
-		puppet_pos = position  # ?? it may avoid jitter, but also it may not
-	pass
-	
-
-puppet func do_animation(what, value):
-#	works!
-	$AnimatedSprite[what] = value
-	pass
-
-master func animate(what, value):
-#	works!
-#	rpc("do_animation", what, value)
-	do_animation(what, value)
-	pass
-
-puppet func do_play_animation(what):
-#	works!
-	if what =='special-attack':
-		$AnimationPlayer.play("special-attack")
-	else:
-		$AnimatedSprite.play(what)
-	pass
-
-master func play_animation(what):
-#	works!
-#	rpc("do_play_animation", what)
-	do_play_animation(what)
-	pass
-
-puppet func do_stop_animation():
-	$AnimatedSprite.stop()
-	pass
-
-master func stop_animation():
-#	rpc("do_stop_animation")
-	do_stop_animation()
-	pass
-
-func solve_animation(velocity, delta):
-#	I've solved it for now with master puppet functions
-
-#	an example was: 
-#	if cond then new_anim = a elif cond2 then new_anim = b else c
-#	if new_anim != current_anim then current_anim = new_anim
-#	no sync was required in the example
-#	doesn't seem to work for us
-
-	if velocity.x != 0:
-		if $AnimationPlayer.current_animation != 'special-attack':
-			animate("flip_h", velocity.x < 0)
+func solve_animation(velocity,delta):
+	if $AnimationPlayer.current_animation != 'special-attack':
+		if x_direction < 0:
+			$AnimatedSprite.flip_h = true
+		elif x_direction > 0:
+			$AnimatedSprite.flip_h = false
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y > delta * GRAVITY + 0.1: #in jump/falling
@@ -222,15 +166,18 @@ func solve_input(delta):
 	var v_x = 0
 	var v_y = velocity.y
 	if Input.is_action_pressed("ui_left"):
-		v_x = -SPEED
+		x_direction = -1
 	elif Input.is_action_pressed("ui_right"):
-		v_x = SPEED
+		x_direction = 1
 	else:
-		v_x = 0
-	if Input.is_action_pressed("ui_up"):
-		v_y += jump(delta)
+		x_direction = 0
 	
-#	FIXME: make this v work
+	print(x_direction)
+		
+	if Input.is_action_pressed("ui_up"):
+		if not in_impulse:
+			velocity.y += jump(delta)
+		
 	if Input.is_action_pressed("ui_attack") and can_attack:
 		current_weapon.attack()
 		$Cooldown_Root/LightAttack_CD.start()
@@ -243,37 +190,92 @@ func solve_input(delta):
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
 		in_dash = true
-		$Cooldown_Root/Dash_CD.start()
-#	! this cannot be used since function returns a Vector2 so yield returns sth else
-#		yield(get_tree().create_timer(0.2), "timeout")
+		dash(delta)
+		yield(get_tree().create_timer(0.2), "timeout")
+		self.GRAVITY = get_node('../GlobalSettings').GRAVITY
+		in_dash = false
+		self.impulse_current_x = impulse_current_x/3
+		self.impulse_step = 5
+	if Input.is_action_just_pressed("debug_test"): 
+		var dir = (self.position - get_global_mouse_position()).normalized() * -1
+		impulse(400, dir)
 		
-	if Input.is_action_pressed("debug_switch_weapon"):
+	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
-	return Vector2(v_x, v_y)
-	pass
+
+var impulse_force = 0
+var impulse_current_x = 0
+var impulse_current_y = 0
+var impulse_dir = Vector2(0, 0)
+var in_impulse = false
+var impulse_step = 5
+
+func impulse(force, direction, step = 5, additive = true):
+	if additive: 
+		impulse_current_x += force
+		impulse_current_y += force
+	else:
+		impulse_current_x = force
+		impulse_current_y = force
+	impulse_dir = direction
+	impulse_step = step
+	in_impulse = true
+
+func solve_impulse():
+	if impulse_current_x > 0:
+		impulse_current_x -= impulse_step + abs(x_direction) * SPEED/air_resistance_factor
+		
+	if impulse_current_y > 0:
+		impulse_current_y -= impulse_step
+		
+	if impulse_current_x <= 0:
+		impulse_current_x = 0
+		impulse_dir.x = 0
+		
+	if impulse_current_y <= 0:
+		impulse_current_y = 0
+		impulse_dir.y = 0
+		
+	if impulse_current_x <= 0 and impulse_current_y <= 0:
+		impulse_step = 5
+		in_impulse = false
 	
+
 func _physics_process(delta):
 	if is_network_master():
 		velocity.y += delta * GRAVITY
+		solve_impulse()
+		
 		if is_on_floor():
-			velocity.y = 0
+			velocity.y=0
 			jump_intensity = 0
-			in_jump = false
+			in_jump=false
+			impulse_current_x = 0
+			impulse_current_y = 0
+		
 		if is_on_ceiling():
-			velocity.y = max(0, velocity.y)
-		velocity = solve_input(delta)
-		dash(delta) # TODO: maybe return a velocity.x from dash
-		move_and_slide(velocity,Vector2(0, -1))
-		rset("puppet_velocity", velocity)
-		rset("puppet_pos", position)
-	else:
-		position = puppet_pos
-		velocity = puppet_velocity
-	solve_animation(velocity,delta)
-	if not is_network_master():
-		puppet_pos = position  # To avoid jitter
-	pass
+			velocity.y=max(0,velocity.y)
+			impulse_current_y /= collision_resistance_factor
+		
+		if is_on_wall():
+			impulse_current_x /= collision_resistance_factor
 
+		solve_input(delta)
+
+	solve_animation(velocity,delta)
+		
+	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+	var vel = Vector2(velocity.x, vel_y)
+
+	move_and_slide(vel, Vector2(0, -1))
+	
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision and collision.collider.name == 'Mob':
+			$DebugCollision.text = 'MOB'
+		elif collision and collision.collider.name != 'Obstacles':
+			$DebugCollision.text = collision.collider.name
 
 var weapon = 0 # Delete this later. Only for debug
 

@@ -45,7 +45,6 @@ position = Vector2( 776.157, 645.386 )
 position = Vector2( 880.445, 648.865 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
-start_enabled = true
 spawn_delay = 3
 spawn_continously = true
 
@@ -77,6 +76,8 @@ position = Vector2( 462.448, 719.835 )
 
 [node name="3" type="Position2D" parent="Spawn"]
 position = Vector2( 506.288, 718.421 )
+[node name="Mob" parent="." instance=ExtResource( 3 )]
+position = Vector2( 278.539, 522.079 )
 [connection signal="body_entered" from="Level/WorldBoundary/Area2D" to="Level/WorldBoundary" method="_on_Area2D_body_entered"]
 
 [editable path="Level"]
