@@ -62,3 +62,10 @@ func on_lose_hp():
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 	pass
+
+sync func set_entity_position(pos, v):
+	position = pos 
+	velocity = v  # do we really need to sync velocity?
+
+sync func change_animation(what, value):
+	$AnimatedSprite[what] = value
