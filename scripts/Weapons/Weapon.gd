@@ -8,10 +8,12 @@ func _ready():
 	position = Vector2(50, 40)
 
 func attack():
-	play_animation(attack_anim_names['attack'])
+	if is_network_master():
+		rpc_unreliable("play_animation", attack_anim_names['attack'])
 
 func special_attack():
-	play_animation(attack_anim_names['special-attack'])
+	if is_network_master():
+		rpc_unreliable("play_animation", attack_anim_names['special-attack'])
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("hitbox"):
