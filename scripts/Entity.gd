@@ -51,10 +51,14 @@ func solve_impulse():
 		in_impulse = false
 	
 func take_damage(value):
-	stats['health'] -= value
-	on_lose_hp()
+	if is_network_master():
+		rpc("do_take_damage", value)
 
-func on_lose_hp():
+sync func do_take_damage(value):
+	stats['health'] -= value
+	on_take_damage()
+	
+func on_take_damage():
 	change_animation("animation", "hit")
 	$Health.text = String(stats['health'])
 	play_animation("")

@@ -103,10 +103,6 @@ func solve_animation(velocity,delta):
 func on_gain_health():
 	$Health.text = String(stats['health'])
 
-master func damage_control(value):
-	rpc("take_damage", value)
-	take_damage(value)
-
 sync func gain_health(value):
 	stats['health'] += value
 	on_gain_health()
