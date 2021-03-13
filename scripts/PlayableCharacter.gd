@@ -69,63 +69,43 @@ func dash(_delta):
 	velocity.y = 0
 	impulse(500, Vector2(dir, -0.001), 10, false)
 
-puppet func do_animation(what, value):
-#    works!
-	$AnimatedSprite[what] = value
-	pass
-
-master func animate(what, value):
-#    works!
-#    rpc("do_animation", what, value)
-	do_animation(what, value)
-	pass
-
-puppet func do_play_animation(what):
-#    works!
+sync func play_animation( what):
 	if what =='special-attack':
 		$AnimationPlayer.play("special-attack")
 	else:
 		$AnimatedSprite.play(what)
 	pass
 
-master func play_animation(what):
-#    works!
-#    rpc("do_play_animation", what)
-	do_play_animation(what)
-	pass
-
-puppet func do_stop_animation():
+sync func stop_animation():
 	$AnimatedSprite.stop()
 	pass
 
-master func stop_animation():
-#    rpc("do_stop_animation")
-	do_stop_animation()
-	pass
-
 func solve_animation(velocity,delta):
+	if not is_network_master():
+		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
 		if x_direction < 0:
-			$AnimatedSprite.flip_h = true
+			$AnimatedSprite["flip_h"] = true
+			rpc_unreliable("change_animation", "flip_h", true)
 		elif x_direction > 0:
-			$AnimatedSprite.flip_h = false
+			rpc_unreliable("change_animation", "flip_h", false)
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y > delta * GRAVITY + 0.1: #in jump/falling
-		animate("animation", "jump")
+		rpc_unreliable("change_animation", "animation", "jump")
 		landing=false
 			
 	elif is_on_floor():
 		if $AnimatedSprite.animation == 'jump':
-			play_animation('land')
+			rpc_unreliable("play_animation", "land")
 			landing = true
 		else:
-			animate("animation", 'walk')
+			rpc_unreliable("change_animation", "animation", "walk")
 	if velocity.length() != 0:
 		if $AnimatedSprite.animation == 'jump' and $AnimatedSprite.frame == 2:
-			stop_animation()
+			rpc_unreliable("stop_animation")
 		else:
-			play_animation("")
+			rpc_unreliable("play_animation", "")
 	pass
 
 func on_gain_health():
@@ -166,7 +146,7 @@ func solve_input(delta):
 		$Cooldown_Root/LightAttack_CD.start()
 		can_attack = false
 	elif Input.is_action_pressed("special_attack") and can_attack:
-		play_animation('special-attack')
+		rpc_unreliable("play_animation", 'special-attack')
 		$Cooldown_Root/SpecialAttack_CD.start()
 		can_attack = false
 	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
@@ -206,6 +186,7 @@ func _physics_process(delta):
 			impulse_current_x /= collision_resistance_factor
 
 		solve_input(delta)
+		rpc_unreliable("set_entity_position", position, velocity)
 
 	solve_animation(velocity,delta)
 		
@@ -258,8 +239,10 @@ func _on_AnimatedSprite_animation_finished():
 
 	if $AnimatedSprite.animation == 'land':
 		landing = false
-		play_animation('walk')
-	stop_animation()
+		if is_network_master():
+			rpc_unreliable("play_animation", "walk")
+	if is_network_master():
+		rpc_unreliable("stop_animation")
 	pass
 
 func _on_LightAttack_CD_timeout():

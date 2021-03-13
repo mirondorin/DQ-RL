@@ -69,25 +69,13 @@ func follow_player():
 func attack_player(_player):
 	pass
 
-<<<<<<< HEAD
-sync func change_animation(what, value):
-	$AnimatedSprite[what] = value
-
-func solve_animation(velocity, delta):
+func solve_animation(velocity):
 	if  is_network_master():
 		if velocity.x != 0:
-			rpc_unreliable("change_animation", "flip_h", velocity.x < 0)
-			rpc_unreliable("change_animation", "animation", 'walk')
+			rpc_unreliable("change_animation", $AnimatedSprite, "flip_h", velocity.x < 0)
+			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'walk')
 		if velocity.x == 0:
-			rpc_unreliable("change_animation", "animation", 'idle')
-=======
-func solve_animation(velocity):
-	if velocity.x != 0:
-		$AnimatedSprite.flip_h = x_direction < 0
-		$AnimatedSprite.animation = 'walk'
-	if velocity.x == 0:
-		$AnimatedSprite.animation = 'idle'
->>>>>>> 6eeb00a2665f9e4e30b893cb7c747fcb178bd5ed
+			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'idle')
 	pass
 
 func out_of_bounds():
@@ -102,23 +90,13 @@ sync func kill_mob():
 	queue_free()
 	if spawner != null:
 		spawner.decrease_spawned()
-<<<<<<< HEAD
 	pass
-
-sync func set_mob_position(pos, v):
-#	position = pos # it looks like we don't actually need position
-#	direction = d
-	velocity = v  
 	
-=======
-
->>>>>>> 6eeb00a2665f9e4e30b893cb7c747fcb178bd5ed
 func _physics_process(delta):
-	follow_player()
-	velocity.y += delta * GRAVITY
-	solve_impulse()
-	
 	if is_network_master():
+		follow_player()
+		velocity.y += delta * GRAVITY
+		solve_impulse()
 		if is_on_floor():
 			velocity.y = 0
 			jump_intensity = 0
@@ -136,27 +114,26 @@ func _physics_process(delta):
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
 			velocity.y += jump()
 			can_jump = false
-		rpc_unreliable("set_mob_position", position, velocity)
-	
-	if in_impulse:
-		x_direction = 0
+		if in_impulse:
+			x_direction = 0
+		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+		move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
 		
-	if Input.is_action_just_pressed("debug_test"): 
-		var dir = (self.position - get_global_mouse_position()).normalized() * -1
-		impulse(400, dir)
+		for i in get_slide_count():
+			if get_slide_count() > i:
+				var collision = get_slide_collision(i)
+				if collision and collision.collider.is_in_group("players") and follow:
+					attack_player(collision.collider)
+		
+		rpc_unreliable("set_entity_position", position, velocity)
+	
+#	if Input.is_action_just_pressed("debug_test"): 
+#		var dir = (self.position - get_global_mouse_position()).normalized() * -1
+#		impulse(400, dir)
 	
 	solve_animation(velocity)
-
-	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
-	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
-	move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
 	
-	for i in get_slide_count():
-		if get_slide_count() > i:
-			var collision = get_slide_collision(i)
-			if collision and collision.collider.is_in_group("players") and follow:
-				attack_player(collision.collider)
-
 func on_take_damage():
 	if not is_dead:
 		if health > 0:

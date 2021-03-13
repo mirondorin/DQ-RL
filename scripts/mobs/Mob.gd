@@ -8,7 +8,6 @@ func _init():
 
 func attack_player(player):
 	if can_attack and is_network_master():
-#		rpc("player.take_damage", attack_damage)  # doesn't work
 		player.take_damage(attack_damage)  # TODO: ensure that player takes damage only once, and takes it everywhere
 		move_and_slide(Vector2(velocity.x + 2000*x_direction*-1, velocity.y), Vector2(0, -1))
 		can_attack = false
