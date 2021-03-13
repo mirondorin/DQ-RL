@@ -98,9 +98,9 @@ sync func kill_mob():
 	pass
 
 sync func set_mob_position(pos, v):
-	position = pos
+#	position = pos # it looks like we don't actually need position
 #	direction = d
-	velocity = v  # it looks like we don't actually need velocity
+	velocity = v  
 	
 func _physics_process(delta):
 	follow_player()
@@ -124,7 +124,8 @@ func _physics_process(delta):
 	solve_animation(velocity, delta)
 	move_and_slide(velocity, Vector2(0, -1))
 	
-	var previous = get_slide_count()
+	var previous = get_slide_count()  # ? 
+	
 	for i in get_slide_count():
 		if get_slide_count() > i:
 			var collision = get_slide_collision(i)
@@ -136,15 +137,15 @@ func on_take_damage():
 		if health > 0:
 			$HealthLabel.text = String(health)
 		else:
-			is_dead = true
-			queue_free()
-			if spawner != null:
-				spawner.decrease_spawned()
+			if is_network_master():
+				rpc("kill_mob")
 	follow = false
 	attack_timer.start()
 	pass
 
 func take_damage(value):
+#	I've added rpc call only to kill mob. Another approach would be to add it 
+#	to a health decrease function to be sure that health is sync-ed
 	health -= value
 	on_take_damage()
 	pass
