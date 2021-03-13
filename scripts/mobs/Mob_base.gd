@@ -1,11 +1,9 @@
-extends KinematicBody2D
+extends "res://scripts/Entity.gd"
 
 var spawner = null
 
 export var follow = true
-export var SPEED = 90
-export var JUMPSPEED = 320
-onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
+
 var player
 onready var attack_timer = $'AttackCooldown'
 onready var jump_timer = $'JumpCooldown'
@@ -15,12 +13,9 @@ puppet var puppet_health
 
 var is_dead = false
 
-var velocity = Vector2()
-
 puppet var puppet_velocity = Vector2()
 puppet var puppet_pos = Vector2()
 
-var direction = 1
 var in_jump = false
 var can_jump = false
 var can_attack = true
@@ -39,8 +34,7 @@ func _ready():
 		jump_timer.wait_time = jump_cooldown
 		jump_timer.start()
 
-	
-func jump(time):
+func jump():
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
@@ -62,19 +56,20 @@ func follow_player():
 		follow = true
 	else:
 		follow = false
-		direction = 0
+		x_direction = 0
 		return 1
 	if position.x < player.position.x:
-		direction = 1
+		x_direction = 1
 	else:
-		direction = -1
+		x_direction = -1
+	
 	if not follow:
-		direction = 0
+		x_direction = 0
+
+func attack_player(_player):
 	pass
 
-func attack_player(player):
-	pass
-
+<<<<<<< HEAD
 sync func change_animation(what, value):
 	$AnimatedSprite[what] = value
 
@@ -85,6 +80,14 @@ func solve_animation(velocity, delta):
 			rpc_unreliable("change_animation", "animation", 'walk')
 		if velocity.x == 0:
 			rpc_unreliable("change_animation", "animation", 'idle')
+=======
+func solve_animation(velocity):
+	if velocity.x != 0:
+		$AnimatedSprite.flip_h = x_direction < 0
+		$AnimatedSprite.animation = 'walk'
+	if velocity.x == 0:
+		$AnimatedSprite.animation = 'idle'
+>>>>>>> 6eeb00a2665f9e4e30b893cb7c747fcb178bd5ed
 	pass
 
 func out_of_bounds():
@@ -99,6 +102,7 @@ sync func kill_mob():
 	queue_free()
 	if spawner != null:
 		spawner.decrease_spawned()
+<<<<<<< HEAD
 	pass
 
 sync func set_mob_position(pos, v):
@@ -106,29 +110,46 @@ sync func set_mob_position(pos, v):
 #	direction = d
 	velocity = v  
 	
+=======
+
+>>>>>>> 6eeb00a2665f9e4e30b893cb7c747fcb178bd5ed
 func _physics_process(delta):
 	follow_player()
-	if (len(in_area) > 0):
-		player = in_area[0]
+	velocity.y += delta * GRAVITY
+	solve_impulse()
+	
 	if is_network_master():
-		velocity.y += delta * GRAVITY
-		velocity.x = SPEED * direction
 		if is_on_floor():
 			velocity.y = 0
 			jump_intensity = 0
 			in_jump=false
+			impulse_current_x = 0
+			impulse_current_y = 0
+			
 		if is_on_ceiling():
 			velocity.y=max(0,velocity.y)
+			impulse_current_y /= collision_resistance_factor
+	
+		if is_on_wall():
+			impulse_current_x /= collision_resistance_factor
 		
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
-			velocity.y += jump(delta)
+			velocity.y += jump()
 			can_jump = false
 		rpc_unreliable("set_mob_position", position, velocity)
 	
-	solve_animation(velocity, delta)
-	move_and_slide(velocity, Vector2(0, -1))
+	if in_impulse:
+		x_direction = 0
+		
+	if Input.is_action_just_pressed("debug_test"): 
+		var dir = (self.position - get_global_mouse_position()).normalized() * -1
+		impulse(400, dir)
 	
-	var previous = get_slide_count()  # ? 
+	solve_animation(velocity)
+
+	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+	move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
 	
 	for i in get_slide_count():
 		if get_slide_count() > i:
