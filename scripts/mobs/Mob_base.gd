@@ -1,14 +1,8 @@
-extends KinematicBody2D
+extends "res://scripts/Entity.gd"
 
 var spawner = null
 
 export var follow = true
-export var SPEED = 90
-export var JUMPSPEED = 320
-onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
-export var air_resistance_factor = 11
-export var collision_resistance_factor = 3
-
 
 var player
 onready var attack_timer = $'AttackCooldown'
@@ -19,12 +13,9 @@ puppet var puppet_health
 
 var is_dead = false
 
-var velocity = Vector2()
-
 puppet var puppet_velocity = Vector2()
 puppet var puppet_pos = Vector2()
 
-var x_direction = 0
 var in_jump = false
 var can_jump = false
 var can_attack = true
@@ -42,8 +33,7 @@ func _ready():
 	jump_timer.wait_time = jump_cooldown
 	jump_timer.start()
 
-	
-func jump(time):
+func jump():
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
@@ -75,10 +65,10 @@ func follow_player():
 	if not follow:
 		x_direction = 0
 
-func attack_player(player):
+func attack_player(_player):
 	pass
 
-func solve_animation(velocity, delta):
+func solve_animation(velocity):
 	if velocity.x != 0:
 		$AnimatedSprite.flip_h = x_direction < 0
 		$AnimatedSprite.animation = 'walk'
@@ -96,43 +86,6 @@ func out_of_bounds():
 	queue_free()
 	if spawner != null:
 		spawner.decrease_spawned()
-
-var impulse_force = 0
-var impulse_current_x = 0
-var impulse_current_y = 0
-var impulse_dir = Vector2(0, 0)
-var in_impulse = false
-var impulse_step = 5
-
-func impulse(force, direction, step = 5, additive = true):
-	if additive: 
-		impulse_current_x += force
-		impulse_current_y += force
-	else:
-		impulse_current_x = force
-		impulse_current_y = force
-	impulse_dir = direction
-	impulse_step = step
-	in_impulse = true
-
-func solve_impulse():
-	if impulse_current_x > 0:
-		impulse_current_x -= impulse_step + abs(x_direction) * SPEED/air_resistance_factor
-		
-	if impulse_current_y > 0:
-		impulse_current_y -= impulse_step
-		
-	if impulse_current_x <= 0:
-		impulse_current_x = 0
-		impulse_dir.x = 0
-		
-	if impulse_current_y <= 0:
-		impulse_current_y = 0
-		impulse_dir.y = 0
-		
-	if impulse_current_x <= 0 and impulse_current_y <= 0:
-		impulse_step = 5
-		in_impulse = false
 
 func _physics_process(delta):
 	follow_player()
@@ -155,7 +108,7 @@ func _physics_process(delta):
 			impulse_current_x /= collision_resistance_factor
 		
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
-			velocity.y += jump(delta)
+			velocity.y += jump()
 			can_jump = false
 		rset("puppet_pos", position)
 		rset("puppet_velocity", velocity)
@@ -170,13 +123,12 @@ func _physics_process(delta):
 		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 		impulse(400, dir)
 	
-	solve_animation(velocity, delta)
+	solve_animation(velocity)
 
 	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
 	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
 	move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
 	
-	var previous = get_slide_count()
 	for i in get_slide_count():
 		if get_slide_count() > i:
 			var collision = get_slide_collision(i)

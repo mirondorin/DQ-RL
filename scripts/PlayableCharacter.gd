@@ -1,16 +1,9 @@
-extends KinematicBody2D
+extends "res://scripts/Entity.gd"
 
 onready var current_weapon = $Weapon
 
-export var SPEED = 100
-export var JUMPSPEED = 80
-onready var GRAVITY = get_node('../../GlobalSettings').GRAVITY
-export var air_resistance_factor = 11
-export var collision_resistance_factor = 3
-
 var screen_size # Size of the game window
 
-var velocity = Vector2()
 var player_pos = Vector2()
 puppet var puppet_velocity = Vector2()
 puppet var puppet_pos = Vector2()
@@ -34,16 +27,16 @@ puppet var puppet_health = health
 # !! maybe it's not needed, as it doesn't change periodically
 
 var start_position
-var stats = {
-	"damage_modifier" : 0,
-	"health" : 100
-}
 
 func set_player_name(new_name):
 #	get_node("label").set_text(new_name)
 	$DebugAction.text = new_name
 	pass
-var x_direction = 0
+
+func _init():
+	self.SPEED = 100
+	self.JUMPSPEED = 80
+	stats["damage_modifier"] = 0
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -51,7 +44,7 @@ func _ready():
 	player_pos = position
 	pass
 
-func jump(time):
+func jump():
 #	This method does not have to be synced
 #	since it only calculates jump speed
 #	client can cheat, but does he really?
@@ -70,7 +63,7 @@ func jump(time):
 	return speed
 	pass
 	
-func dash(delta):
+func dash(_delta):
 	var dir = -1 if $AnimatedSprite.flip_h else 1
 	self.GRAVITY = 0
 	velocity.y = 0
@@ -135,27 +128,6 @@ func solve_animation(velocity,delta):
 			play_animation("")
 	pass
 
-func on_lose_hp():
-#	solving animation (as I know it) should not require sync
-#	however $Health.text doesn't seem to sync on players. 
-
-#	maybe we could do ??? (a refactoring I suppose, to get all modifications
-#	to be made to [x for x in velocity, position, animations, health] returned
-#	to main loop and do them all there)
-#	!! this ^ is supposed to be done only if it really works
-#	I say it should, but I have to ask the compiler
-
-#	probably we also need a puppet animation var 
-#	UPDATE: maybe not
-#	and maybe a puppet health var
-	animate("animation", "hit")
-	$Health.text = String(stats['health'])
-	play_animation("")
-	if stats['health'] <= 0:
-		$Health.text = 'dead!'
-		$Health.add_color_override("font_color", Color(255, 0, 0))
-	pass
-
 func on_gain_health():
 #	copy paste comments above here
 	$Health.text = String(stats['health'])
@@ -164,24 +136,6 @@ func on_gain_health():
 master func damage_control(value):
 	rpc("take_damage", value)
 	take_damage(value)
-
-puppet func take_damage(value):
-	stats['health'] -= value
-	on_lose_hp()
-
-#func take_damage(value):
-##	this has to be sync-ed, or should return modifications made
-#
-##	version 1.0.3: this doesn't have to be sync-ed anymore, checking network
-##	master is enough
-##	or is supposed to be enough, testing will prove it (wrong)
-#	if is_network_master():
-#		stats['health'] -= value
-#		rset("puppet_health", stats['health'])
-#	else:
-#		stats['health'] = puppet_health
-#	on_lose_hp()
-#	pass
 
 sync func gain_health(value):
 #	copy paste comments above here
@@ -193,24 +147,19 @@ sync func gain_health(value):
 	on_gain_health()
 	pass
 
-
 func solve_input(delta):
 #	theoretically should not require sync
 #	but we have to find a way to sync weapon attacks and animations
-	var v_x = 0
-	var v_y = velocity.y
 	if Input.is_action_pressed("ui_left"):
 		x_direction = -1
 	elif Input.is_action_pressed("ui_right"):
 		x_direction = 1
 	else:
 		x_direction = 0
-	
-	print(x_direction)
 		
 	if Input.is_action_pressed("ui_up"):
 		if not in_impulse:
-			velocity.y += jump(delta)
+			velocity.y += jump()
 		
 	if Input.is_action_pressed("ui_attack") and can_attack:
 		current_weapon.attack()
@@ -236,44 +185,6 @@ func solve_input(delta):
 		
 	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
-
-var impulse_force = 0
-var impulse_current_x = 0
-var impulse_current_y = 0
-var impulse_dir = Vector2(0, 0)
-var in_impulse = false
-var impulse_step = 5
-
-func impulse(force, direction, step = 5, additive = true):
-	if additive: 
-		impulse_current_x += force
-		impulse_current_y += force
-	else:
-		impulse_current_x = force
-		impulse_current_y = force
-	impulse_dir = direction
-	impulse_step = step
-	in_impulse = true
-
-func solve_impulse():
-	if impulse_current_x > 0:
-		impulse_current_x -= impulse_step + abs(x_direction) * SPEED/air_resistance_factor
-		
-	if impulse_current_y > 0:
-		impulse_current_y -= impulse_step
-		
-	if impulse_current_x <= 0:
-		impulse_current_x = 0
-		impulse_dir.x = 0
-		
-	if impulse_current_y <= 0:
-		impulse_current_y = 0
-		impulse_dir.y = 0
-		
-	if impulse_current_x <= 0 and impulse_current_y <= 0:
-		impulse_step = 5
-		in_impulse = false
-	
 
 func _physics_process(delta):
 	if is_network_master():

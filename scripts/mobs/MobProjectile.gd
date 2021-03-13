@@ -3,7 +3,6 @@ extends 'res://scripts/mobs/Mob_base.gd'
 const bullet = preload("res://scenes/WeaponProjectile_bullet.tscn")
 var max_dist_player = 150
 
-
 func _init():
 	self.SPEED = 20
 
@@ -27,7 +26,7 @@ func follow_player():
 	if not follow:
 		x_direction = 0
 
-func attack_player(player): #player will be null here
+func attack_player(_player): #player will be null here
 	if can_attack:
 		var bullet_inst = bullet.instance()
 		bullet_inst.group_to_detect = 'players'
@@ -37,9 +36,5 @@ func attack_player(player): #player will be null here
 		can_attack = false
 		attack_timer.start()
 	
-func _process(delta):
+func _process(_delta):
 	attack_player(null)
-	print(global_position)
-
-	
-
