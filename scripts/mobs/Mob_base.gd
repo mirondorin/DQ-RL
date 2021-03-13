@@ -75,12 +75,16 @@ func follow_player():
 func attack_player(player):
 	pass
 
+sync func change_animation(what, value):
+	$AnimatedSprite[what] = value
+
 func solve_animation(velocity, delta):
-	if velocity.x != 0:
-		$AnimatedSprite.flip_h = velocity.x < 0
-		$AnimatedSprite.animation = 'walk'
-	if velocity.x == 0:
-		$AnimatedSprite.animation = 'idle'
+	if  is_network_master():
+		if velocity.x != 0:
+			rpc_unreliable("change_animation", "flip_h", velocity.x < 0)
+			rpc_unreliable("change_animation", "animation", 'walk')
+		if velocity.x == 0:
+			rpc_unreliable("change_animation", "animation", 'idle')
 	pass
 
 func out_of_bounds():
