@@ -29,9 +29,10 @@ var jump_cooldown = 4
 var in_area = []
 
 func _ready():
-	attack_timer.wait_time = attack_cooldown	
-	jump_timer.wait_time = jump_cooldown
-	jump_timer.start()
+	if is_network_master():
+		attack_timer.wait_time = attack_cooldown	
+		jump_timer.wait_time = jump_cooldown
+		jump_timer.start()
 
 func jump():
 	var speed = -JUMPSPEED/20
@@ -69,30 +70,33 @@ func attack_player(_player):
 	pass
 
 func solve_animation(velocity):
-	if velocity.x != 0:
-		$AnimatedSprite.flip_h = x_direction < 0
-		$AnimatedSprite.animation = 'walk'
-	if velocity.x == 0:
-		$AnimatedSprite.animation = 'idle'
+	if  is_network_master():
+		if velocity.x != 0:
+			rpc_unreliable("change_animation", $AnimatedSprite, "flip_h", velocity.x < 0)
+			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'walk')
+		if velocity.x == 0:
+			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'idle')
 	pass
 
 func out_of_bounds():
-#	? TODO: check how to networking
-
 	# we can add invisible objects, boundaries, and 
 	# _on_Area2D_body_entered => direction *= -1
 	# to ensure that the enemy patrols only one zone
+	rpc("kill_mob")
+	
+sync func kill_mob():
+#	should execute on all peers
 	is_dead = true
 	queue_free()
 	if spawner != null:
 		spawner.decrease_spawned()
-
-func _physics_process(delta):
-	follow_player()
-	velocity.y += delta * GRAVITY
-	solve_impulse()
+	pass
 	
+func _physics_process(delta):
 	if is_network_master():
+		follow_player()
+		velocity.y += delta * GRAVITY
+		solve_impulse()
 		if is_on_floor():
 			velocity.y = 0
 			jump_intensity = 0
@@ -110,45 +114,40 @@ func _physics_process(delta):
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
 			velocity.y += jump()
 			can_jump = false
-		rset("puppet_pos", position)
-		rset("puppet_velocity", velocity)
-	else:
-		position = puppet_pos
-		velocity = puppet_velocity
-	
-	if in_impulse:
-		x_direction = 0
+		if in_impulse:
+			x_direction = 0
+		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+		move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
 		
-	if Input.is_action_just_pressed("debug_test"): 
-		var dir = (self.position - get_global_mouse_position()).normalized() * -1
-		impulse(400, dir)
+		for i in get_slide_count():
+			if get_slide_count() > i:
+				var collision = get_slide_collision(i)
+				if collision and collision.collider.is_in_group("players") and follow:
+					attack_player(collision.collider)
+		
+		rpc_unreliable("set_entity_position", position, velocity)
+	
+#	if Input.is_action_just_pressed("debug_test"): 
+#		var dir = (self.position - get_global_mouse_position()).normalized() * -1
+#		impulse(400, dir)
 	
 	solve_animation(velocity)
-
-	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
-	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
-	move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
 	
-	for i in get_slide_count():
-		if get_slide_count() > i:
-			var collision = get_slide_collision(i)
-			if collision and collision.collider.is_in_group("players") and follow:
-				attack_player(collision.collider)
-
 func on_take_damage():
 	if not is_dead:
 		if health > 0:
 			$HealthLabel.text = String(health)
 		else:
-			is_dead = true
-			queue_free()
-			if spawner != null:
-				spawner.decrease_spawned()
+			if is_network_master():
+				rpc("kill_mob")
 	follow = false
 	attack_timer.start()
 	pass
 
 func take_damage(value):
+#	I've added rpc call only to kill mob. Another approach would be to add it 
+#	to a health decrease function to be sure that health is sync-ed
 	health -= value
 	on_take_damage()
 	pass

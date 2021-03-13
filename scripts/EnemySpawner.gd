@@ -24,8 +24,8 @@ func _ready():
 		if start_enabled:
 			$Timer.start()
 
-# V 01.master puppet functions
-puppet func do_spawn():
+
+sync func do_spawn():
 	var inst = enemy.instance()
 #	maybe we should set a name for mobs?
 	inst.spawner = self
@@ -36,10 +36,9 @@ puppet func do_spawn():
 	current_spawns += 1
 	pass
 
-master func spawn():
+func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
 		rpc("do_spawn")
-		do_spawn()
 	pass
 
 # V 02. sync
