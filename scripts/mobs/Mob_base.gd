@@ -72,10 +72,10 @@ func attack_player(_player):
 func solve_animation(velocity):
 	if  is_network_master():
 		if velocity.x != 0:
-			rpc_unreliable("change_animation", $AnimatedSprite, "flip_h", velocity.x < 0)
-			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'walk')
+			rpc_unreliable("change_animation", "flip_h", velocity.x < 0)
+			rpc_unreliable("change_animation", "animation", 'walk')
 		if velocity.x == 0:
-			rpc_unreliable("change_animation", $AnimatedSprite, "animation", 'idle')
+			rpc_unreliable("change_animation", "animation", 'idle')
 	pass
 
 func out_of_bounds():
@@ -85,7 +85,6 @@ func out_of_bounds():
 	rpc("kill_mob")
 	
 sync func kill_mob():
-#	should execute on all peers
 	is_dead = true
 	queue_free()
 	if spawner != null:
