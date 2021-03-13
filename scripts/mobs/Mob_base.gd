@@ -147,9 +147,8 @@ func on_take_damage():
 func take_damage(value):
 #	I've added rpc call only to kill mob. Another approach would be to add it 
 #	to a health decrease function to be sure that health is sync-ed
-	health -= value
+	health -= value #TODO: check that health is really sync-ed
 	on_take_damage()
-	pass
 
 func _on_DetectArea_body_entered(body):
 	if not body in in_area:
