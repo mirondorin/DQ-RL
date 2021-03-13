@@ -9,39 +9,23 @@ var attack_anim_names = {
 	'special-attack' : null,
 }
 
-puppet func do_animation(what, value):
+sync func change_animation(what, value):
 	$AnimatedSprite[what] = value
-	pass
 
-master func animate(what, value):
-	rpc("do_animation", what, value)
-	do_animation(what, value)
-	pass
-	
-puppet func do_play_animation(what):
+sync func play_animation(what):
 	$AnimationPlayer.play(what)
-	pass
-
-master func play_animation(what):
-	rpc("do_play_animation", what)
-	do_play_animation(what)
-	pass
-
-# Not working!
-#remotesync func play_animation(what):
-#	$AnimationPlayer.play(what)
-
-func _ready():
-	position = offset_position
-
+	
 func attack():
 	pass
 
 func special_attack():
 	pass
+	
+sync func update_weapon_postion(x, radians):
+	self.position.x = x
+	self.rotation_degrees = radians
 
-func update_orientation(orientation):	
-	animate("flip_h", orientation)
+func update_orientation(orientation):
 	if orientation:
 		self.rotation_degrees = -180
 		if self.position.x > 0:
@@ -50,4 +34,7 @@ func update_orientation(orientation):
 		self.rotation_degrees = 0
 		if self.position.x < 0:
 			self.position.x = -self.position.x
+	if is_network_master():
+		rpc_unreliable("change_animation", "flip_h", orientation) # Does this need to be reliable?
+		rpc_unreliable("update_weapon_postion", self.position.x, self.rotation_degrees)
 
