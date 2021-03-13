@@ -34,9 +34,10 @@ var jump_cooldown = 4
 var in_area = []
 
 func _ready():
-	attack_timer.wait_time = attack_cooldown	
-	jump_timer.wait_time = jump_cooldown
-	jump_timer.start()
+	if is_network_master():
+		attack_timer.wait_time = attack_cooldown	
+		jump_timer.wait_time = jump_cooldown
+		jump_timer.start()
 
 	
 func jump(time):
@@ -83,16 +84,23 @@ func solve_animation(velocity, delta):
 	pass
 
 func out_of_bounds():
-#	? TODO: check how to networking
-
 	# we can add invisible objects, boundaries, and 
 	# _on_Area2D_body_entered => direction *= -1
 	# to ensure that the enemy patrols only one zone
+	rpc("kill_mob")
+	
+sync func kill_mob():
+#	should execute on all peers
 	is_dead = true
 	queue_free()
 	if spawner != null:
 		spawner.decrease_spawned()
 	pass
+
+sync func set_mob_position(pos, v):
+	position = pos
+#	direction = d
+	velocity = v  # it looks like we don't actually need velocity
 	
 func _physics_process(delta):
 	follow_player()
@@ -111,11 +119,7 @@ func _physics_process(delta):
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
 			velocity.y += jump(delta)
 			can_jump = false
-		rset("puppet_pos", position)
-		rset("puppet_velocity", velocity)
-	else:
-		position = puppet_pos
-		velocity = puppet_velocity
+		rpc_unreliable("set_mob_position", position, velocity)
 	
 	solve_animation(velocity, delta)
 	move_and_slide(velocity, Vector2(0, -1))
