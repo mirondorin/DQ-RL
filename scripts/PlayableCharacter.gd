@@ -4,7 +4,7 @@ onready var current_weapon = $Weapon
 
 export var SPEED = 100
 export var JUMPSPEED = 80
-onready var GRAVITY = get_node('../GlobalSettings').GRAVITY
+onready var GRAVITY = get_node('../../GlobalSettings').GRAVITY
 export var air_resistance_factor = 11
 export var collision_resistance_factor = 3
 
@@ -75,6 +75,40 @@ func dash(delta):
 	self.GRAVITY = 0
 	velocity.y = 0
 	impulse(500, Vector2(dir, -0.001), 10, false)
+
+puppet func do_animation(what, value):
+#    works!
+	$AnimatedSprite[what] = value
+	pass
+
+master func animate(what, value):
+#    works!
+#    rpc("do_animation", what, value)
+	do_animation(what, value)
+	pass
+
+puppet func do_play_animation(what):
+#    works!
+	if what =='special-attack':
+		$AnimationPlayer.play("special-attack")
+	else:
+		$AnimatedSprite.play(what)
+	pass
+
+master func play_animation(what):
+#    works!
+#    rpc("do_play_animation", what)
+	do_play_animation(what)
+	pass
+
+puppet func do_stop_animation():
+	$AnimatedSprite.stop()
+	pass
+
+master func stop_animation():
+#    rpc("do_stop_animation")
+	do_stop_animation()
+	pass
 
 func solve_animation(velocity,delta):
 	if $AnimationPlayer.current_animation != 'special-attack':
@@ -192,7 +226,7 @@ func solve_input(delta):
 		in_dash = true
 		dash(delta)
 		yield(get_tree().create_timer(0.2), "timeout")
-		self.GRAVITY = get_node('../GlobalSettings').GRAVITY
+		self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
 		in_dash = false
 		self.impulse_current_x = impulse_current_x/3
 		self.impulse_step = 5

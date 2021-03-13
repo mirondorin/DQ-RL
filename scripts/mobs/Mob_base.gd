@@ -65,7 +65,7 @@ func follow_player():
 		follow = true
 	else:
 		follow = false
-		direction = 0
+		x_direction = 0
 		return 1
 	if position.x < player.position.x:
 		x_direction = 1
@@ -139,19 +139,20 @@ func _physics_process(delta):
 	velocity.y += delta * GRAVITY
 	solve_impulse()
 	
-	if is_on_floor():
-		velocity.y = 0
-		jump_intensity = 0
-		in_jump=false
-		impulse_current_x = 0
-		impulse_current_y = 0
-		
-	if is_on_ceiling():
-		velocity.y=max(0,velocity.y)
-		impulse_current_y /= collision_resistance_factor
+	if is_network_master():
+		if is_on_floor():
+			velocity.y = 0
+			jump_intensity = 0
+			in_jump=false
+			impulse_current_x = 0
+			impulse_current_y = 0
+			
+		if is_on_ceiling():
+			velocity.y=max(0,velocity.y)
+			impulse_current_y /= collision_resistance_factor
 	
-	if is_on_wall():
-		impulse_current_x /= collision_resistance_factor
+		if is_on_wall():
+			impulse_current_x /= collision_resistance_factor
 		
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
 			velocity.y += jump(delta)

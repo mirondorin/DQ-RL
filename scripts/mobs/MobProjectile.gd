@@ -39,7 +39,7 @@ func attack_player(player): #player will be null here
 	
 func _process(delta):
 	attack_player(null)
-	
+	print(global_position)
 
 	
 
