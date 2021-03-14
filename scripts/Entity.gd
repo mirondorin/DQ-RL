@@ -20,6 +20,11 @@ var stats = {
 	"health" : 100
 }
 
+func get_x_orientation():
+	if $AnimatedSprite.flip_h:
+		return -1
+	return 1
+
 func impulse(force, direction, step = 5, additive = true):
 	if additive: 
 		impulse_current_x += force

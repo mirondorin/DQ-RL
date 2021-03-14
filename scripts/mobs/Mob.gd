@@ -9,8 +9,9 @@ func _init():
 func attack_player(player):
 	if can_attack and is_network_master():
 		player.take_damage(attack_damage)  # TODO: ensure that player takes damage only once, and takes it everywhere
-		move_and_slide(Vector2(velocity.x + 2000*x_direction*-1, velocity.y), Vector2(0, -1))
+		impulse(100, Vector2(get_x_orientation() * -1, -1))
 		can_attack = false
+		follow = false
 		attack_timer.start()
 
 func _on_Hurtbox_area_entered(area):

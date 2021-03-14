@@ -39,7 +39,7 @@ script = ExtResource( 7 )
 shape = SubResource( 1 )
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 6 )]
-position = Vector2( 880.445, 648.865 )
+position = Vector2( 879.915, 649.395 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
 start_enabled = true

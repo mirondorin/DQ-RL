@@ -150,8 +150,15 @@ func solve_input(delta):
 func _physics_process(delta):
 	if is_network_master():
 		velocity.y += delta * GRAVITY
+			
+		solve_animation(velocity,delta)
 		solve_impulse()
 		
+		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+		var vel = Vector2(velocity.x, vel_y)
+		move_and_slide(vel, Vector2(0, -1))
+	
 		if is_on_floor():
 			velocity.y=0
 			jump_intensity = 0
@@ -169,14 +176,6 @@ func _physics_process(delta):
 		solve_input(delta)
 		rpc_unreliable("set_entity_position", position, velocity)
 
-	solve_animation(velocity,delta)
-		
-	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
-	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
-	var vel = Vector2(velocity.x, vel_y)
-
-	move_and_slide(vel, Vector2(0, -1))
-	
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision and collision.collider.name == 'Mob':
