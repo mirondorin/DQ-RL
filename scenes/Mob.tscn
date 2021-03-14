@@ -31,12 +31,12 @@ extents = Vector2( 10, 14.4904 )
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 100.0
-height = 152.841
+height = 353.295
 
 [node name="Mob" type="KinematicBody2D" groups=[
 "mobs",
 ]]
-position = Vector2( 0.264862, -0.61401 )
+position = Vector2( -0.402557, -0.61401 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
@@ -45,7 +45,6 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
@@ -76,7 +75,6 @@ position = Vector2( 0, 3.402 )
 shape = SubResource( 3 )
 
 [node name="DetectArea" type="Area2D" parent="."]
-visible = false
 show_behind_parent = true
 input_pickable = false
 gravity_vec = Vector2( 0, 0 )
