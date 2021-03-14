@@ -140,6 +140,9 @@ func on_take_damage(direction):
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
+			$AnimatedSprite.set_material(flash_material)
+			yield(get_tree().create_timer(0.15), "timeout")
+			$AnimatedSprite.set_material(null)
 		else:
 #			if is_network_master():
 #				rpc("kill_mob") # on_take_damage is called from all peers
@@ -148,9 +151,7 @@ func on_take_damage(direction):
 	impulse(50, Vector2(direction.x, -1))
 	
 	attack_timer.start()
-	$AnimatedSprite.set_material(flash_material)
-	yield(get_tree().create_timer(0.15), "timeout")
-	$AnimatedSprite.set_material(null)
+	
 	pass
 
 func _on_DetectArea_body_entered(body):
