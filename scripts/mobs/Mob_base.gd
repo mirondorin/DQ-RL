@@ -1,5 +1,6 @@
 extends "res://scripts/Entity.gd"
 
+const flash_material = preload("res://materials/white.tres")
 var spawner = null
 
 export var follow = true
@@ -70,8 +71,8 @@ func attack_player(_player):
 
 func solve_animation(velocity):
 	if  is_network_master():
-		if velocity.x != 0:
-			rpc_unreliable("change_animation", "flip_h", velocity.x < 0)
+		if x_direction !=0:
+			rpc_unreliable("change_animation", "flip_h", x_direction < 0)
 			rpc_unreliable("change_animation", "animation", 'walk')
 		if velocity.x == 0:
 			rpc_unreliable("change_animation", "animation", 'idle')
@@ -135,7 +136,7 @@ func _physics_process(delta):
 #		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 #		impulse(400, dir)
 	
-func on_take_damage():
+func on_take_damage(direction):
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
@@ -144,8 +145,12 @@ func on_take_damage():
 #				rpc("kill_mob") # on_take_damage is called from all peers
 			kill_mob()
 	follow = false
-	impulse(50, Vector2(get_x_orientation() * -1, -1))
+	impulse(50, Vector2(direction.x, -1))
+	
 	attack_timer.start()
+	$AnimatedSprite.set_material(flash_material)
+	yield(get_tree().create_timer(0.15), "timeout")
+	$AnimatedSprite.set_material(null)
 	pass
 
 func _on_DetectArea_body_entered(body):
@@ -164,6 +169,7 @@ func _on_DetectArea_body_exited(body):
 func _on_AttackCooldown_timeout():
 	can_attack = true
 	follow = true
+	
 	pass
 	
 func _on_JumpCooldown_timeout():

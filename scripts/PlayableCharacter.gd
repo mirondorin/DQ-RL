@@ -51,7 +51,7 @@ func jump():
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
-		jump_intensity = 20
+		jump_intensity = 21
 		start_time = OS.get_ticks_msec()
 	var current_time = OS.get_ticks_msec()
 	if current_time-start_time>50:
@@ -64,10 +64,16 @@ func jump():
 	pass
 	
 func dash(_delta):
+	in_dash = true
 	var dir = -1 if $AnimatedSprite.flip_h else 1
 	self.GRAVITY = 0
 	velocity.y = 0
 	impulse(500, Vector2(dir, -0.001), 10, false)
+	yield(get_tree().create_timer(0.2), "timeout")
+	self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
+	in_dash = false
+	self.impulse_current_x = impulse_current_x/3
+	self.impulse_step = 5
 
 sync func play_animation( what):
 	if what =='special-attack':
@@ -133,13 +139,8 @@ func solve_input(delta):
 	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
-		in_dash = true
 		dash(delta)
-		yield(get_tree().create_timer(0.2), "timeout")
-		self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
-		in_dash = false
-		self.impulse_current_x = impulse_current_x/3
-		self.impulse_step = 5
+		
 	if Input.is_action_just_pressed("debug_test"): 
 		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 		impulse(400, dir)
