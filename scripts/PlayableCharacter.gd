@@ -80,7 +80,8 @@ func solve_animation(velocity,delta):
 	if not is_network_master():
 		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
-		rpc_unreliable("change_animation", "flip_h", x_direction < 0)
+		if x_direction !=0:
+			rpc_unreliable("change_animation", "flip_h", x_direction < 0)
 	
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
