@@ -31,7 +31,7 @@ extents = Vector2( 10, 14.8159 )
 extents = Vector2( 10, 14.4904 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 18.4591, 450.06 )
+extents = Vector2( 34.0679, 455.331 )
 
 [node name="MobProjectile" type="KinematicBody2D" groups=[
 "mobs",
@@ -47,7 +47,7 @@ position = Vector2( 0, 3.664 )
 scale = Vector2( 1.806, 1.806 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 2
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]

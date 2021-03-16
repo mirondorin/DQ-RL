@@ -37,4 +37,5 @@ func attack_player(_player): #player will be null here
 		attack_timer.start()
 	
 func _process(_delta):
-	attack_player(null)
+	if len(in_area) > 0:
+		attack_player(null)
