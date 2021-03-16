@@ -71,4 +71,6 @@ func _on_Timer_timeout():
 	
 	if spawn_continously:
 		$Timer.start()
+	else:
+		$Timer.stop()
 	

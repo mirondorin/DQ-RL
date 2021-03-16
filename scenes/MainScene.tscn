@@ -1,17 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scenes/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/levels/level1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/GlobalSettings.gd" type="Script" id=4]
 [ext_resource path="res://scenes/MobProjectile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scripts/WorldBoundary.gd" type="Script" id=7]
 [ext_resource path="res://scripts/MainScene.gd" type="Script" id=8]
 [ext_resource path="res://scenes/items/DamageBoost.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=10]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 1000, 10 )
 
 [node name="MainScene" type="Node"]
 script = ExtResource( 8 )
@@ -22,58 +18,63 @@ __meta__ = {
 [node name="GlobalSettings" type="Node" parent="."]
 script = ExtResource( 4 )
 
-[node name="Level" parent="." instance=ExtResource( 1 )]
-position = Vector2( 441, 419 )
-
-[node name="Obstacles" parent="Level" index="1"]
-tile_data = PoolIntArray( -1769496, 12, 0, -1441805, 12, 0, -1507328, 8, 0, -1310707, 11, 0, -1310704, 12, 0, -1310691, 12, 0, -1245184, 8, 0, -983053, 12, 0, -983043, 12, 0, -1048569, 12, 0, -655390, 9, 0, -655380, 12, 0, -655369, 9, 0, -720895, 12, 0, -524275, 9, 0, -393225, 12, 0, -393212, 3, 0, -262139, 13, 0, -262125, 12, 0, -196604, 3, 0, -131072, 0, 0, -131069, 1, 0, -65532, 0, 0, 131056, 12, 0, 65536, 0, 0 )
-
-[node name="WorldBoundary" type="Node2D" parent="Level"]
-position = Vector2( 91.644, 550 )
-scale = Vector2( 0.25, 0.25 )
-script = ExtResource( 7 )
-
-[node name="Area2D" type="Area2D" parent="Level/WorldBoundary"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/WorldBoundary/Area2D"]
-shape = SubResource( 1 )
+[node name="LevelRoot" parent="." instance=ExtResource( 1 )]
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 6 )]
-position = Vector2( 879.915, 649.395 )
+position = Vector2( 622.744, 597.042 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
 start_enabled = true
 spawn_delay = 3
-spawn_continously = true
+
+[node name="EnemySpawner3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 309.834, 568.466 )
+enemyscene = ExtResource( 3 )
+max_spawns = 1
+start_enabled = true
+spawn_delay = 0
+
+[node name="EnemySpawner4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 124.172, 968.88 )
+enemyscene = ExtResource( 3 )
+max_spawns = 1
+start_enabled = true
+spawn_delay = 0
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 260.24, 798.628 )
+position = Vector2( 412.588, 838.354 )
 enemyscene = ExtResource( 5 )
 max_spawns = 1
 start_enabled = true
-spawn_continously = true
+
+[node name="EnemySpawner5" parent="." instance=ExtResource( 6 )]
+position = Vector2( -77.2979, 937.8 )
+enemyscene = ExtResource( 5 )
+max_spawns = 1
+start_enabled = true
 
 [node name="DamageBoost" parent="." instance=ExtResource( 9 )]
-position = Vector2( 447.214, 720.82 )
+position = Vector2( 352.085, 568.748 )
 
 [node name="HealthPickup" parent="." instance=ExtResource( 10 )]
-position = Vector2( 483.864, 722.212 )
+position = Vector2( 137.254, 837.811 )
 
 [node name="Players" type="Node2D" parent="."]
+position = Vector2( -5.33936, -25.362 )
 
 [node name="Spawn" type="Node2D" parent="."]
+position = Vector2( 11.027, -19.7559 )
 
 [node name="0" type="Position2D" parent="Spawn"]
-position = Vector2( 400, 720 )
+position = Vector2( 23.786, 704.523 )
 
 [node name="1" type="Position2D" parent="Spawn"]
-position = Vector2( 424.264, 718.421 )
+position = Vector2( 52.2807, 703.872 )
 
 [node name="2" type="Position2D" parent="Spawn"]
-position = Vector2( 462.448, 719.835 )
+position = Vector2( 78.3926, 704.473 )
 
 [node name="3" type="Position2D" parent="Spawn"]
-position = Vector2( 506.288, 718.421 )
-[connection signal="body_entered" from="Level/WorldBoundary/Area2D" to="Level/WorldBoundary" method="_on_Area2D_body_entered"]
+position = Vector2( 100.514, 704.648 )
 
-[editable path="Level"]
+[editable path="LevelRoot"]
