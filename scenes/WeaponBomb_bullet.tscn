@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/items/bomb_anims.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://scripts/Weapons/WeaponBomb_bullet.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 116.837
+
+[node name="WeaponBomb_bullet" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 1 )
+animation = "bomb_idle"
+frame = 1
+playing = true
+offset = Vector2( 0, -3.121 )
+
+[node name="PhysicsCollision" type="CollisionShape2D" parent="."]
+scale = Vector2( 0.84, 0.889 )
+shape = SubResource( 1 )
+
+[node name="Hurtbox" type="Area2D" parent="." groups=[
+"hurtbox",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource( 2 )
+disabled = true
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]

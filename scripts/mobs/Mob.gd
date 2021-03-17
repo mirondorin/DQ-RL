@@ -8,7 +8,7 @@ func _init():
 
 func attack_player(player):
 	if can_attack and is_network_master():
-		player.take_damage(attack_damage, Vector2(x_direction, 0))  # TODO: ensure that player takes damage only once, and takes it everywhere
+		player.take_damage(attack_damage, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 		impulse(100, Vector2(get_x_orientation() * -1, -1))
 		can_attack = false
 		follow = false

@@ -187,13 +187,15 @@ func _physics_process(delta):
 var weapon = 0 # Delete this later. Only for debug
 
 func switch_weapon():
-	weapon = 1 - weapon
+	weapon = (1 + weapon) % 3
 	current_weapon.queue_free()
 	var wep
 	if weapon == 1:
 		wep = load("res://scenes/WeaponProjectile.tscn")
-	else:
+	elif weapon == 0:
 		wep = load("res://scenes/Weapon.tscn")
+	elif weapon == 2:
+		wep = load("res://scenes/WeaponBomb.tscn")
 	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)
