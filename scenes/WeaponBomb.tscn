@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/items/bomb_anims.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://scripts/Weapons/WeaponBomb.gd" type="Script" id=2]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -54,7 +54,7 @@ tracks/3/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1.73777, 1.66416 )
 
 [node name="Weapon" type="Node2D"]
@@ -70,7 +70,7 @@ playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite")
-anims/idle = SubResource( 2 )
+anims/idle = SubResource( 1 )
 
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
@@ -81,6 +81,6 @@ input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0.741129, 0.150243 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 disabled = true
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Area2D_area_entered"]

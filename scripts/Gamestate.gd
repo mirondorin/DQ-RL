@@ -32,7 +32,7 @@ func _player_connected(id):
 
 # Callback from SceneTree.
 func _player_disconnected(id):
-	if has_node("/root/MainScene"): # Game is in progress.
+	if has_node("/root/MainSceneDorin"): # Game is in progress.
 		if get_tree().is_network_server():
 			emit_signal("game_error", "Player " + players[id] + " disconnected")
 			end_game()
@@ -75,8 +75,7 @@ func unregister_player(id):
 
 remote func pre_start_game(spawn_points):
 	# Change scene.
-	# var aa = load("res://scenes/MainScene.tscn")
-	var world = load("res://scenes/MainScene.tscn").instance()
+	var world = load("res://scenes/MainSceneDorin.tscn").instance()
 	get_tree().get_root().add_child(world)
 
 	get_tree().get_root().get_node("Lobby").hide()
@@ -88,7 +87,7 @@ remote func pre_start_game(spawn_points):
 		print("ok")
 #		var sss = world.get_node("Spawn/1")
 		print("okidoki")
-		var spawn_pos = world.get_node("Spawn/" + str(spawn_points[p_id])).position
+		var spawn_pos = world.get_node("LevelRoot/Spawn/" + str(spawn_points[p_id])).position
 		var player = player_scene.instance()
 
 		player.set_name(str(p_id)) # Use unique ID as node name.
@@ -176,6 +175,41 @@ func end_game():
 	emit_signal("game_ended")
 	players.clear()
 
+func get_next_level(current_level):
+	var result = current_level.split('/',true)[-1] #levelnr.tscn
+	result = result.split('.tscn')[0] #levelnr
+	var nr = 0
+	for i in range(5,len(result)):
+		nr = nr*10 +int(result[i])
+	nr+=1
+	result = "level" + str(nr) + ".tscn"
+	return result
+
+func change_level():
+	var world = get_tree().get_root().get_node("MainScene")
+	assert(get_tree().is_network_server())
+
+	var level = world.get_node("LevelRoot")
+	var next_level = get_next_level(level.filename)
+	print(next_level)
+	world.remove_child(level)
+	level.queue_free()
+	level = load("res://scenes/levels/" + next_level).instance()
+	world.add_child(level)
+	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.
+	var spawn_points = {}
+	spawn_points[1] = 0 # Server in spawn point 0.
+	var spawn_point_idx = 1
+	for p in players:
+		spawn_points[p] = spawn_point_idx
+		spawn_point_idx += 1
+		
+	for p_id in spawn_points:
+		var spawn_pos = world.get_node("LevelRoot/Spawn/" + str(spawn_points[p_id])).position
+		var player = world.get_node("Players/" + str(p_id))
+		
+		player.position = spawn_pos
+	world.move_child(world.get_node("Players"), world.get_child_count())
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
