@@ -51,7 +51,7 @@ func jump():
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
-		jump_intensity = 20
+		jump_intensity = 21
 		start_time = OS.get_ticks_msec()
 	var current_time = OS.get_ticks_msec()
 	if current_time-start_time>50:
@@ -64,10 +64,16 @@ func jump():
 	pass
 	
 func dash(_delta):
+	in_dash = true
 	var dir = -1 if $AnimatedSprite.flip_h else 1
 	self.GRAVITY = 0
 	velocity.y = 0
 	impulse(500, Vector2(dir, -0.001), 10, false)
+	yield(get_tree().create_timer(0.2), "timeout")
+	self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
+	in_dash = false
+	self.impulse_current_x = impulse_current_x/3
+	self.impulse_step = 5
 
 sync func play_animation( what):
 	if what =='special-attack':
@@ -80,7 +86,8 @@ func solve_animation(velocity,delta):
 	if not is_network_master():
 		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
-		rpc_unreliable("change_animation", "flip_h", x_direction < 0)
+		if x_direction !=0:
+			rpc_unreliable("change_animation", "flip_h", x_direction < 0)
 	
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
@@ -132,13 +139,8 @@ func solve_input(delta):
 	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
-		in_dash = true
 		dash(delta)
-		yield(get_tree().create_timer(0.2), "timeout")
-		self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
-		in_dash = false
-		self.impulse_current_x = impulse_current_x/3
-		self.impulse_step = 5
+		
 	if Input.is_action_just_pressed("debug_test"): 
 		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 		impulse(400, dir)
@@ -149,8 +151,15 @@ func solve_input(delta):
 func _physics_process(delta):
 	if is_network_master():
 		velocity.y += delta * GRAVITY
+			
+		solve_animation(velocity,delta)
 		solve_impulse()
 		
+		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+		var vel = Vector2(velocity.x, vel_y)
+		move_and_slide(vel, Vector2(0, -1))
+	
 		if is_on_floor():
 			velocity.y=0
 			jump_intensity = 0
@@ -168,14 +177,6 @@ func _physics_process(delta):
 		solve_input(delta)
 		rpc_unreliable("set_entity_position", position, velocity)
 
-	solve_animation(velocity,delta)
-		
-	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
-	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
-	var vel = Vector2(velocity.x, vel_y)
-
-	move_and_slide(vel, Vector2(0, -1))
-	
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision and collision.collider.name == 'Mob':
@@ -186,13 +187,15 @@ func _physics_process(delta):
 var weapon = 0 # Delete this later. Only for debug
 
 func switch_weapon():
-	weapon = 1 - weapon
+	weapon = (1 + weapon) % 3
 	current_weapon.queue_free()
 	var wep
 	if weapon == 1:
 		wep = load("res://scenes/WeaponProjectile.tscn")
-	else:
+	elif weapon == 0:
 		wep = load("res://scenes/Weapon.tscn")
+	elif weapon == 2:
+		wep = load("res://scenes/WeaponBomb.tscn")
 	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)
