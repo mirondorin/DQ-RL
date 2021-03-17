@@ -157,6 +157,7 @@ anims/special-attack = SubResource( 3 )
 rotation = 1.5708
 scale = Vector2( 3, 3 )
 input_pickable = false
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0.317, -13.203 )

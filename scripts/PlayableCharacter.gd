@@ -147,6 +147,8 @@ func solve_input(delta):
 		
 	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
+	if Input.is_action_just_pressed("change_level"):
+		gamestate.change_level()
 
 func _physics_process(delta):
 	if is_network_master():

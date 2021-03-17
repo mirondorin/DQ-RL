@@ -37,6 +37,8 @@ extents = Vector2( 34.0679, 455.331 )
 "mobs",
 ]]
 position = Vector2( 0.264862, -0.61401 )
+collision_layer = 0
+collision_mask = 2
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
@@ -47,7 +49,7 @@ position = Vector2( 0, 3.664 )
 scale = Vector2( 1.806, 1.806 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
