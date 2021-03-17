@@ -6,15 +6,18 @@ extends 'res://scripts/mobs/Mob_base.gd'
 func _init():
 	self.SPEED = 70
 
+# ! normal mob attack is not sync-ed, but seems to work
+
 func attack_player(player):
-	if can_attack and is_network_master():
+	if can_attack: #  and is_network_master() 
+		# if is_network_master, player does not take damage because is not on master
 		player.take_damage(attack_damage)  # TODO: ensure that player takes damage only once, and takes it everywhere
 		move_and_slide(Vector2(velocity.x + 2000*x_direction*-1, velocity.y), Vector2(0, -1))
 		can_attack = false
 		attack_timer.start()
 
 func _on_Hurtbox_area_entered(area):
-	if area.is_in_group('hitbox') and is_network_master():
+	if area.is_in_group('hitbox'): #  and is_network_master()
 		var owner = area.get_owner()
 		if owner.is_in_group('players'):
 			attack_player(owner)
