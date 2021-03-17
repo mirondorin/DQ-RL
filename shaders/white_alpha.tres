@@ -1,0 +1,58 @@
+[gd_resource type="VisualShader" load_steps=4 format=2]
+
+[sub_resource type="VisualShaderNodeInput" id=1]
+input_name = "screen_texture"
+
+[sub_resource type="VisualShaderNodeInput" id=2]
+output_port_for_preview = 0
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeTexture" id=3]
+source = 2
+
+[resource]
+code = "shader_type canvas_item;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:3
+	vec3 n_out3p0 = COLOR.rgb;
+
+// Input:2
+
+// Texture:4
+	vec3 n_out4p0;
+	float n_out4p1;
+	{
+		vec4 _tex_read = texture(TEXTURE , UV.xy);
+		n_out4p0 = _tex_read.rgb;
+		n_out4p1 = _tex_read.a;
+	}
+
+// Output:0
+	COLOR.rgb = n_out3p0;
+	COLOR.a = n_out4p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -356, -4.75 )
+mode = 1
+flags/light_only = false
+nodes/fragment/2/node = SubResource( 1 )
+nodes/fragment/2/position = Vector2( -200, 300 )
+nodes/fragment/3/node = SubResource( 2 )
+nodes/fragment/3/position = Vector2( 60, 60 )
+nodes/fragment/4/node = SubResource( 3 )
+nodes/fragment/4/position = Vector2( 60, 240 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 4, 2, 4, 1, 0, 1, 3, 0, 0, 0 )

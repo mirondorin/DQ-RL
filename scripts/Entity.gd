@@ -20,6 +20,11 @@ var stats = {
 	"health" : 100
 }
 
+func get_x_orientation():
+	if $AnimatedSprite.flip_h:
+		return -1
+	return 1
+
 func impulse(force, direction, step = 5, additive = true):
 	if additive: 
 		impulse_current_x += force
@@ -50,15 +55,15 @@ func solve_impulse():
 		impulse_step = 5
 		in_impulse = false
 	
-func take_damage(value):
+func take_damage(value, direction, impulse_force):
 	if is_network_master():
-		rpc("do_take_damage", value)
+		rpc("do_take_damage", value, direction, impulse_force)
 
-sync func do_take_damage(value):
+sync func do_take_damage(value, direction, impulse_force):
 	stats['health'] -= value
-	on_take_damage()
+	on_take_damage(direction, impulse_force)
 	
-func on_take_damage():
+func on_take_damage(direction, impulse_force):
 	change_animation("animation", "hit")
 	$Health.text = String(stats['health'])
 	play_animation("")

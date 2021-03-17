@@ -1,5 +1,6 @@
 extends "res://scripts/Entity.gd"
 
+const flash_material = preload("res://materials/white.tres")
 var spawner = null
 
 export var follow = true
@@ -38,7 +39,7 @@ func jump():
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
-		jump_intensity = 20
+		jump_intensity = 60
 		start_time = OS.get_ticks_msec()
 	var current_time = OS.get_ticks_msec()
 	if current_time-start_time>50:
@@ -53,7 +54,6 @@ func jump():
 func follow_player():
 	if len(in_area) > 0:
 		player = in_area[0]
-		follow = true
 	else:
 		follow = false
 		x_direction = 0
@@ -63,7 +63,7 @@ func follow_player():
 	else:
 		x_direction = -1
 	
-	if not follow:
+	if not follow or abs(position.x - player.position.x) < 10:
 		x_direction = 0
 
 func attack_player(_player):
@@ -71,8 +71,8 @@ func attack_player(_player):
 
 func solve_animation(velocity):
 	if  is_network_master():
-		if velocity.x != 0:
-			rpc_unreliable("change_animation", "flip_h", velocity.x < 0)
+		if x_direction !=0:
+			rpc_unreliable("change_animation", "flip_h", x_direction < 0)
 			rpc_unreliable("change_animation", "animation", 'walk')
 		if velocity.x == 0:
 			rpc_unreliable("change_animation", "animation", 'idle')
@@ -95,7 +95,18 @@ func _physics_process(delta):
 	if is_network_master():
 		follow_player()
 		velocity.y += delta * GRAVITY
+		
+		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
+			velocity.y += jump()
+			can_jump = false
+		
+		solve_animation(velocity)
 		solve_impulse()
+		
+		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+		move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
+		
 		if is_on_floor():
 			velocity.y = 0
 			jump_intensity = 0
@@ -110,15 +121,9 @@ func _physics_process(delta):
 		if is_on_wall():
 			impulse_current_x /= collision_resistance_factor
 		
-		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
-			velocity.y += jump()
-			can_jump = false
 		if in_impulse:
 			x_direction = 0
-		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
-		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
-		move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
-		
+
 		for i in get_slide_count():
 			if get_slide_count() > i:
 				var collision = get_slide_collision(i)
@@ -131,28 +136,32 @@ func _physics_process(delta):
 #		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 #		impulse(400, dir)
 	
-	solve_animation(velocity)
-	
-func on_take_damage():
+func on_take_damage(direction, impulse_force):
+	impulse(impulse_force, Vector2(direction.x, -1 if direction.y == 0 else direction.y))
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
+			$AnimatedSprite.set_material(flash_material)
+			yield(get_tree().create_timer(0.15), "timeout")
+			$AnimatedSprite.set_material(null)
 		else:
 #			if is_network_master():
 #				rpc("kill_mob") # on_take_damage is called from all peers
 			kill_mob()
 	follow = false
 	attack_timer.start()
+	
 	pass
 
 func _on_DetectArea_body_entered(body):
 	if not body in in_area:
 		if body.is_in_group("players"):
 			in_area.append(body)
+			follow = true
 	pass
 
 func _on_DetectArea_body_exited(body):
-	if not body in in_area:
+	if body in in_area:
 		if body.is_in_group("players"):
 			in_area.erase(body)
 	pass
@@ -160,6 +169,7 @@ func _on_DetectArea_body_exited(body):
 func _on_AttackCooldown_timeout():
 	can_attack = true
 	follow = true
+	
 	pass
 	
 func _on_JumpCooldown_timeout():
