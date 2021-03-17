@@ -16,25 +16,27 @@ func follow_player():
 				x_direction = -1
 		else:
 			x_direction = 0
-		
-		if position.x < player.position.x:
-			$AnimatedSprite.flip_h = false
-		else:
-			$AnimatedSprite.flip_h = true
+		if is_network_master():
+			rpc_unreliable("change_animation", "flip_h", position.x >= player.position.x) 
+			# nu stiu daca aici ar trebuii sa fie unreliable
 	else:
 		x_direction = 0
 	if not follow:
 		x_direction = 0
 
+
+sync func do_attack():
+	var bullet_inst = bullet.instance()
+	bullet_inst.group_to_detect = 'players'
+	bullet_inst.direction = -1 if int($AnimatedSprite.flip_h) else 1
+	get_tree().get_root().add_child(bullet_inst)
+	bullet_inst.global_position = self.global_position
+	can_attack = false
+	attack_timer.start()
+
 func attack_player(_player): #player will be null here
-	if can_attack:
-		var bullet_inst = bullet.instance()
-		bullet_inst.group_to_detect = 'players'
-		bullet_inst.direction = -1 if int($AnimatedSprite.flip_h) else 1
-		get_tree().get_root().add_child(bullet_inst)
-		bullet_inst.global_position = self.global_position
-		can_attack = false
-		attack_timer.start()
+	if can_attack and is_network_master():
+		rpc_unreliable("do_attack")
 	
 func _process(_delta):
 	attack_player(null)
