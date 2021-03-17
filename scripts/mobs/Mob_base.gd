@@ -63,7 +63,7 @@ func follow_player():
 	else:
 		x_direction = -1
 	
-	if not follow or abs(position.x - player.position.x) < 15:
+	if not follow or abs(position.x - player.position.x) < 10:
 		x_direction = 0
 
 func attack_player(_player):
@@ -136,7 +136,8 @@ func _physics_process(delta):
 #		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 #		impulse(400, dir)
 	
-func on_take_damage(direction):
+func on_take_damage(direction, impulse_force):
+	impulse(impulse_force, Vector2(direction.x, -1 if direction.y == 0 else direction.y))
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
@@ -148,8 +149,6 @@ func on_take_damage(direction):
 #				rpc("kill_mob") # on_take_damage is called from all peers
 			kill_mob()
 	follow = false
-	impulse(50, Vector2(direction.x, -1))
-	
 	attack_timer.start()
 	
 	pass

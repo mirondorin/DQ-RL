@@ -20,4 +20,4 @@ func _on_Area2D_area_entered(area):
 		var owner = area.get_owner()
 		if owner.is_in_group('mobs'):
 			owner.take_damage(attack_damage + get_parent().stats['damage_modifier'],
-			Vector2(-1 if $AnimatedSprite.flip_h else 1, 0))
+			Vector2(-1 if $AnimatedSprite.flip_h else 1, 0), 50)

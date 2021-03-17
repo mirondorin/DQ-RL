@@ -55,15 +55,15 @@ func solve_impulse():
 		impulse_step = 5
 		in_impulse = false
 	
-func take_damage(value, direction):
+func take_damage(value, direction, impulse_force):
 	if is_network_master():
-		rpc("do_take_damage", value, direction)
+		rpc("do_take_damage", value, direction, impulse_force)
 
-sync func do_take_damage(value, direction):
+sync func do_take_damage(value, direction, impulse_force):
 	stats['health'] -= value
-	on_take_damage(direction)
+	on_take_damage(direction, impulse_force)
 	
-func on_take_damage(direction):
+func on_take_damage(direction, impulse_force):
 	change_animation("animation", "hit")
 	$Health.text = String(stats['health'])
 	play_animation("")

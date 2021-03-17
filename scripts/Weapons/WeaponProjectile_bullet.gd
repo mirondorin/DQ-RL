@@ -16,6 +16,6 @@ func _on_Hurtbox_area_entered(area):
 	if area.is_in_group("hitbox"):
 		var owner = area.get_owner()
 		if owner.is_in_group(group_to_detect):
-			owner.take_damage(attack_damage, Vector2(direction, 0))
+			owner.take_damage(attack_damage, Vector2(direction, 0), 50)
 			if destroy_on_hit:
 				$".".queue_free()
