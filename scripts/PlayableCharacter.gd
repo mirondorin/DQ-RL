@@ -65,12 +65,14 @@ func jump():
 	
 func dash(_delta):
 	in_dash = true
+	$Hitbox.monitorable = false
 	var dir = -1 if $AnimatedSprite.flip_h else 1
 	self.GRAVITY = 0
 	velocity.y = 0
 	impulse(500, Vector2(dir, -0.001), 10, false)
 	yield(get_tree().create_timer(0.2), "timeout")
 	self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
+	$Hitbox.monitorable = true
 	in_dash = false
 	self.impulse_current_x = impulse_current_x/3
 	self.impulse_step = 5
@@ -193,11 +195,11 @@ func switch_weapon():
 	current_weapon.queue_free()
 	var wep
 	if weapon == 1:
-		wep = load("res://scenes/WeaponProjectile.tscn")
+		wep = load("res://scenes/Weapons/WeaponProjectile.tscn")
 	elif weapon == 0:
-		wep = load("res://scenes/Weapon.tscn")
+		wep = load("res://scenes/Weapons/Weapon.tscn")
 	elif weapon == 2:
-		wep = load("res://scenes/WeaponBomb.tscn")
+		wep = load("res://scenes/Weapons/WeaponBomb.tscn")
 	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)

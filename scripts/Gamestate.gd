@@ -186,6 +186,8 @@ func get_next_level(current_level):
 	return result
 	
 remote func peer_change_level(spawn_points):
+	
+	get_tree().call_group("projectile", "queue_free")	
 	var world = get_tree().get_root().get_node("MainScene")
 
 	var level = world.get_node("LevelRoot")

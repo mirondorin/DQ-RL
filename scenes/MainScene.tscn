@@ -15,25 +15,6 @@ script = ExtResource( 4 )
 
 [node name="LevelRoot" parent="." instance=ExtResource( 1 )]
 
-[node name="EnemySpawner" parent="LevelRoot" index="2"]
-spawn_continously = false
-
-[node name="EnemySpawner2" parent="LevelRoot" index="3"]
-spawn_delay = 1
-spawn_continously = false
-
-[node name="EnemySpawner3" parent="LevelRoot" index="4"]
-spawn_delay = 1
-spawn_continously = false
-
-[node name="EnemySpawner4" parent="LevelRoot" index="5"]
-spawn_delay = 1
-spawn_continously = false
-
-[node name="EnemySpawner5" parent="LevelRoot" index="6"]
-spawn_delay = 1
-spawn_continously = false
-
 [node name="Players" type="Node2D" parent="."]
 
 [editable path="LevelRoot"]

@@ -1,6 +1,6 @@
 extends 'res://scripts/Weapons/Weapon_base.gd'
 
-const bullet = preload("res://scenes/WeaponProjectile_bullet.tscn")
+const bullet = preload("res://scenes/Weapons/WeaponProjectile_bullet.tscn")
 
 func _init():
 	self.attack_damage = 5

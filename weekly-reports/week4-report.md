@@ -1,6 +1,9 @@
 # Weekly report 4
 
 ## Ciobanu Sebastian
+* Helped with refactoring
+* Bug fixes
+* Tesing
 
 ## Miron Dorin
 * Refactored code

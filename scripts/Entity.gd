@@ -17,7 +17,8 @@ var x_direction = 0
 var velocity = Vector2()
 
 var stats = {
-	"health" : 100
+	"health" : 100,
+	"invincible" : false
 }
 
 func get_x_orientation():
@@ -56,8 +57,8 @@ func solve_impulse():
 		in_impulse = false
 	
 func take_damage(value, direction, impulse_force):
-	if is_network_master():
-		rpc("do_take_damage", value, direction, impulse_force)
+	if not stats['invincible'] and is_network_master():
+			rpc("do_take_damage", value, direction, impulse_force)
 
 sync func do_take_damage(value, direction, impulse_force):
 	stats['health'] -= value

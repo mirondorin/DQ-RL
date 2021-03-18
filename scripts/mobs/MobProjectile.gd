@@ -1,6 +1,6 @@
 extends 'res://scripts/mobs/Mob_base.gd'
 
-const bullet = preload("res://scenes/WeaponProjectile_bullet.tscn")
+var bullet = load("res://scenes/Weapons/WeaponProjectile_bullet.tscn")
 var max_dist_player = 150
 
 func _init():

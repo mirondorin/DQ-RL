@@ -1,11 +1,12 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Mobs/Mob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/items/DamageBoost.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/MobProjectile.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Mobs/MobHomingProjectile.tscn" type="PackedScene" id=7]
 
 [sub_resource type="VisualShaderNodeColorOp" id=1]
 operator = 2
@@ -111,30 +112,39 @@ enemyscene = ExtResource( 3 )
 max_spawns = 1
 start_enabled = true
 spawn_delay = 3
+spawn_continously = false
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 317.938, 566.952 )
-enemyscene = ExtResource( 3 )
+enemyscene = ExtResource( 7 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawner3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 144.413, 967.471 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawner4" parent="." instance=ExtResource( 2 )]
 position = Vector2( 362.708, 834.823 )
 enemyscene = ExtResource( 5 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawner5" parent="." instance=ExtResource( 2 )]
 position = Vector2( -78.5266, 933.818 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="DamageBoost" parent="." instance=ExtResource( 4 )]
 position = Vector2( 361.504, 566.325 )
