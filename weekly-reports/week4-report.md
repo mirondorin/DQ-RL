@@ -9,6 +9,10 @@
 * Changed collision logic for mobs/bombs/player
 
 ## Paraschiv Tudor
+* Worked on refactor
+* Added a sort of physics impulse for entities
+* Added bomb weapon + bomb entity with explosion
+* Added a new test level
+* Updated mob reactions on hit
 
- 
 ## Stoica George
