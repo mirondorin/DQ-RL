@@ -184,10 +184,9 @@ func get_next_level(current_level):
 	nr+=1
 	result = "level" + str(nr) + ".tscn"
 	return result
-
-func change_level():
+	
+remote func peer_change_level(spawn_points):
 	var world = get_tree().get_root().get_node("MainScene")
-	assert(get_tree().is_network_server())
 
 	var level = world.get_node("LevelRoot")
 	var next_level = get_next_level(level.filename)
@@ -196,20 +195,38 @@ func change_level():
 	level.queue_free()
 	level = load("res://scenes/levels/" + next_level).instance()
 	world.add_child(level)
-	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.
-	var spawn_points = {}
-	spawn_points[1] = 0 # Server in spawn point 0.
-	var spawn_point_idx = 1
-	for p in players:
-		spawn_points[p] = spawn_point_idx
-		spawn_point_idx += 1
 		
 	for p_id in spawn_points:
 		var spawn_pos = world.get_node("LevelRoot/Spawn/" + str(spawn_points[p_id])).position
 		var player = world.get_node("Players/" + str(p_id))
 		
 		player.position = spawn_pos
+#		player.set_network_master(p_id)
 	world.move_child(world.get_node("Players"), world.get_child_count())
+	if not get_tree().is_network_server():
+		# Tell server we are ready to start.
+		rpc_id(1, "ready_to_start", get_tree().get_network_unique_id())
+	elif players.size() == 0:
+		post_start_game()
+
+sync func master_change_level():
+	get_tree().set_pause(true)
+	if not get_tree().is_network_server():
+		return 1
+	var spawn_points = {}
+	spawn_points[1] = 0 # Server in spawn point 0.
+	var spawn_point_idx = 1
+	for p in players:
+		spawn_points[p] = spawn_point_idx
+		spawn_point_idx += 1
+	for p in players:
+		rpc_id(p, "peer_change_level", spawn_points)
+	peer_change_level(spawn_points)
+
+func change_level():
+	print("change level")
+	rpc("master_change_level")
+	
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
