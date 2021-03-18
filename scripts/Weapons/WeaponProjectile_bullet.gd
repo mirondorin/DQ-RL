@@ -4,11 +4,16 @@ export var attack_damage = 10
 export var destroy_on_hit = true
 export var direction = 1 #1 right, -1 left
 export var speed = 200
+var lifespan = 10
 var group_to_detect = 'mobs'
-	
-func _physics_process(_delta):
+var max_distance = 1000
+
+func _physics_process(delta):
+	lifespan -= delta
+	if lifespan<0:
+		self.queue_free()
 	move_and_slide(Vector2(speed*direction, 0), Vector2(1, 0))
-	
+		
 func _ready():
 	set_as_toplevel(true)
 

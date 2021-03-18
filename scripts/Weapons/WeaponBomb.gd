@@ -1,5 +1,5 @@
 extends 'res://scripts/Weapons/Weapon_base.gd'
-const bullet = preload("res://scenes/WeaponBomb_bullet.tscn")
+const bullet = preload("res://scenes/Weapons/WeaponBomb_bullet.tscn")
 
 
 func _init():
