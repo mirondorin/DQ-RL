@@ -5,7 +5,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack"
-length = 0.4
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -13,10 +13,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0749531, 0.2, 0.3, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.0561505, 0.1256 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( -4.7622, 0 ), Vector2( 41.074, 0 ), Vector2( 33.885, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( -15, 0 ), Vector2( 15, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("../Hurtbox/CollisionShape2D:disabled")
@@ -25,7 +25,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.386365 ),
+"times": PoolRealArray( 0, 0.0571483, 0.127777 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
@@ -141,6 +141,7 @@ scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="Sprite" parent="."]
+position = Vector2( 15, 0 )
 rotation = 1.5708
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
