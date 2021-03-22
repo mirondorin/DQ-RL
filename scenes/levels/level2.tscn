@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/Mobs/Mob.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/Mobs/MobHomingProjectile.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/Mobs/GolemBoss.tscn" type="PackedScene" id=8]
 
 [node name="LevelRoot" type="Node2D"]
 
@@ -35,6 +36,7 @@ position = Vector2( 263.044, 333.754 )
 enemyscene = ExtResource( 2 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
 spawn_continously = true
 
 [node name="EnemySpawner(Melee)2" parent="." instance=ExtResource( 3 )]
@@ -42,6 +44,7 @@ position = Vector2( 505.581, 333.047 )
 enemyscene = ExtResource( 2 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
 spawn_continously = true
 
 [node name="EnemySpawner(Projectile)" parent="." instance=ExtResource( 3 )]
@@ -49,6 +52,7 @@ position = Vector2( 728.495, 317.156 )
 enemyscene = ExtResource( 6 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
 spawn_continously = true
 
 [node name="EnemySpawner(Projectile)2" parent="." instance=ExtResource( 3 )]
@@ -56,6 +60,7 @@ position = Vector2( 809.495, 334.156 )
 enemyscene = ExtResource( 6 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
 spawn_continously = true
 
 [node name="DamageBoost" parent="." instance=ExtResource( 4 )]
@@ -78,7 +83,18 @@ position = Vector2( 80.6137, 369.018 )
 [node name="3" type="Position2D" parent="Spawn"]
 position = Vector2( 102.862, 367.969 )
 
-[node name="EnemySpawner" parent="." instance=ExtResource( 3 )]
+[node name="EnemySpawner(Homing)" parent="." instance=ExtResource( 3 )]
 position = Vector2( 981.395, 253.739 )
 enemyscene = ExtResource( 7 )
+max_spawns = 2
 start_enabled = true
+spawn_delay = 1
+spawn_continously = false
+
+[node name="EnemySpawner(Boss)" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1208.26, 364.747 )
+enemyscene = ExtResource( 8 )
+max_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
