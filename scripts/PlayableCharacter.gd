@@ -190,7 +190,7 @@ func _physics_process(delta):
 
 var weapon = 0 # Delete this later. Only for debug
 
-func switch_weapon():
+sync func do_switch_weapon():
 	weapon = (1 + weapon) % 3
 	current_weapon.queue_free()
 	var wep
@@ -203,6 +203,9 @@ func switch_weapon():
 	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)
+
+func switch_weapon():
+	rpc("do_switch_weapon")
 	
 	
 func out_of_bounds():
