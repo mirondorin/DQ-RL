@@ -24,8 +24,8 @@ func special_attack():
 sync func update_weapon_postion(x, radians):
 	self.position.x = x
 	self.rotation_degrees = radians
-
-func update_orientation(orientation):
+	
+sync func do_update_orientation(orientation):
 	if orientation:
 		self.rotation_degrees = -180
 		if self.position.x > 0:
@@ -34,7 +34,9 @@ func update_orientation(orientation):
 		self.rotation_degrees = 0
 		if self.position.x < 0:
 			self.position.x = -self.position.x
-	if is_network_master():
-		rpc_unreliable("change_animation", "flip_h", orientation) # Does this need to be reliable?
-		rpc_unreliable("update_weapon_postion", self.position.x, self.rotation_degrees)
+	change_animation("flip_h", orientation)
+	update_weapon_postion(self.position.x, self.rotation_degrees)
+
+func update_orientation(orientation):
+	rpc_unreliable("do_update_orientation", orientation)
 
