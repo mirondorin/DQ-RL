@@ -82,7 +82,6 @@ position = Vector2( 102.862, 367.969 )
 [node name="EnemySpawner(Homing)" parent="." instance=ExtResource( 3 )]
 position = Vector2( 981.395, 253.739 )
 enemyscene = ExtResource( 7 )
-start_enabled = true
 
 [node name="EnemySpawner(Boss)" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1561.81, 515.361 )

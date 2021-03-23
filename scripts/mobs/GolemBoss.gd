@@ -41,9 +41,10 @@ func solve_animation(velocity):
 	pass
 	
 func jump_attack_init():
-	if can_jump_attack and not pebble_attacking and player != null:
+	if can_jump and can_jump_attack and not pebble_attacking and player != null:
 		can_jump_attack = false
 		can_pebble_attack = false
+		can_jump = false
 		follow = false
 		jump_attacking = true
 		jump_attack_exec()

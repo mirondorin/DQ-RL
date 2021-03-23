@@ -13,7 +13,7 @@ extents = Vector2( 10.1497, 9.43893 )
 "projectile",
 ]]
 collision_layer = 4
-collision_mask = 0
+collision_mask = 4
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

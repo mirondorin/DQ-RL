@@ -34,6 +34,7 @@ position = Vector2( 263.044, 333.754 )
 enemyscene = ExtResource( 2 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
 spawn_continously = true
 
 [node name="EnemySpawner2(Melee)" parent="." instance=ExtResource( 3 )]
@@ -41,6 +42,7 @@ position = Vector2( 505.581, 333.047 )
 enemyscene = ExtResource( 2 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
 spawn_continously = true
 
 [node name="EnemySpawner3(Projectile)" parent="." instance=ExtResource( 3 )]
@@ -48,6 +50,7 @@ position = Vector2( 856.306, 365.574 )
 enemyscene = ExtResource( 6 )
 max_spawns = 1
 start_enabled = true
+spawn_delay = 1
 spawn_continously = true
 
 [node name="DamageBoost" parent="." instance=ExtResource( 4 )]
