@@ -7,7 +7,6 @@
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=6]
 
-
 [node name="LevelRoot" type="Node2D"]
 
 [node name="Background" type="TileMap" parent="."]

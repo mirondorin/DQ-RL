@@ -31,4 +31,3 @@ region_rect = Rect2( 340, 135.045, 45.339, 43.38 )
 position = Vector2( -0.529732, -0.662163 )
 shape = SubResource( 2 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]

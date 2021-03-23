@@ -6,7 +6,7 @@ var attack_damage = 15
 
 func _ready():
 	set_as_toplevel(true)
-	var force = rand_range(200, 500)
+	var force = rand_range(400, 600)
 	direction = Vector2(1, 0).rotated(rand_range(0, PI) + PI)
 	impulse(force, direction)
 	pass

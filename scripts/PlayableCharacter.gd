@@ -1,4 +1,5 @@
 extends "res://scripts/Entity.gd"
+const flash_material = preload("res://materials/white.tres")
 
 onready var current_weapon = $Weapon
 
@@ -217,6 +218,18 @@ func out_of_bounds():
 	else:
 		position = puppet_pos
 	pass
+
+func on_take_damage(direction, impulse_force):
+	$AnimatedSprite.set_material(flash_material)
+	yield(get_tree().create_timer(0.15), "timeout")
+	$AnimatedSprite.set_material(null)
+	
+	change_animation("animation", "hit")
+	$Health.text = String(stats['health'])
+	play_animation("")
+	if stats['health'] <= 0:
+		$Health.text = 'dead!'
+		$Health.add_color_override("font_color", Color(255, 0, 0))
 
 func _on_AnimatedSprite_animation_finished():
 #	remotesync not working (or maybe it does, but I don't see it)
