@@ -23,8 +23,8 @@ var cooldowns = {
 
 var can_attack = true
 
-export var health = 100
-puppet var puppet_health = health
+#export var health = 100
+#puppet var puppet_health = health
 # !! maybe it's not needed, as it doesn't change periodically
 
 var start_position
@@ -38,6 +38,7 @@ func _init():
 	self.SPEED = 100
 	self.JUMPSPEED = 80
 	stats["damage_modifier"] = 0
+	stats["health"] = 10000
 
 func _ready():
 	screen_size = get_viewport_rect().size

@@ -11,6 +11,7 @@ extents = Vector2( 10.1497, 9.43893 )
 [node name="GolemPebble" type="KinematicBody2D" groups=[
 "projectile",
 ]]
+collision_layer = 0
 script = ExtResource( 2 )
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
@@ -26,6 +27,7 @@ region_rect = Rect2( 340, 135.045, 45.339, 43.38 )
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
 ]]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( -0.529732, -0.662163 )

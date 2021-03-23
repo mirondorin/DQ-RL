@@ -137,10 +137,12 @@ func _physics_process(delta):
 #		impulse(400, dir)
 	
 func on_take_damage(direction, impulse_force):
-	impulse(impulse_force, Vector2(direction.x, -1 if direction.y == 0 else direction.y))
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
+			if stats['stagger_health'] == 0:
+				impulse(impulse_force, Vector2(direction.x, -1 if direction.y == 0 else direction.y))
+				stats['stagger_health'] == stats['stagger_default']
 			$AnimatedSprite.set_material(flash_material)
 			yield(get_tree().create_timer(0.15), "timeout")
 			$AnimatedSprite.set_material(null)

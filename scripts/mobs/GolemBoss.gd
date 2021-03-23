@@ -12,7 +12,18 @@ func _ready():
 func _init():
 	self.SPEED = 100
 	self.stats['health'] = 100
+	self.stats['stagger_default'] = 300
+	self.stats['stagger_health'] = 300
 	can_jump = false
+
+func _process(delta):
+	pebble_attack_init()
+	jump_attack_init()
+	
+	if is_on_floor():
+		if jump_attacking:
+			jump_attack_reset()
+	#print(can_jump_attack)
 
 func solve_animation(velocity):
 	if  is_network_master():
@@ -28,15 +39,6 @@ func solve_animation(velocity):
 			else:
 				rpc_unreliable("change_animation", "animation", 'idle')
 	pass
-
-func _process(delta):
-	pebble_attack_init()
-	jump_attack_init()
-	
-	if is_on_floor():
-		if jump_attacking:
-			jump_attack_reset()
-	#print(can_jump_attack)
 	
 func jump_attack_init():
 	if can_jump_attack and not pebble_attacking and player != null:
