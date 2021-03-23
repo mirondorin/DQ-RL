@@ -93,6 +93,12 @@ change_level={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player_collisions"
+2d_physics/layer_2="mob_collisions"
+2d_physics/layer_3="projectile-world_collisions"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

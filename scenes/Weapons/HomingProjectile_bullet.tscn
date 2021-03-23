@@ -11,6 +11,7 @@ extents = Vector2( 9.14363, 9.09905 )
 [node name="HomingProjectile_bullet" type="KinematicBody2D" groups=[
 "projectile",
 ]]
+collision_layer = 4
 script = ExtResource( 2 )
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]

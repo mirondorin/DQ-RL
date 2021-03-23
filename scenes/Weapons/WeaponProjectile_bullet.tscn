@@ -11,12 +11,13 @@ extents = Vector2( 9.14363, 9.09905 )
 [node name="WeaponProjectile_bullet" type="KinematicBody2D" groups=[
 "projectile",
 ]]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource( 2 )
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 scale = Vector2( 0.84, 0.889 )
 shape = SubResource( 1 )
-disabled = true
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 2.445, 2.445 )
@@ -25,6 +26,7 @@ texture = ExtResource( 1 )
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
 ]]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 2 )
