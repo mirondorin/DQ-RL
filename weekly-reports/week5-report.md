@@ -1,8 +1,11 @@
-# Weekly report 4
+# Weekly report 5
 
 ## Ciobanu Sebastian
 
 ## Miron Dorin
+* Worked on golem boss
+* Added one way platforms
+* More layer & masks logic
 
 ## Paraschiv Tudor
 
