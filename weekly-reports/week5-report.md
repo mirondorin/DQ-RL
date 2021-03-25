@@ -8,6 +8,8 @@
 * More layer & masks logic
 
 ## Paraschiv Tudor
+* Added golem rock attack
+* Added golem jump attack
 
 ## Stoica George
  * I've been playing the game for fun
