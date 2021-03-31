@@ -12,13 +12,13 @@ radius = 116.837
 "projectile",
 ]]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
 animation = "bomb_idle"
-frame = 2
+frame = 1
 playing = true
 offset = Vector2( 0, -3.121 )
 

@@ -27,7 +27,9 @@ var jump_cooldown = 4
 var in_area = []
 
 func _init():
-	stats["health"] = 20
+	stats['health'] = 20
+	stats['stagger_default'] = 1
+	stats['stagger_health'] = 1
 
 func _ready():
 	if is_network_master():
@@ -140,9 +142,9 @@ func on_take_damage(direction, impulse_force):
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
-			if stats['stagger_health'] == 0:
+			if stats['stagger_health'] <= 0:
 				impulse(impulse_force, Vector2(direction.x, -1 if direction.y == 0 else direction.y))
-				stats['stagger_health'] == stats['stagger_default']
+				stats['stagger_health'] = stats['stagger_default']
 			$AnimatedSprite.set_material(flash_material)
 			yield(get_tree().create_timer(0.15), "timeout")
 			$AnimatedSprite.set_material(null)

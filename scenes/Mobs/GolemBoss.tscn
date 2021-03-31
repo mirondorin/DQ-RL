@@ -199,7 +199,7 @@ script = ExtResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 23 )
 animation = "idle"
-frame = 3
+frame = 7
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
@@ -251,7 +251,7 @@ margin_bottom = 33.0
 rect_scale = Vector2( 0.466, 0.444 )
 custom_fonts/font = ExtResource( 9 )
 custom_colors/font_color = Color( 1, 0.741176, 0, 1 )
-text = "100
+text = "1000
 
 "
 __meta__ = {

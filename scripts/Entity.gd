@@ -18,8 +18,8 @@ var velocity = Vector2()
 
 var stats = {
 	"health" : 100,
-	"stagger_default" : 10,
-	"stagger_health" : 10,
+	"stagger_default" : 1,
+	"stagger_health" : 1,
 	"invincible" : false
 }
 
@@ -66,9 +66,9 @@ sync func do_take_damage(value, direction, impulse_force):
 	stats['health'] -= value
 	stats['stagger_health'] -= value
 	on_take_damage(direction, impulse_force)
-	
+
 func on_take_damage(direction, impulse_force):
-	if stats['stagger_health'] == 0:
+	if stats['stagger_health'] <= 0:
 		change_animation("animation", "hit")
 		stats['stagger_health'] = stats['stagger_default']
 	$Health.text = String(stats['health'])

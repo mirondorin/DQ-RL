@@ -45,7 +45,7 @@ func on_take_damage(direction, impulse_force):
 func _on_Hurtbox_area_entered(area):
 	if area.is_in_group("hitbox"):
 		var owner = area.get_owner()
-		if owner.is_in_group(group_to_detect):
+		if owner.is_in_group(group_to_detect) or owner.is_in_group("secret_door"):
 			var dir = (owner.position - self.position).normalized()
 			dir.y -= 1
 			owner.take_damage(attack_damage, dir, 400)

@@ -11,9 +11,9 @@ func _ready():
 	
 func _init():
 	self.SPEED = 100
-	self.stats['health'] = 100
-	self.stats['stagger_default'] = 300
-	self.stats['stagger_health'] = 300
+	self.stats['health'] = 1000
+	self.stats['stagger_default'] = 999
+	self.stats['stagger_health'] = 999
 	can_jump = false
 
 func _process(delta):

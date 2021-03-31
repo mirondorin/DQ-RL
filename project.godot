@@ -97,7 +97,8 @@ change_level={
 
 2d_physics/layer_1="player_collisions"
 2d_physics/layer_2="mob_collisions"
-2d_physics/layer_3="projectile-world_collisions"
+2d_physics/layer_3="projectile_world_collisions"
+2d_physics/layer_4="secret_path"
 
 [rendering]
 
