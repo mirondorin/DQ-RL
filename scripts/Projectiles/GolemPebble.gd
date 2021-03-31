@@ -19,7 +19,7 @@ func _on_Hurtbox_area_entered(area):
 	if area.is_in_group("hitbox"):
 		var owner = area.get_owner()
 		if owner.is_in_group(group_to_detect):
-			owner.take_damage(attack_damage, direction, 50)
+			owner.take_damage(attack_damage, 50, direction, 0)
 		queue_free()
 
 func _physics_process(delta):
