@@ -66,7 +66,7 @@ func jump_attack_reset():
 		$Hurtbox/CollisionShape2D.disabled = true	
 	
 func attack_player(player):
-	player.take_damage(attack_damage, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
+	player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 		
 sync func pebble_attack_init():
 	if can_pebble_attack and not jump_attacking:

@@ -21,6 +21,8 @@ var cooldowns = {
 	"can_utility" : true
 		}
 
+var interactables = []
+
 var can_attack = true
 
 #export var health = 100
@@ -136,14 +138,17 @@ func solve_input(delta):
 		current_weapon.attack()
 		$Cooldown_Root/LightAttack_CD.start()
 		can_attack = false
-	elif Input.is_action_pressed("special_attack") and can_attack:
+	elif Input.is_action_pressed("special_attack") and can_attack and weapon == 0:
 		rpc_unreliable("play_animation", 'special-attack')
 		$Cooldown_Root/SpecialAttack_CD.start()
 		can_attack = false
-	if Input.is_action_pressed('utility') and cooldowns['can_utility']:
+	if Input.is_action_pressed("utility") and cooldowns['can_utility']:
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
 		dash(delta)
+	
+	if Input.is_action_just_pressed("interact"):
+		use_interact()
 		
 	if Input.is_action_just_pressed("debug_test"): 
 		var dir = (self.position - get_global_mouse_position()).normalized() * -1
@@ -267,6 +272,11 @@ func _on_Dash_timeout():
 
 func grab_item():
 	print("Called grab item")
+
+func use_interact():
+	for i in interactables:
+		i.get_parent().interact()
+		return
 	
 sync func do_modify_stats(status, value):
 	stats[status] += value
@@ -275,3 +285,11 @@ sync func do_modify_stats(status, value):
 func modify_stats(status, value):
 	if is_network_master():
 		rpc("do_modify_stats", status, value)
+
+func _on_Hitbox_area_entered(area):
+	if area.is_in_group("interactable"):
+		interactables.append(area)
+
+func _on_Hitbox_area_exited(area):
+	if area.is_in_group("interactable"):
+		interactables.erase(area)
