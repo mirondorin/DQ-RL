@@ -20,7 +20,8 @@ var stats = {
 	"health" : 100,
 	"stagger_default" : 10,
 	"stagger_health" : 10,
-	"invincible" : false
+	"invincible" : false,
+	"default_speed": 100
 }
 
 func get_x_orientation():
@@ -58,13 +59,13 @@ func solve_impulse():
 		impulse_step = 5
 		in_impulse = false
 	
-func take_damage(value, direction, impulse_force):
+func take_damage(value, stagger, direction, impulse_force):
 	if not stats['invincible'] and is_network_master():
-			rpc("do_take_damage", value, direction, impulse_force)
+			rpc("do_take_damage", value, stagger, direction, impulse_force)
 
-sync func do_take_damage(value, direction, impulse_force):
+sync func do_take_damage(value, stagger, direction, impulse_force):
 	stats['health'] -= value
-	stats['stagger_health'] -= value
+	stats['stagger_health'] -= stagger
 	on_take_damage(direction, impulse_force)
 	
 func on_take_damage(direction, impulse_force):

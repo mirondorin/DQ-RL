@@ -4,6 +4,7 @@ var bullet = load("res://scenes/Weapons/WeaponProjectile_bullet.tscn")
 var max_dist_player = 150
 
 func _init():
+	stats['default_speed'] = 20
 	self.SPEED = 20
 
 func follow_player():

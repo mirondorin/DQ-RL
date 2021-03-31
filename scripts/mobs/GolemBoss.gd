@@ -10,10 +10,11 @@ func _ready():
 	bullet = load("res://scenes/Weapons/GolemPebble.tscn")
 	
 func _init():
-	self.SPEED = 100
+	stats['default_speed'] = 100
 	self.stats['health'] = 100
 	self.stats['stagger_default'] = 300
 	self.stats['stagger_health'] = 300
+	self.SPEED = stats['default_speed'] 
 	can_jump = false
 
 func _process(delta):

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=55 format=2]
+[gd_resource type="TileSet" load_steps=57 format=2]
 
 [ext_resource path="res://assets/Caves/background4b.png" type="Texture" id=1]
 [ext_resource path="res://assets/Caves/mainlev_build.png" type="Texture" id=2]
@@ -104,6 +104,12 @@ points = PoolVector2Array( 96, 64, 0, 64, 0, 0, 96, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=33]
 points = PoolVector2Array( 48, 16, 0, 32, 0, 0, 48, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=50]
+points = PoolVector2Array( 48, 16, 0, 16, 0, 0, 48, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=51]
+points = PoolVector2Array( 48, 16, 0, 16, 0, 0, 48, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=34]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -893,9 +899,16 @@ points = PoolVector2Array( 176, 16, 0, 16, 0, 0, 176, 0 )
 44/navigation_offset = Vector2( 0, 0 )
 44/shape_offset = Vector2( 0, 0 )
 44/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+44/shape = SubResource( 50 )
 44/shape_one_way = false
-44/shape_one_way_margin = 0.0
-44/shapes = [  ]
+44/shape_one_way_margin = 1.0
+44/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 50 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
 44/z_index = 0
 45/name = "3wood2.png"
 45/texture = ExtResource( 2 )
@@ -907,9 +920,16 @@ points = PoolVector2Array( 176, 16, 0, 16, 0, 0, 176, 0 )
 45/navigation_offset = Vector2( 0, 0 )
 45/shape_offset = Vector2( 0, 0 )
 45/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+45/shape = SubResource( 51 )
 45/shape_one_way = false
-45/shape_one_way_margin = 0.0
-45/shapes = [  ]
+45/shape_one_way_margin = 1.0
+45/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 51 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
 45/z_index = 0
 46/name = "ice_atlas.png"
 46/texture = ExtResource( 2 )
@@ -1221,7 +1241,7 @@ points = PoolVector2Array( 176, 16, 0, 16, 0, 0, 176, 0 )
 65/region = Rect2( 32, 16, 48, 48 )
 65/tile_mode = 1
 65/autotile/bitmask_mode = 1
-65/autotile/bitmask_flags = [ Vector2( 0, 0 ), 256, Vector2( 0, 1 ), 260, Vector2( 0, 2 ), 4, Vector2( 1, 0 ), 320, Vector2( 1, 1 ), 325, Vector2( 1, 2 ), 5, Vector2( 2, 0 ), 64, Vector2( 2, 1 ), 65, Vector2( 2, 2 ), 1 ]
+65/autotile/bitmask_flags = [ Vector2( 0, 0 ), 432, Vector2( 0, 1 ), 438, Vector2( 0, 2 ), 54, Vector2( 1, 0 ), 504, Vector2( 1, 1 ), 511, Vector2( 1, 2 ), 63, Vector2( 2, 0 ), 216, Vector2( 2, 1 ), 219, Vector2( 2, 2 ), 27 ]
 65/autotile/icon_coordinate = Vector2( 0, 0 )
 65/autotile/tile_size = Vector2( 16, 16 )
 65/autotile/spacing = 0
