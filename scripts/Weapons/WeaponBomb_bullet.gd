@@ -36,7 +36,7 @@ func _physics_process(delta):
 	move_and_slide(vel, Vector2(0, -1))
 	rotation_degrees += (velocity.x * x_direction)/7
 
-func take_damage(value, direction, impulse_force):
+func take_damage(value, stagger, direction, impulse_force):
 	pass
 
 func on_take_damage(direction, impulse_force):
@@ -48,4 +48,4 @@ func _on_Hurtbox_area_entered(area):
 		if owner.is_in_group(group_to_detect):
 			var dir = (owner.position - self.position).normalized()
 			dir.y -= 1
-			owner.take_damage(attack_damage, dir, 400)
+			owner.take_damage(attack_damage, 999, dir, 400)

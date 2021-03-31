@@ -6,7 +6,7 @@ var rate_of_change = 2
 
 func _ready():
 	lifespan = 5
-	speed = 100
+	speed = 70
 	direction = 0
 	pass
 

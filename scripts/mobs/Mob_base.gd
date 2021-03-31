@@ -140,17 +140,19 @@ func on_take_damage(direction, impulse_force):
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
-			if stats['stagger_health'] == 0:
+			if stats['stagger_health'] <= 0:
 				impulse(impulse_force, Vector2(direction.x, -1 if direction.y == 0 else direction.y))
-				stats['stagger_health'] == stats['stagger_default']
+				stats['stagger_health'] = stats['stagger_default']
+				follow = false
 			$AnimatedSprite.set_material(flash_material)
+			SPEED = SPEED / 2
 			yield(get_tree().create_timer(0.15), "timeout")
+			SPEED = stats['default_speed']
 			$AnimatedSprite.set_material(null)
 		else:
 #			if is_network_master():
 #				rpc("kill_mob") # on_take_damage is called from all peers
 			kill_mob()
-	follow = false
 	attack_timer.start()
 	
 	pass

@@ -4,14 +4,15 @@ extends 'res://scripts/mobs/Mob_base.gd'
 # read this mayne helps
 
 func _init():
-	self.SPEED = 70
+	stats['default_speed'] = 65
+	self.SPEED = stats['default_speed']
 
 # ! normal mob attack is not sync-ed, but seems to work
 
 func attack_player(player):
 	if can_attack: # and is_network_master():
 		# if is_network_master, player does not take damage because is not on master
-		player.take_damage(attack_damage, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
+		player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 		impulse(100, Vector2(get_x_orientation() * -1, -1))
 		can_attack = false
 		follow = false

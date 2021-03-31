@@ -7,6 +7,7 @@ export var speed = 200
 var lifespan = 10
 var group_to_detect = 'mobs'
 var max_distance = 1000
+var stagger_damage = 5
 
 func _physics_process(delta):
 	lifespan -= delta
@@ -21,6 +22,6 @@ func _on_Hurtbox_area_entered(area):
 	if area.is_in_group("hitbox"):
 		var owner = area.get_owner()
 		if owner.is_in_group(group_to_detect):
-			owner.take_damage(attack_damage, Vector2(direction, 0), 50)
+			owner.take_damage(attack_damage, stagger_damage, Vector2(direction, 0), 50)
 			if destroy_on_hit:
 				queue_free()

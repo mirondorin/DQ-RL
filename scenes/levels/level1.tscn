@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/Mobs/MobHomingProjectile.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/Weapons/GolemPebble.tscn" type="PackedScene" id=8]
 
 [sub_resource type="VisualShaderNodeColorOp" id=1]
 operator = 2
@@ -158,9 +157,3 @@ position = Vector2( 8.08713, 688.115 )
 
 [node name="3" type="Position2D" parent="Spawn"]
 position = Vector2( 27.622, 688.062 )
-
-[node name="GolemPebble" parent="." instance=ExtResource( 8 )]
-position = Vector2( 89.5463, 640.484 )
-
-[node name="GolemPebble2" parent="." instance=ExtResource( 8 )]
-position = Vector2( 75.5305, 641.152 )
