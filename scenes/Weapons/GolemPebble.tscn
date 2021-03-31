@@ -4,6 +4,7 @@
 [ext_resource path="res://scripts/Projectiles/GolemPebble.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6.51617, 6.3485 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10.1497, 9.43893 )
@@ -11,11 +12,9 @@ extents = Vector2( 10.1497, 9.43893 )
 [node name="GolemPebble" type="KinematicBody2D" groups=[
 "projectile",
 ]]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource( 2 )
-
-[node name="PhysicsCollision" type="CollisionShape2D" parent="."]
-scale = Vector2( 0.84, 0.889 )
-shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
@@ -23,12 +22,16 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 340, 135.045, 45.339, 43.38 )
 
+[node name="PhysicsCollision" type="CollisionShape2D" parent="."]
+scale = Vector2( 0.84, 0.889 )
+shape = SubResource( 1 )
+
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
 ]]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2( -0.529732, -0.662163 )
+position = Vector2( -0.0842822, -0.439438 )
 shape = SubResource( 2 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
