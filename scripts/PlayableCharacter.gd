@@ -216,11 +216,6 @@ func switch_weapon():
 	
 	
 func out_of_bounds():
-#	Unrelated to networking, should we kill player or decrease health if oob?
-
-#	networking: probably it will work as intended. otherwise try sth like:
-#	remotesync or
-#	master puppet functions
 	if is_network_master():
 		position = start_position
 		rset("puppet_pos", position)
@@ -241,11 +236,6 @@ func on_take_damage(direction, impulse_force):
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 
 func _on_AnimatedSprite_animation_finished():
-#	remotesync not working (or maybe it does, but I don't see it)
-#	sync not working (or maybe it does)
-#	acctually: standard walking animation works, until the player jumps
-#	after jumping, animation stops being sync-ed
-
 	if $AnimatedSprite.animation == 'land':
 		landing = false
 		if is_network_master():
