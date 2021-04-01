@@ -15,3 +15,5 @@
 * Changed stagger behaviour
 
 ## Stoica George
+* Tested networking issues
+* Begun work on synchronizing new behaviours
