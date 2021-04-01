@@ -1,6 +1,8 @@
 # Weekly report 5
 
 ## Ciobanu Sebastian
+* Added a mob with homing projectiles
+* Helped with bugfixes/testing
 
 ## Miron Dorin
 * Worked on golem boss
