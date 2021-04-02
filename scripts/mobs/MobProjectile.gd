@@ -17,14 +17,12 @@ func follow_player():
 				x_direction = -1
 		else:
 			x_direction = 0
-		if is_network_master():
-			rpc_unreliable("change_animation", "flip_h", position.x >= player.position.x) 
-			# nu stiu daca aici ar trebuii sa fie unreliable
+		animation_change = true
+		animation_dict["flip_h"] = (position.x >= player.position.x)
 	else:
 		x_direction = 0
 	if not follow:
 		x_direction = 0
-
 
 sync func do_attack():
 	var bullet_inst = bullet.instance()

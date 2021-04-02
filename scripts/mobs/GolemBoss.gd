@@ -27,19 +27,19 @@ func _process(delta):
 	#print(can_jump_attack)
 
 func solve_animation(velocity):
-	if  is_network_master():
-		if x_direction !=0:
-			if jump_attacking:
-				rpc_unreliable("change_animation", "animation", 'idle')
-			else:
-				rpc_unreliable("change_animation", "flip_h", x_direction < 0)
-				rpc_unreliable("change_animation", "animation", 'walk')
-		if velocity.x == 0:
-			if pebble_attacking:
-				rpc_unreliable("change_animation", "animation", 'rock_throw')
-			else:
-				rpc_unreliable("change_animation", "animation", 'idle')
-	pass
+	if x_direction != 0:
+		animation_change = true
+		if jump_attacking:
+			animation_dict["animation"] = "idle" 
+		else:
+			animation_dict["flip_h"] = (x_direction < 0)
+			animation_dict["animation"] = 'walk'
+	if velocity.x == 0:
+		animation_change = true
+		if pebble_attacking:
+			animation_dict["animation"] = 'rock_throw'
+		else:
+			animation_dict["animation"] = 'idle'
 	
 func jump_attack_init():
 	if can_jump and can_jump_attack and not pebble_attacking and player != null:
