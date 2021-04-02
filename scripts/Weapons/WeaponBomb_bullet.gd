@@ -10,6 +10,7 @@ func _ready():
 	set_as_toplevel(true)
 	animation_change = true
 	animation_dict["animation"] = "bomb_idle"
+	change_animation()
 	yield(get_tree().create_timer(fuse_time), "timeout")
 	$Hurtbox/CollisionShape2D.disabled = false
 	$AnimatedSprite.scale *= 2
@@ -19,6 +20,7 @@ func _ready():
 	self.x_direction = 0
 	animation_change = true
 	animation_dict["animation"] = "explosion"
+	change_animation()
 	yield(get_tree().create_timer(0.24), "timeout")
 	self.queue_free()
 
@@ -28,7 +30,7 @@ func change_animation():
 	animation_dict = {}
 
 func _physics_process(delta):
-	make_animation_calls()
+#	make_animation_calls()
 	solve_impulse()
 	if is_on_floor():
 		velocity.y = 0
