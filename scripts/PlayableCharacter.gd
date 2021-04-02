@@ -2,6 +2,7 @@ extends "res://scripts/Entity.gd"
 const flash_material = preload("res://materials/white.tres")
 
 onready var current_weapon = $Weapon
+onready var camera = $Camera2D
 
 var screen_size # Size of the game window
 
@@ -43,6 +44,10 @@ func _init():
 	stats["health"] = 10000
 
 func _ready():
+	if is_network_master():
+		self.camera.make_current()
+	else:
+		self.camera.clear_current()
 	screen_size = get_viewport_rect().size
 	start_position = position
 	player_pos = position
@@ -81,37 +86,37 @@ func dash(_delta):
 	self.impulse_current_x = impulse_current_x/3
 	self.impulse_step = 5
 
-sync func play_animation( what):
-	if what =='special-attack':
-		$AnimationPlayer.play("special-attack")
-	else:
-		$AnimatedSprite.play(what)
-	pass
+sync func play_special_attack():
+	$AnimationPlayer.play("special-attack")
 
 func solve_animation(velocity,delta):
 	if not is_network_master():
 		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
 		if x_direction !=0:
-			rpc_unreliable("change_animation", "flip_h", x_direction < 0)
+			animation_change = true
+			animation_dict["flip_h"] = (x_direction < 0)
 	
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y > delta * GRAVITY + 0.1: #in jump/falling
-		rpc_unreliable("change_animation", "animation", "jump")
+		animation_change = true
+		animation_dict["animation"] = "jump"
 		landing=false
 	elif is_on_floor():
 		if $AnimatedSprite.animation == 'jump':
-			rpc_unreliable("play_animation", "land")
+			animation_play = true
+			animation_play_what = "land"
 			landing = true
 		else:
-			rpc_unreliable("change_animation", "animation", "walk")
+			animation_change = true
+			animation_dict["animation"] = "walk"
 	if velocity.length() != 0:
 		if $AnimatedSprite.animation == 'jump' and $AnimatedSprite.frame == 2:
-			rpc_unreliable("stop_animation")
+			animation_stop = true
 		else:
-			rpc_unreliable("play_animation", "")
-	pass
+			animation_play = true
+			animation_play_what = ""
 
 func on_gain_health():
 	$Health.text = String(stats['health'])
@@ -139,7 +144,7 @@ func solve_input(delta):
 		$Cooldown_Root/LightAttack_CD.start()
 		can_attack = false
 	elif Input.is_action_pressed("special_attack") and can_attack and weapon == 0:
-		rpc_unreliable("play_animation", 'special-attack')
+		rpc_unreliable("play_special_attack")
 		$Cooldown_Root/SpecialAttack_CD.start()
 		can_attack = false
 	if Input.is_action_pressed("utility") and cooldowns['can_utility']:
@@ -164,6 +169,7 @@ func _physics_process(delta):
 		velocity.y += delta * GRAVITY
 			
 		solve_animation(velocity,delta)
+		make_animation_calls()
 		solve_impulse()
 		
 		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
@@ -224,13 +230,16 @@ func out_of_bounds():
 	pass
 
 func on_take_damage(direction, impulse_force):
+#	TODO: check this 
+#	CHECK: do we really need a diffrent on take damage for player?
 	$AnimatedSprite.set_material(flash_material)
 	yield(get_tree().create_timer(0.15), "timeout")
 	$AnimatedSprite.set_material(null)
-	
-	change_animation("animation", "hit")
+	animation_dict["animation"] = "hit"
+	animation_change = true
 	$Health.text = String(stats['health'])
-	play_animation("")
+	animation_play = true
+	animation_play_what = ""
 	if stats['health'] <= 0:
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
@@ -238,10 +247,9 @@ func on_take_damage(direction, impulse_force):
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == 'land':
 		landing = false
-		if is_network_master():
-			rpc_unreliable("play_animation", "walk")
-	if is_network_master():
-		rpc_unreliable("stop_animation")
+		animation_play = true
+		animation_play_what = "walk"
+	animation_stop = true
 	pass
 
 func _on_LightAttack_CD_timeout():
