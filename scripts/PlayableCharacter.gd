@@ -2,6 +2,7 @@ extends "res://scripts/Entity.gd"
 const flash_material = preload("res://materials/white.tres")
 
 onready var current_weapon = $Weapon
+onready var camera = $Camera2D
 
 var screen_size # Size of the game window
 
@@ -43,6 +44,10 @@ func _init():
 	stats["health"] = 10000
 
 func _ready():
+	if is_network_master():
+		self.camera.make_current()
+	else:
+		self.camera.clear_current()
 	screen_size = get_viewport_rect().size
 	start_position = position
 	player_pos = position
