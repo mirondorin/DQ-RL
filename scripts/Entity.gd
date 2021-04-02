@@ -43,19 +43,18 @@ func impulse(force, direction, step = 5, additive = true):
 func solve_impulse():
 	if impulse_current_x > 0:
 		impulse_current_x -= impulse_step + abs(x_direction) * SPEED/air_resistance_factor
-		
-	if impulse_current_y > 0:
-		impulse_current_y -= impulse_step
-		
-	if impulse_current_x <= 0:
+	else:
 		impulse_current_x = 0
 		impulse_dir.x = 0
-		
-	if impulse_current_y <= 0:
+	
+	if impulse_current_y > 0:
+		impulse_current_y -= impulse_step
+	else:
 		impulse_current_y = 0
 		impulse_dir.y = 0
 		
-	if impulse_current_x <= 0 and impulse_current_y <= 0:
+#	if impulse_current_x <= 0 and impulse_current_y <= 0:
+	if impulse_current_x == 0 and impulse_current_y == 0:
 		impulse_step = 5
 		in_impulse = false
 	
