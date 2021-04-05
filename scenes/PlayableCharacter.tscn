@@ -159,8 +159,7 @@ scale = Vector2( 5, 5 )
 frames = SubResource( 3 )
 animation = "idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+[node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 position = Vector2( -3.51978, 28.5693 )
 scale = Vector2( 0.84, 1 )
 shape = SubResource( 4 )
@@ -241,6 +240,8 @@ shape = SubResource( 7 )
 [connection signal="timeout" from="Cooldown_Root/SpecialAttack_CD" to="." method="_on_SpecialAttack_CD_timeout"]
 [connection signal="timeout" from="Cooldown_Root/Utility_CD" to="." method="_on_Utility_CD_timeout"]
 [connection signal="timeout" from="Cooldown_Root/Dash_CD" to="." method="_on_Dash_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="area_exited" from="Hitbox" to="." method="_on_Hitbox_area_exited"]
 
 [editable path="Weapon"]
 

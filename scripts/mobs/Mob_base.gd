@@ -70,18 +70,15 @@ func attack_player(_player):
 	pass
 
 func solve_animation(velocity):
-	if  is_network_master():
-		if x_direction !=0:
-			rpc_unreliable("change_animation", "flip_h", x_direction < 0)
-			rpc_unreliable("change_animation", "animation", 'walk')
-		if velocity.x == 0:
-			rpc_unreliable("change_animation", "animation", 'idle')
-	pass
+	if x_direction != 0:
+		animation_change = true
+		animation_dict["flip_h"] = (x_direction < 0)
+		animation_dict["animation"] = 'walk'
+	if velocity.x == 0:
+		animation_change = true
+		animation_dict["animation"] = 'idle'
 
 func out_of_bounds():
-	# we can add invisible objects, boundaries, and 
-	# _on_Area2D_body_entered => direction *= -1
-	# to ensure that the enemy patrols only one zone
 	rpc("kill_mob")
 	
 sync func kill_mob():
@@ -101,6 +98,7 @@ func _physics_process(delta):
 			can_jump = false
 		
 		solve_animation(velocity)
+		make_animation_calls()
 		solve_impulse()
 		
 		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
@@ -132,11 +130,8 @@ func _physics_process(delta):
 		
 		rpc_unreliable("set_entity_position", position, velocity)
 	
-#	if Input.is_action_just_pressed("debug_test"): 
-#		var dir = (self.position - get_global_mouse_position()).normalized() * -1
-#		impulse(400, dir)
-	
 func on_take_damage(direction, impulse_force):
+#	TODO: check how to optimize this and normalize it since we use it on both player and mob
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
@@ -150,12 +145,8 @@ func on_take_damage(direction, impulse_force):
 			SPEED = stats['default_speed']
 			$AnimatedSprite.set_material(null)
 		else:
-#			if is_network_master():
-#				rpc("kill_mob") # on_take_damage is called from all peers
 			kill_mob()
 	attack_timer.start()
-	
-	pass
 
 func _on_DetectArea_body_entered(body):
 	if not body in in_area:
