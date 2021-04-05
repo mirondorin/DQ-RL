@@ -4,6 +4,7 @@ func _ready():
 	pass
 
 sync func do_interact():
+	print("aa")
 	gamestate.change_level()
 
 func interact():
