@@ -27,19 +27,19 @@ func _process(delta):
 	#print(can_jump_attack)
 
 func solve_animation(velocity):
-	if  is_network_master():
-		if x_direction !=0:
-			if jump_attacking:
-				rpc_unreliable("change_animation", "animation", 'idle')
-			else:
-				rpc_unreliable("change_animation", "flip_h", x_direction < 0)
-				rpc_unreliable("change_animation", "animation", 'walk')
-		if velocity.x == 0:
-			if pebble_attacking:
-				rpc_unreliable("change_animation", "animation", 'rock_throw')
-			else:
-				rpc_unreliable("change_animation", "animation", 'idle')
-	pass
+	if x_direction != 0:
+		animation_change = true
+		if jump_attacking:
+			animation_dict["animation"] = "idle" 
+		else:
+			animation_dict["flip_h"] = (x_direction < 0)
+			animation_dict["animation"] = 'walk'
+	if velocity.x == 0:
+		animation_change = true
+		if pebble_attacking:
+			animation_dict["animation"] = 'rock_throw'
+		else:
+			animation_dict["animation"] = 'idle'
 	
 func jump_attack_init():
 	if can_jump and can_jump_attack and not pebble_attacking and player != null:
@@ -66,7 +66,7 @@ func jump_attack_reset():
 		$Hurtbox/CollisionShape2D.disabled = true	
 	
 func attack_player(player):
-	player.take_damage(attack_damage, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
+	player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 		
 sync func pebble_attack_init():
 	if can_pebble_attack and not jump_attacking:
