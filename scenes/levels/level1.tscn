@@ -130,4 +130,4 @@ enemyscene = ExtResource( 9 )
 max_spawns = 1
 
 [node name="BossDoor" parent="." instance=ExtResource( 8 )]
-position = Vector2( 1949.29, 439.626 )
+position = Vector2( 1949.71, 439.626 )
