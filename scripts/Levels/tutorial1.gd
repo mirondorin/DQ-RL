@@ -5,8 +5,8 @@ var mobs = []
 var MobStaticpos
 var finishedmovement = false
 var finishedfightarea1 = false
-onready var currentrespawn = $Triggers/respawn1
-const health = preload("res://scenes/items/HealthPickup.tscn")
+var respawnhealth = 10
+onready var currentrespawn = $respawn0
 
 func _ready():
 	MobStaticpos = $MobStatic.position
@@ -15,10 +15,8 @@ func _ready():
 func _process(delta):
 	for player in players:
 		if player.stats['health'] <= 0:
-			if finishedmovement:
-				currentrespawn = $Triggers/respawn2
 			player.position = currentrespawn.position
-			player.stats['health'] = 10
+			player.stats['health'] = respawnhealth
 			
 
 func _on_StartTrigger_area_entered(area):
@@ -29,14 +27,21 @@ func _on_StartTrigger_area_entered(area):
 	
 
 func _on_respawntrigger0_area_entered(area):
-	area.get_parent().position = $Triggers/respawn0.position
+	area.get_parent().position = currentrespawn.position
 
 func _on_respawntrigger1_area_entered(area):
-	area.get_parent().position = $Triggers/respawn1.position
-
+	area.get_parent().position = currentrespawn.position
+	
 func _on_fightareatrigger_area_entered(area):
-	finishedmovement = true
-	print('asasd')
-
+	respawnhealth = 40
+	currentrespawn = $respawn2
+	
 func _on_MobSpawnArea_area_entered(area):
 	mobs.append(area.get_parent())
+
+func _on_fightareatrigger2_area_entered(area):
+	respawnhealth = 40
+	currentrespawn = $respawn3
+
+func _on_dashtrigger_area_entered(area):
+	currentrespawn = $respawn1

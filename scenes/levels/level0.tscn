@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f1.png" type="Texture" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/items/DamageBoost.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -47,6 +48,12 @@ extents = Vector2( 68.7013, 10 )
 
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 69.3528, 160.267 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 18.6112, 190.528 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 10, 83.8634 )
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 217.193, 32.1834 )
@@ -95,76 +102,10 @@ position = Vector2( 22.9289, 433.445 )
 [node name="3" type="Position2D" parent="Spawn"]
 position = Vector2( 45.1772, 432.396 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = -16.0362
-margin_top = 356.487
-margin_right = 84.9638
-margin_bottom = 387.487
-text = "Move with A, D.
-Jump with W. "
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="."]
-margin_left = 441.883
-margin_top = 274.042
-margin_right = 558.883
-margin_bottom = 322.042
-text = "Dash with L. 
-You are invincible 
-while dashing."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label3" type="Label" parent="."]
-margin_left = 1088.0
-margin_top = 439.0
-margin_right = 1202.0
-margin_bottom = 470.0
-text = "J - Attack. 
-K - Special Attack."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label4" type="Label" parent="."]
-margin_left = 1858.82
-margin_top = 533.808
-margin_right = 1982.82
-margin_bottom = 564.808
-text = "U - Switch weapons"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label5" type="Label" parent="."]
-margin_left = 950.829
-margin_top = 521.458
-margin_right = 1051.83
-margin_bottom = 555.458
-text = "This item gives 
-10 health"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label6" type="Label" parent="."]
-margin_left = 1873.0
-margin_top = 657.696
-margin_right = 1979.0
-margin_bottom = 691.696
-text = "This item gives 
-5 extra damage"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="MobStatic" type="KinematicBody2D" parent="." groups=[
 "mobs",
 ]]
-position = Vector2( 704.156, 284.985 )
+position = Vector2( 703.526, 279.315 )
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 10 )
@@ -176,7 +117,7 @@ follow = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="MobStatic"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -234,14 +175,22 @@ start_enabled = true
 spawn_continously = true
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 13 )]
-position = Vector2( 1758.18, 630.474 )
+position = Vector2( 1890.35, 705.489 )
 enemyscene = ExtResource( 12 )
+max_spawns = 1
+start_enabled = true
+spawn_continously = true
+
+[node name="EnemySpawner4" parent="." instance=ExtResource( 13 )]
+position = Vector2( 2105.26, 626.066 )
+enemyscene = ExtResource( 16 )
+max_spawns = 1
 start_enabled = true
 spawn_continously = true
 
 [node name="EnemySpawner3" parent="." instance=ExtResource( 13 )]
-position = Vector2( 2102.86, 623.612 )
-enemyscene = ExtResource( 16 )
+position = Vector2( 1764.88, 637.413 )
+enemyscene = ExtResource( 12 )
 max_spawns = 1
 start_enabled = true
 spawn_continously = true
@@ -267,24 +216,42 @@ collision_layer = 0
 position = Vector2( 703.188, 531.772 )
 shape = SubResource( 8 )
 
-[node name="respawn0" type="Position2D" parent="Triggers"]
-position = Vector2( 207.785, 401.904 )
-
-[node name="respawn1" type="Position2D" parent="Triggers"]
-position = Vector2( 546.301, 370.263 )
-
-[node name="respawn2" type="Position2D" parent="Triggers"]
-position = Vector2( 905.146, 496.87 )
-
 [node name="fightareatrigger" type="Area2D" parent="Triggers"]
 position = Vector2( 914.139, 427.122 )
-collision_layer = 0
+collision_layer = 2147483648
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/fightareatrigger"]
-position = Vector2( -57.6446, -74.3268 )
+position = Vector2( -57.0834, -74.3268 )
 shape = SubResource( 7 )
 
+[node name="fightareatrigger2" type="Area2D" parent="Triggers"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/fightareatrigger2"]
+position = Vector2( 1506.42, 488.465 )
+shape = SubResource( 10 )
+
+[node name="dashtrigger" type="Area2D" parent="Triggers"]
+position = Vector2( 368.755, 343.966 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/dashtrigger"]
+position = Vector2( 2.80615, -26.9391 )
+shape = SubResource( 11 )
+
+[node name="respawn0" type="Position2D" parent="."]
+position = Vector2( 207.785, 401.904 )
+
+[node name="respawn1" type="Position2D" parent="."]
+position = Vector2( 546.301, 370.263 )
+
+[node name="respawn2" type="Position2D" parent="."]
+position = Vector2( 905.146, 496.87 )
+
+[node name="respawn3" type="Position2D" parent="."]
+position = Vector2( 1537.53, 500.238 )
+
 [node name="MobSpawnArea" type="Area2D" parent="."]
+visible = false
 position = Vector2( 1134.98, 632.592 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MobSpawnArea"]
@@ -323,6 +290,88 @@ position = Vector2( 1656.25, 640.842 )
 
 [node name="DamageBoost" parent="Pickups" instance=ExtResource( 15 )]
 position = Vector2( 1918.67, 707.469 )
+
+[node name="NewLevelDoor" parent="." instance=ExtResource( 17 )]
+position = Vector2( 2375.93, 535.913 )
+
+[node name="Labels" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Labels"]
+margin_left = -16.0362
+margin_top = 356.487
+margin_right = 84.9638
+margin_bottom = 387.487
+text = "Move with A, D.
+Jump with W. "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Labels"]
+margin_left = 441.883
+margin_top = 274.042
+margin_right = 558.883
+margin_bottom = 322.042
+text = "Dash with L. 
+You are invincible 
+while dashing."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Labels"]
+margin_left = 1088.0
+margin_top = 439.0
+margin_right = 1202.0
+margin_bottom = 470.0
+text = "J - Attack. 
+K - Special Attack."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="Labels"]
+margin_left = 1858.82
+margin_top = 533.808
+margin_right = 1982.82
+margin_bottom = 564.808
+text = "U - Switch weapons"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Labels"]
+margin_left = 950.829
+margin_top = 521.458
+margin_right = 1051.83
+margin_bottom = 555.458
+text = "This item gives 
+10 health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="Label" parent="Labels"]
+margin_left = 1873.0
+margin_top = 657.696
+margin_right = 1979.0
+margin_bottom = 691.696
+text = "This item gives 
+5 extra damage"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label7" type="Label" parent="Labels"]
+margin_left = 2283.76
+margin_top = 473.992
+margin_right = 2389.76
+margin_bottom = 507.992
+text = "Press E to 
+go to next level."
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="area_entered" from="MobStatic/Hurtbox" to="MobStatic" method="_on_Hurtbox_area_entered"]
 [connection signal="timeout" from="MobStatic/AttackCooldown" to="MobStatic" method="_on_AttackCooldown_timeout"]
 [connection signal="timeout" from="MobStatic/JumpCooldown" to="MobStatic" method="_on_JumpCooldown_timeout"]
@@ -330,4 +379,8 @@ position = Vector2( 1918.67, 707.469 )
 [connection signal="area_entered" from="Triggers/respawntrigger0" to="." method="_on_respawntrigger0_area_entered"]
 [connection signal="area_entered" from="Triggers/respawntrigger1" to="." method="_on_respawntrigger1_area_entered"]
 [connection signal="area_entered" from="Triggers/fightareatrigger" to="." method="_on_fightareatrigger_area_entered"]
+[connection signal="area_entered" from="Triggers/fightareatrigger2" to="." method="_on_fightareatrigger2_area_entered"]
+[connection signal="area_entered" from="Triggers/dashtrigger" to="." method="_on_dashtrigger_area_entered"]
 [connection signal="area_entered" from="MobSpawnArea" to="." method="_on_MobSpawnArea_area_entered"]
+
+[editable path="NewLevelDoor"]
