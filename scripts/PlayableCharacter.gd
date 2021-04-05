@@ -105,8 +105,10 @@ func solve_animation(velocity,delta):
 		landing=false
 	elif is_on_floor():
 		if $AnimatedSprite.animation == 'jump':
+			animation_change = true
 			animation_play = true
 			animation_play_what = "land"
+			animation_dict["animation"] = "land"
 			landing = true
 		else:
 			animation_change = true
@@ -153,6 +155,7 @@ func solve_input(delta):
 		dash(delta)
 	
 	if Input.is_action_just_pressed("interact"):
+		print("bb")
 		use_interact()
 		
 	if Input.is_action_just_pressed("debug_test"): 
