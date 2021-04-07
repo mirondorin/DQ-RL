@@ -22,7 +22,7 @@ func _process(delta):
 func _on_StartTrigger_area_entered(area):
 	players = get_tree().get_nodes_in_group('players')
 	for player in players:
-		player.stats['health'] = 10
+		player.modify_stats("health",-90)
 	$Triggers/StartTrigger/CollisionShape2D.disabled = true
 	
 

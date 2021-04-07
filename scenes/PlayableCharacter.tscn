@@ -27,14 +27,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "land",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ) ],
@@ -42,9 +42,9 @@ animations = [ {
 "name": "hit",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
-"name": "land",
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -192,7 +192,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Health" type="Label" parent="."]
+[node name="HealthLabel" type="Label" parent="."]
 margin_left = -26.0
 margin_top = -49.0
 margin_right = 16.0
@@ -211,6 +211,9 @@ anims/special-attack = SubResource( 6 )
 [node name="Weapon" parent="." instance=ExtResource( 12 )]
 position = Vector2( 46.6849, 49.3108 )
 rotation = 0.0
+
+[node name="CollisionShape2D" parent="Weapon/Hurtbox" index="0"]
+position = Vector2( 0.168517, -13.3515 )
 
 [node name="Cooldown_Root" parent="." instance=ExtResource( 13 )]
 

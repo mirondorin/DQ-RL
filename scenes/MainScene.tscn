@@ -13,7 +13,7 @@ __meta__ = {
 [node name="LevelRoot" parent="." instance=ExtResource( 1 )]
 
 [node name="AnimatedSprite" parent="LevelRoot/MobStatic" index="0"]
-frame = 1
+frame = 0
 
 [node name="GlobalSettings" type="Node" parent="."]
 script = ExtResource( 4 )
