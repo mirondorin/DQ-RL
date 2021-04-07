@@ -41,7 +41,8 @@ func _init():
 	self.SPEED = 100
 	self.JUMPSPEED = 80
 	stats["damage_modifier"] = 0
-	stats["health"] = 10000
+	stats["health"] = 100
+	stats["max_health"] = 100
 
 func _ready():
 	if is_network_master():
@@ -51,6 +52,7 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	start_position = position
 	player_pos = position
+	$HealthLabel.text = String(stats["health"])
 	pass
 
 func jump():
@@ -121,7 +123,7 @@ func solve_animation(velocity,delta):
 			animation_play_what = ""
 
 func on_gain_health():
-	$Health.text = String(stats['health'])
+	$HealthLabel.text = String(stats['health'])
 
 sync func gain_health(value):
 	stats['health'] += value
@@ -240,12 +242,12 @@ func on_take_damage(direction, impulse_force):
 	$AnimatedSprite.set_material(null)
 	animation_dict["animation"] = "hit"
 	animation_change = true
-	$Health.text = String(stats['health'])
+	$HealthLabel.text = String(stats['health'])
 	animation_play = true
 	animation_play_what = ""
 	if stats['health'] <= 0:
-		$Health.text = 'dead!'
-		$Health.add_color_override("font_color", Color(255, 0, 0))
+		$HealthLabel.text = 'dead!'
+		$HealthLabel.add_color_override("font_color", Color(255, 0, 0))
 
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == 'land':
@@ -280,8 +282,8 @@ func use_interact():
 		return
 	
 sync func do_modify_stats(status, value):
-	stats[status] += value
-	$Health.text = String(stats['health'])
+	stats[status] 	+= value
+	$HealthLabel.text = String(stats['health'])
 
 func modify_stats(status, value):
 	if is_network_master():
@@ -294,3 +296,4 @@ func _on_Hitbox_area_entered(area):
 func _on_Hitbox_area_exited(area):
 	if area.is_in_group("interactable"):
 		interactables.erase(area)
+		

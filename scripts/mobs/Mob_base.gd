@@ -21,19 +21,27 @@ var jump_intensity = 0
 var start_time = -100
 
 var attack_damage = 10
-var attack_cooldown = 1.5	
+var attack_cooldown = 1.5
 var jump_cooldown = 4
 
 var in_area = []
+onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
 
 func _init():
 	stats["health"] = 20
-
+	
 func _ready():
 	if is_network_master():
 		attack_timer.wait_time = attack_cooldown	
 		jump_timer.wait_time = jump_cooldown
 		jump_timer.start()
+		var lvl_nr = GlobalSettings.level_nr
+		if self.is_in_group("boss"):
+			stats["health"] += stats["health"]/2 * lvl_nr
+		else:
+			stats["health"] += stats["health"]/2 * lvl_nr
+		stats["max_health"]=stats["health"]
+		$HealthLabel.text = String(stats["health"])
 
 func jump():
 	var speed = -JUMPSPEED/20

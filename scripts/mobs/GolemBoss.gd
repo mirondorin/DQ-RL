@@ -11,7 +11,7 @@ func _ready():
 	
 func _init():
 	stats['default_speed'] = 100
-	self.stats['health'] = 100
+	self.stats['health'] = 200
 	self.stats['stagger_default'] = 300
 	self.stats['stagger_health'] = 300
 	self.SPEED = stats['default_speed'] 
@@ -76,11 +76,16 @@ sync func pebble_attack_init():
 		can_pebble_attack = false
 
 func pebble_attack_exec():
-	var bullet_inst = bullet.instance()
-	bullet_inst.group_to_detect = 'players'
-	get_tree().get_root().add_child(bullet_inst)
-	bullet_inst.global_position = self.global_position + Vector2(0, 50)
-	$PebbleAttackCooldown.start()
+	var hp = float(stats["health"])/stats["max_health"]
+	var nr = 1 + 2- (int(hp*2))
+	if hp*2 > (int(hp*2)):
+		nr-=1
+	for i in range(0,nr):
+		var bullet_inst = bullet.instance()
+		bullet_inst.group_to_detect = 'players'
+		get_tree().get_root().add_child(bullet_inst)
+		bullet_inst.global_position = self.global_position + Vector2(0, 50)
+		$PebbleAttackCooldown.start()
 
 func reset_pebble_attack():
 	follow = true

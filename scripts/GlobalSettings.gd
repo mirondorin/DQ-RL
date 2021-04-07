@@ -1,7 +1,7 @@
 extends Node
 
 export var GRAVITY = 500.0
-
+var level_nr = 0
 
 func _ready():
 	pass

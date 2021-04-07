@@ -175,24 +175,17 @@ func end_game():
 	emit_signal("game_ended")
 	players.clear()
 
-func get_next_level(current_level):
-	var result = current_level.split('/',true)[-1] #levelnr.tscn
-	result = result.split('.tscn')[0] #levelnr
-	var nr = 0
-	for i in range(5,len(result)):
-		nr = nr*10 +int(result[i])
-	nr+=1
-	result = "level" + str(nr) + ".tscn"
-	return result
-	
 remote func peer_change_level(spawn_points):
 	
 	get_tree().call_group("projectile", "queue_free")	
 	var world = get_tree().get_root().get_node("MainScene")
 
+	var GlobalSettings = get_node("/root/MainScene/GlobalSettings")
+	GlobalSettings.level_nr +=1
+	
 	var level = world.get_node("LevelRoot")
-	var next_level = get_next_level(level.filename)
-	print(next_level)
+	var next_level = "level" + str(GlobalSettings.level_nr) + ".tscn"
+	
 	world.remove_child(level)
 	level.queue_free()
 	level = load("res://scenes/levels/" + next_level).instance()
@@ -202,6 +195,7 @@ remote func peer_change_level(spawn_points):
 		var spawn_pos = world.get_node("LevelRoot/Spawn/" + str(spawn_points[p_id])).position
 		var player = world.get_node("Players/" + str(p_id))
 		
+		player.modify_stats("health",player.stats["max_health"]-player.stats["health"])
 		player.position = spawn_pos
 #		player.set_network_master(p_id)
 	world.move_child(world.get_node("Players"), world.get_child_count())
