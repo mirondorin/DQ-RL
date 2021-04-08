@@ -37,11 +37,10 @@ func _ready():
 		jump_timer.start()
 		var lvl_nr = GlobalSettings.level_nr
 		if self.is_in_group("boss"):
-			stats["health"] += stats["health"]/2 * lvl_nr
+			set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
 		else:
-			stats["health"] += stats["health"]/2 * lvl_nr
-		stats["max_health"]=stats["health"]
-		$HealthLabel.text = String(stats["health"])
+			set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
+		
 
 func jump():
 	var speed = -JUMPSPEED/20
