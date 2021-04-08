@@ -29,3 +29,12 @@ func on_take_damage(direction, impulse_force):
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 	pass
+
+sync func do_set_health(value):
+	stats['health'] = value
+	stats['max_health'] = value
+	$HealthLabel.text = String(stats["health"])
+
+func set_initial_health(value):
+#	Shoudl be called only from master
+	rpc("do_set_health", value)
