@@ -2,7 +2,6 @@ extends "res://scripts/Entity.gd"
 const flash_material = preload("res://materials/white.tres")
 
 onready var current_weapon = $Weapon
-onready var camera = $Camera2D
 
 var screen_size # Size of the game window
 
@@ -22,6 +21,7 @@ var cooldowns = {
 	"can_utility" : true
 		}
 
+var camera
 var interactables = []
 
 var can_attack = true
@@ -46,14 +46,10 @@ func _init():
 
 func _ready():
 	if is_network_master():
-		self.camera.make_current()
-	else:
-		self.camera.clear_current()
-	screen_size = get_viewport_rect().size
-	start_position = position
-	player_pos = position
-	$HealthLabel.text = String(stats["health"])
-	pass
+		camera = Camera2D.new()
+		self.add_child(camera)
+		camera.make_current()
+		camera.set_zoom(Vector2( 0.5, 0.5 ))
 
 func jump():
 #	This method does not have to be synced
