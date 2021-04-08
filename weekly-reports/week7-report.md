@@ -10,5 +10,5 @@
 * Made tutorial level
 
 ## Stoica George
-* Tested networking issues
-* Begun work on synchronizing new behaviours
+* Optimized a few networking interactions
+* Tested the game in multiplayer
