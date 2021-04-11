@@ -92,6 +92,7 @@ func stop_animation():
 #	TODO: check if this doesn't affect animation_dict
 	animation_stop = false
 	animation_stopped = true
+	old_animation_play_what = "1"
 	rpc_unreliable("do_stop_animation")
 
 func make_animation_calls():
