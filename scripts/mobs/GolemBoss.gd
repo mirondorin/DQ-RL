@@ -30,16 +30,30 @@ func solve_animation(velocity):
 	if x_direction != 0:
 		animation_change = true
 		if jump_attacking:
-			animation_dict["animation"] = "idle" 
+			if not key_has_value(animation_dict, "animation", "idle"):
+				animation_dict["animation"] = "idle" 
+				new_animation_dict["animation"] = "idle" 
+				animation_change = true
 		else:
-			animation_dict["flip_h"] = (x_direction < 0)
-			animation_dict["animation"] = 'walk'
+			if not key_has_value(animation_dict, "flip_h", (x_direction < 0)):
+				animation_dict["flip_h"] = (x_direction < 0)
+				new_animation_dict["flip_h"] = (x_direction < 0)
+				animation_change = true
+			if not key_has_value(animation_dict, "animation", "walk"):
+				animation_dict["animation"] = 'walk'
+				new_animation_dict["animation"] = 'walk'
+				animation_change = true
 	if velocity.x == 0:
-		animation_change = true
 		if pebble_attacking:
-			animation_dict["animation"] = 'rock_throw'
+			if not key_has_value(animation_dict, "animation", "rock_throw"):
+				animation_dict["animation"] = "rock_throw" 
+				new_animation_dict["animation"] = "rock_throw" 
+				animation_change = true
 		else:
-			animation_dict["animation"] = 'idle'
+			if not key_has_value(animation_dict, "animation", "idle"):
+				animation_dict["animation"] = "idle" 
+				new_animation_dict["animation"] = "idle" 
+				animation_change = true
 	
 func jump_attack_init():
 	if can_jump and can_jump_attack and not pebble_attacking and player != null:
