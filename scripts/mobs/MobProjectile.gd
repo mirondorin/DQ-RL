@@ -17,8 +17,10 @@ func follow_player():
 				x_direction = -1
 		else:
 			x_direction = 0
-		animation_change = true
-		animation_dict["flip_h"] = (position.x >= player.position.x)
+		if not key_has_value(animation_dict, "flip_h", (position.x >= player.position.x)):
+			animation_dict["flip_h"] = (position.x >= player.position.x)
+			new_animation_dict["flip_h"] = (position.x >= player.position.x)
+			animation_change = true
 	else:
 		x_direction = 0
 	if not follow:

@@ -92,25 +92,32 @@ func solve_animation(velocity,delta):
 		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
 		if x_direction !=0:
-			animation_change = true
-			animation_dict["flip_h"] = (x_direction < 0)
+			if not key_has_value(animation_dict, "flip_h", (x_direction < 0)):
+				animation_dict["flip_h"] = (x_direction < 0)
+				new_animation_dict["flip_h"] = (x_direction < 0)
+				animation_change = true
 	
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
 			
 	if in_jump or velocity.y > delta * GRAVITY + 0.1: #in jump/falling
-		animation_change = true
-		animation_dict["animation"] = "jump"
+		if not key_has_value(animation_dict, "animation", "jump"):
+			animation_dict["animation"] = "jump"
+			new_animation_dict["animation"] = "jump"
+			animation_change = true
 		landing=false
 	elif is_on_floor():
 		if $AnimatedSprite.animation == 'jump':
-			animation_change = true
 			animation_play = true
 			animation_play_what = "land"
-			animation_dict["animation"] = "land"
+			if not key_has_value(animation_dict, "animation", "land"):
+
+				animation_change = true
 			landing = true
 		else:
-			animation_change = true
-			animation_dict["animation"] = "walk"
+			if not key_has_value(animation_dict, "animation", "walk"):
+				animation_dict["animation"] = "walk"
+				new_animation_dict["animation"] = "walk"
+				animation_change = true
 	if velocity.length() != 0:
 		if $AnimatedSprite.animation == 'jump' and $AnimatedSprite.frame == 2:
 			animation_stop = true
@@ -236,8 +243,10 @@ func on_take_damage(direction, impulse_force):
 	$AnimatedSprite.set_material(flash_material)
 	yield(get_tree().create_timer(0.15), "timeout")
 	$AnimatedSprite.set_material(null)
-	animation_dict["animation"] = "hit"
-	animation_change = true
+	if not key_has_value(animation_dict, "animation", "hit"):
+		animation_dict["animation"] = "hit"
+		new_animation_dict["animation"] = "hit"
+		animation_change = true
 	$HealthLabel.text = String(stats['health'])
 	animation_play = true
 	animation_play_what = ""

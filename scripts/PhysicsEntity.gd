@@ -18,9 +18,12 @@ var velocity = Vector2()
 
 var animation_play = false
 var animation_stop = false
+var animation_stopped = false
 var animation_change = false
 var animation_dict = {}
+var new_animation_dict = {}
 var animation_play_what = ""
+var old_animation_play_what = "1"
 
 func get_x_orientation():
 	if $AnimatedSprite.flip_h:
@@ -64,34 +67,43 @@ sync func set_entity_position(pos, v):
 	velocity = v  # do we really need to sync velocity?
 #	TODO: try to not sync velocity or position
 
-sync func do_change_animation(animation_dict):
-	for what in animation_dict.keys():
-		$AnimatedSprite[what] = animation_dict[what]
+sync func do_change_animation(new_animation_dict):
+	for what in new_animation_dict.keys():
+		$AnimatedSprite[what] = new_animation_dict[what]
 	
 func change_animation():
 	animation_change = false
-	rpc_unreliable("do_change_animation", animation_dict)
-	animation_dict = {}
+	rpc_unreliable("do_change_animation", new_animation_dict)
+	new_animation_dict = {}
 
 sync func do_play_animation(what):
 	$AnimatedSprite.play(what)
 
 func play_animation():
 	animation_play = true
+	animation_stopped = false
+	old_animation_play_what = animation_play_what
 	rpc_unreliable("do_play_animation", animation_play_what)
 	
 sync func do_stop_animation():
 	$AnimatedSprite.stop()
 	
 func stop_animation():
+#	TODO: check if this doesn't affect animation_dict
 	animation_stop = false
+	animation_stopped = true
 	rpc_unreliable("do_stop_animation")
 
 func make_animation_calls():
-	if is_network_master(): # ? Redundand if?
-		if animation_stop:
+	if is_network_master(): # ? Redundant if?
+		if animation_stop and not animation_stopped:
 			stop_animation()
-		elif animation_play:
+		elif animation_play and old_animation_play_what != animation_play_what:
 			play_animation()
 		if animation_change:
 			change_animation()
+
+func key_has_value(dictionary, key, value):
+	if key in dictionary.keys():
+		return dictionary[key] == value
+	return false
