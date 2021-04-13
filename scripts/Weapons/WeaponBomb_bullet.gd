@@ -58,4 +58,4 @@ func _on_Hurtbox_area_entered(area):
 		if owner.is_in_group(group_to_detect):
 			var dir = (owner.position - self.position).normalized()
 			dir.y -= 1
-			owner.take_damage(attack_damage, 999, dir, 400)
+			owner.take_damage(attack_damage, 15, dir, 400)

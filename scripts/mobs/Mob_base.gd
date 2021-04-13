@@ -28,7 +28,7 @@ var in_area = []
 onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
 
 func _init():
-	stats["health"] = 20
+	stats["health"] = 25
 	
 func _ready():
 	if is_network_master():

@@ -9,6 +9,25 @@ var attack_anim_names = {
 	'special-attack' : null,
 }
 
+var LightAttack_CD
+var SpecialAttack_CD
+
+func _init():
+	LightAttack_CD = Timer.new()
+	LightAttack_CD.connect("timeout",self,"_on_LightAttack_CD_timeout") 
+	add_child(LightAttack_CD)
+	SpecialAttack_CD = Timer.new()
+	SpecialAttack_CD.connect("timeout",self,"_on_SpecialAttack_CD_timeout") 
+	add_child(SpecialAttack_CD)
+
+func _on_LightAttack_CD_timeout():
+	can_attack = true
+	pass
+
+func _on_SpecialAttack_CD_timeout():
+	can_attack = true
+	pass
+
 sync func change_animation(what, value):
 	$AnimatedSprite[what] = value
 

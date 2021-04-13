@@ -4,6 +4,7 @@ const bullet = preload("res://scenes/Weapons/WeaponProjectile_bullet.tscn")
 
 func _init():
 	self.attack_damage = 5
+	LightAttack_CD.wait_time = 0.6
 
 sync func do_attack():
 	var bullet_inst = bullet.instance()

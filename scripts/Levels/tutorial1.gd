@@ -23,7 +23,7 @@ func _on_StartTrigger_area_entered(area):
 	players = get_tree().get_nodes_in_group('players')
 	for player in players:
 		player.modify_stats("health",-90)
-	$Triggers/StartTrigger/CollisionShape2D.disabled = true
+	$Triggers/StartTrigger/CollisionShape2D.call_deferred("set", "disabled", true)
 	
 
 func _on_respawntrigger0_area_entered(area):

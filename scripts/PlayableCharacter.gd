@@ -20,11 +20,11 @@ var cooldowns = {
 	"can_special_attack" : true,
 	"can_utility" : true
 		}
+var weapon = 0
+
 
 var camera
 var interactables = []
-
-var can_attack = true
 
 #export var health = 100
 #puppet var puppet_health = health
@@ -146,21 +146,20 @@ func solve_input(delta):
 		if not in_impulse:
 			velocity.y += jump()
 		
-	if Input.is_action_pressed("ui_attack") and can_attack:
+	if Input.is_action_pressed("ui_attack") and current_weapon.can_attack:
 		current_weapon.attack()
-		$Cooldown_Root/LightAttack_CD.start()
-		can_attack = false
-	elif Input.is_action_pressed("special_attack") and can_attack and weapon == 0:
+		current_weapon.LightAttack_CD.start()
+		current_weapon.can_attack = false
+	elif Input.is_action_pressed("special_attack") and current_weapon.can_attack and weapon == 0:
 		rpc_unreliable("play_special_attack")
-		$Cooldown_Root/SpecialAttack_CD.start()
-		can_attack = false
+		current_weapon.SpecialAttack_CD.start()
+		current_weapon.can_attack = false
 	if Input.is_action_pressed("utility") and cooldowns['can_utility']:
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
 		dash(delta)
 	
 	if Input.is_action_just_pressed("interact"):
-		print("bb")
 		use_interact()
 		
 	if Input.is_action_just_pressed("debug_test"): 
@@ -208,8 +207,6 @@ func _physics_process(delta):
 			$DebugCollision.text = 'MOB'
 		elif collision and collision.collider.name != 'Obstacles':
 			$DebugCollision.text = collision.collider.name
-
-var weapon = 0 # Delete this later. Only for debug
 
 sync func do_switch_weapon():
 	weapon = (1 + weapon) % 3
@@ -262,20 +259,8 @@ func _on_AnimatedSprite_animation_finished():
 	animation_stop = true
 	pass
 
-func _on_LightAttack_CD_timeout():
-	can_attack = true
-	pass
-
-func _on_SpecialAttack_CD_timeout():
-	can_attack = true
-	pass
-
 func _on_Utility_CD_timeout():
 	cooldowns['can_utility'] = true
-	pass
-
-func _on_Dash_timeout():
-	in_dash = false
 	pass
 
 func grab_item():
