@@ -144,7 +144,7 @@ extents = Vector2( 44.669, 18.4748 )
 
 [sub_resource type="CapsuleShape2D" id=27]
 radius = 100.0
-height = 353.295
+height = 735.528
 
 [sub_resource type="Animation" id=28]
 tracks/0/type = "method"
@@ -199,7 +199,7 @@ script = ExtResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 23 )
 animation = "idle"
-frame = 5
+frame = 7
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]

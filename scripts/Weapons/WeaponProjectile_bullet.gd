@@ -7,7 +7,7 @@ export var speed = 200
 var lifespan = 10
 var group_to_detect = 'mobs'
 var max_distance = 1000
-var stagger_damage = 5
+var stagger_damage = 1
 
 func _physics_process(delta):
 	lifespan -= delta

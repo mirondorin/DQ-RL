@@ -2,6 +2,7 @@ extends "res://scripts/PhysicsEntity.gd"
 
 var stats = {
 	"health" : 0,
+	"mana" : 100,
 	"stagger_default" : 10,
 	"stagger_health" : 10,
 	"invincible" : false,
@@ -36,5 +37,5 @@ sync func do_set_health(value):
 	$HealthLabel.text = String(stats["health"])
 
 func set_initial_health(value):
-#	Shoudl be called only from master
+#	Should be called only from master
 	rpc("do_set_health", value)
