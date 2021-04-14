@@ -6,25 +6,31 @@ onready var mainscene = get_parent()
 export (PackedScene) var enemyscene
 onready var enemy = load(enemyscene.get_path())
 export var max_spawns = 2 #use 0 to spawn infinitely
-export var start_enabled = false
+export var start_enabled = true
 export var spawn_delay = 1
 export var spawn_continously = false
 
 var current_spawns = 0
 var enabled = false
 
-func _ready():
+var cleanup = true
+
+func tool_cleanup():
 	if Engine.is_editor_hint():
 		if enemyscene != null:
 			$Label.text = "spawner\n"+ enemyscene.get_path()
 	else:
 		$Label.queue_free()
 		$CollisionShape2D.queue_free()
+
+func _ready():
+	if cleanup:
+		tool_cleanup()
 		
-		$Timer.wait_time = spawn_delay
-		if start_enabled:
-			$Timer.start()
-			enabled = true
+	$Timer.wait_time = spawn_delay
+	if start_enabled:
+		$Timer.start()
+		enabled = true
 
 
 sync func do_spawn():

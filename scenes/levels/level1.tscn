@@ -38,49 +38,41 @@ __meta__ = {
 position = Vector2( 314.861, 335.668 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Melee)3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 389.027, 124.407 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Melee)6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 506.624, 336.197 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Melee)4" parent="." instance=ExtResource( 2 )]
 position = Vector2( 653.483, -45.798 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Melee)2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1019.65, 374.766 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Melee)5" parent="." instance=ExtResource( 2 )]
 position = Vector2( 986.012, -92.7721 )
 enemyscene = ExtResource( 3 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Projectile)" parent="." instance=ExtResource( 2 )]
 position = Vector2( 809.763, 335.192 )
 enemyscene = ExtResource( 5 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Projectile)2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1122.19, -92.6919 )
 enemyscene = ExtResource( 5 )
 max_spawns = 1
-start_enabled = true
 
 [node name="DamageBoost" parent="." instance=ExtResource( 4 )]
 position = Vector2( -58.1147, -77.6965 )
@@ -112,24 +104,22 @@ position = Vector2( 102.862, 367.969 )
 position = Vector2( -22.4687, 2.7536 )
 enemyscene = ExtResource( 7 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Homing)2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1194.1, 164.484 )
 enemyscene = ExtResource( 7 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Homing)3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1803.84, 192.801 )
 enemyscene = ExtResource( 7 )
 max_spawns = 1
-start_enabled = true
 
 [node name="EnemySpawner(Boss)" parent="." instance=ExtResource( 2 )]
 position = Vector2( 2380.49, 450.22 )
 enemyscene = ExtResource( 9 )
 max_spawns = 1
+start_enabled = false
 
 [node name="BossDoor" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1949.71, 439.626 )

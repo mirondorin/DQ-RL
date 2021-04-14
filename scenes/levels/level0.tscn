@@ -171,28 +171,24 @@ __meta__ = {
 position = Vector2( 1148.27, 574.629 )
 enemyscene = ExtResource( 12 )
 max_spawns = 1
-start_enabled = true
 spawn_continously = true
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1890.35, 705.489 )
 enemyscene = ExtResource( 12 )
 max_spawns = 1
-start_enabled = true
 spawn_continously = true
 
 [node name="EnemySpawner4" parent="." instance=ExtResource( 13 )]
 position = Vector2( 2105.26, 626.066 )
 enemyscene = ExtResource( 16 )
 max_spawns = 1
-start_enabled = true
 spawn_continously = true
 
 [node name="EnemySpawner3" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1764.88, 637.413 )
 enemyscene = ExtResource( 12 )
 max_spawns = 1
-start_enabled = true
 spawn_continously = true
 
 [node name="Triggers" type="Node2D" parent="."]
