@@ -92,8 +92,9 @@ func solve_animation(velocity,delta):
 		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
 		if x_direction !=0:
-			if not key_has_value(animation_dict, "flip_h", (x_direction < 0)):
-				animation_dict["flip_h"] = (x_direction < 0)
+			if not key_has_value(animation_dict, "flip_h", (x_direction < 0))\
+				 and not Input.is_action_pressed("hold_direction"):
+				animation_dict["flip_h"] = (x_direction < 0) 
 				new_animation_dict["flip_h"] = (x_direction < 0)
 				animation_change = true
 	

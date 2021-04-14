@@ -37,14 +37,14 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "land",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "hit",
 "speed": 5.0
 } ]
 
@@ -172,6 +172,7 @@ margin_bottom = -13.0
 custom_fonts/font = ExtResource( 11 )
 text = "collision
 "
+percent_visible = 0.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -213,13 +214,7 @@ position = Vector2( 0.168517, -13.3515 )
 
 [node name="Cooldown_Root" parent="." instance=ExtResource( 13 )]
 
-[node name="LightAttack_CD" parent="Cooldown_Root" index="0"]
-wait_time = 0.4
-
-[node name="SpecialAttack_CD" parent="Cooldown_Root" index="1"]
-wait_time = 2.0
-
-[node name="Utility_CD" parent="Cooldown_Root" index="2"]
+[node name="Utility_CD" parent="Cooldown_Root" index="0"]
 wait_time = 1.0
 
 [node name="Hitbox" type="Area2D" parent="." groups=[
@@ -232,8 +227,6 @@ shape = SubResource( 7 )
 
 [node name="HUD" parent="." instance=ExtResource( 14 )]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="timeout" from="Cooldown_Root/LightAttack_CD" to="." method="_on_LightAttack_CD_timeout"]
-[connection signal="timeout" from="Cooldown_Root/SpecialAttack_CD" to="." method="_on_SpecialAttack_CD_timeout"]
 [connection signal="timeout" from="Cooldown_Root/Utility_CD" to="." method="_on_Utility_CD_timeout"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="area_exited" from="Hitbox" to="." method="_on_Hitbox_area_exited"]
