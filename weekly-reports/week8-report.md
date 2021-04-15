@@ -11,5 +11,5 @@
 * Added direction hold
 
 ## Stoica George
-* Optimized a few networking interactions
-* Tested the game in multiplayer
+* Optimized a few networking interactions and tested the game in multiplayer
+* Modified animation update on player and mobs to make it do less `rpc`
