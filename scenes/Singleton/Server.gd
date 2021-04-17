@@ -65,3 +65,13 @@ remote func SignalPlayerListRefresh(s_players):
 #	TODO: this could be better with an emit("signal")
 	print("Being notified of new player connection")
 	get_tree().get_root().get_node("SceneHandler").lobby_instance.set_player_list(s_players)
+
+
+func FetchPlayerStats():
+	rpc_id(1, "FetchPlayerStats")
+
+
+remote func ReturnPlayerStats(s_stats):
+	print("Player stats: " + str(s_stats))
+
+

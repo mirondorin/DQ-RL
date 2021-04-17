@@ -73,3 +73,9 @@ func refresh_lobby():
 func set_player_list(s_players):
 	players = s_players
 	refresh_lobby()
+
+
+func _on_start_pressed():
+	Server.FetchPlayerStats()
+
+
