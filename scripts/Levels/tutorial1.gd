@@ -13,10 +13,11 @@ func _ready():
 	$MobStatic.stats['health'] = 99999
 	
 func _process(delta):
-	for player in players:
-		if player.stats['health'] <= 0:
-			player.position = currentrespawn.position
-			player.stats['health'] = respawnhealth
+#	for player in players:
+#		if player.stats['health'] <= 0:
+#			player.position = currentrespawn.position
+#			player.stats['health'] = respawnhealth
+	pass
 			
 
 func _on_StartTrigger_area_entered(area):

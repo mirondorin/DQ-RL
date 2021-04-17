@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export var SPEED = 100
 export var JUMPSPEED = 80
-onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
+#onready var GRAVITY = get_tree().get_root().get_node('MainScene/GlobalSettings').GRAVITY
 
 export var air_resistance_factor = 11
 export var collision_resistance_factor = 3

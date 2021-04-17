@@ -16,11 +16,11 @@ _global_script_class_icons={
 [application]
 
 config/name="DQ-RL"
-run/main_scene="res://scenes/lobby.tscn"
+run/main_scene="res://scenes/SceneHandler.tscn"
 
 [autoload]
 
-gamestate="*res://scripts/Gamestate.gd"
+Server="*res://scenes/Singleton/Server.gd"
 
 [debug]
 

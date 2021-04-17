@@ -25,7 +25,7 @@ var attack_cooldown = 1.5
 var jump_cooldown = 4
 
 var in_area = []
-onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
+#onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
 
 func _init():
 	stats["health"] = 25
@@ -35,7 +35,8 @@ func _ready():
 		attack_timer.wait_time = attack_cooldown	
 		jump_timer.wait_time = jump_cooldown
 		jump_timer.start()
-		var lvl_nr = GlobalSettings.level_nr
+#		var lvl_nr = GlobalSettings.level_nr
+		var lvl_nr = 0
 		if self.is_in_group("boss"):
 			set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
 		else:
@@ -106,7 +107,7 @@ sync func kill_mob():
 func _physics_process(delta):
 	if is_network_master():
 		follow_player()
-		velocity.y += delta * GRAVITY
+#		velocity.y += delta * GRAVITY
 		
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
 			velocity.y += jump()
