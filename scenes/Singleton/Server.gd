@@ -83,8 +83,8 @@ remote func DespawnPlayer(player_id):
 	get_node("../SceneHandler/MainScene").DespawnPlayer(player_id)
 
 
-func SignalGameStart(spawn_positions):
-	rpc_id(1, "SignalGameStart", spawn_positions)
+func SignalGameStart(level):
+	rpc_id(1, "SignalGameStart", level)
 
 
 remote func ReturnGameStart(s_spawn_positions):

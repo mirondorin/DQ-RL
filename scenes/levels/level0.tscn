@@ -117,6 +117,7 @@ follow = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="MobStatic"]
 frames = SubResource( 1 )
 animation = "idle"
+frame = 2
 playing = true
 flip_h = true
 
