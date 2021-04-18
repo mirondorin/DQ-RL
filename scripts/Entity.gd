@@ -1,5 +1,6 @@
 extends "res://scripts/PhysicsEntity.gd"
 
+
 var stats = {
 	"health" : 0,
 	"mana" : 100,
@@ -11,9 +12,10 @@ var stats = {
 
 func take_damage(value, stagger, direction, impulse_force):
 	if not stats['invincible'] and is_network_master():
-		rpc("do_take_damage", value, stagger, direction, impulse_force)
+		do_take_damage(value, stagger, direction, impulse_force)
 
-sync func do_take_damage(value, stagger, direction, impulse_force):
+
+func do_take_damage(value, stagger, direction, impulse_force):
 	stats['health'] -= value
 	stats['stagger_health'] -= stagger
 	on_take_damage(direction, impulse_force)
@@ -31,11 +33,10 @@ func on_take_damage(direction, impulse_force):
 		$Health.add_color_override("font_color", Color(255, 0, 0))
 	pass
 
-sync func do_set_health(value):
+func do_set_health(value):
 	stats['health'] = value
 	stats['max_health'] = value
 	$HealthLabel.text = String(stats["health"])
 
 func set_initial_health(value):
-#	Should be called only from master
-	rpc("do_set_health", value)
+	do_set_health(value)

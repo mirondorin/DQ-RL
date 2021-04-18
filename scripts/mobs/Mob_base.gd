@@ -31,17 +31,16 @@ func _init():
 	stats["health"] = 25
 	
 func _ready():
-	return 1
-	if is_network_master():
-		attack_timer.wait_time = attack_cooldown	
-		jump_timer.wait_time = jump_cooldown
-		jump_timer.start()
+	init_gravity()
+	attack_timer.wait_time = attack_cooldown	
+	jump_timer.wait_time = jump_cooldown
+	jump_timer.start()
 #		var lvl_nr = GlobalSettings.level_nr
-		var lvl_nr = 0
-		if self.is_in_group("boss"):
-			set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
-		else:
-			set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
+	var lvl_nr = 0
+	if self.is_in_group("boss"):
+		set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
+	else:
+		set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
 		
 
 func jump():
@@ -96,9 +95,9 @@ func solve_animation(velocity):
 			
 
 func out_of_bounds():
-	rpc("kill_mob")
+	kill_mob()
 	
-sync func kill_mob():
+func kill_mob():
 	is_dead = true
 	queue_free()
 	if spawner != null:
@@ -109,7 +108,7 @@ func _physics_process(delta):
 	return 1
 	if is_network_master():
 		follow_player()
-#		velocity.y += delta * GRAVITY
+		velocity.y += delta * GRAVITY
 		
 		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
 			velocity.y += jump()
@@ -146,8 +145,8 @@ func _physics_process(delta):
 				if collision and collision.collider.is_in_group("players") and follow:
 					attack_player(collision.collider)
 		
-		rpc_unreliable("set_entity_position", position, velocity)
-	
+		set_entity_position(position, velocity)
+
 func on_take_damage(direction, impulse_force):
 #	TODO: check how to optimize this and normalize it since we use it on both player and mob
 	if not is_dead:

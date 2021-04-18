@@ -56,6 +56,7 @@ sync func do_update_orientation(orientation):
 	change_animation("flip_h", orientation)
 	update_weapon_postion(self.position.x, self.rotation_degrees)
 
+
 func update_orientation(orientation):
-	rpc_unreliable("do_update_orientation", orientation)
+	do_update_orientation(orientation)
 

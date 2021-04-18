@@ -1,12 +1,15 @@
 extends "res://scripts/Entity.gd"
 
+
 export var attack_damage = 10
 export var destroy_on_hit = true
 export var direction = 1 #1 right, -1 left
 export var fuse_time = 1
 var group_to_detect = 'mobs'
-		
+
+
 func _ready():
+	init_gravity()
 	set_as_toplevel(true)
 	animation_change = true
 	animation_dict["animation"] = "bomb_idle"

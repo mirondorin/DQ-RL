@@ -10,10 +10,12 @@ func _ready():
 	var force = rand_range(400, 600)
 	direction = Vector2(1, 0).rotated(rand_range(0, PI) + PI)
 	impulse(force, direction)
+	init_gravity()
+
+
+func _process(delta):
 	pass
 
-#func _process(delta):
-#	pass
 
 func _on_Hurtbox_area_entered(area):
 	if area.is_in_group("hitbox"):
@@ -22,6 +24,7 @@ func _on_Hurtbox_area_entered(area):
 			owner.take_damage(attack_damage, 50, direction, 0)
 		queue_free()
 
+
 func _physics_process(delta):
 	solve_impulse()
 	if is_on_floor():
@@ -29,7 +32,6 @@ func _physics_process(delta):
 	if is_on_wall():
 		x_direction *= -1
 		impulse_dir.x *= -1
-		
 	velocity.y += delta * GRAVITY
 	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
 	var vel_y = velocity.y + impulse_dir.y * impulse_current_y

@@ -34,7 +34,7 @@ func _ready():
 		enabled = true
 
 
-sync func do_spawn():
+func do_spawn():
 	var inst = enemy.instance()
 #	maybe we should set a name for mobs?
 	inst.spawner = self
@@ -47,8 +47,8 @@ sync func do_spawn():
 
 func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
-		rpc("do_spawn")
-	pass
+		do_spawn()
+
 
 func start_spawn():
 	if enabled == false:

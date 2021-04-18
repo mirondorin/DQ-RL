@@ -5,11 +5,9 @@ const flash_material = preload("res://materials/white.tres")
 
 
 onready var current_weapon = $Weapon
-onready var scene_handler = get_tree().get_root().get_node("SceneHandler")
 
 
 var player_state
-var GRAVITY = 500.0
 var start_position
 var interactables = []
 var weapon = 0
@@ -37,11 +35,6 @@ func _init():
 
 func init_game_data():
 	init_gravity()
-
-
-func init_gravity():
-	if scene_handler.game_data.has("GRAVITY"):
-		GRAVITY = scene_handler.game_data["GRAVITY"]
 
 
 func _ready():

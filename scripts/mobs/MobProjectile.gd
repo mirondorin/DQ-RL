@@ -37,7 +37,7 @@ sync func do_attack():
 
 func attack_player(_player): #player will be null here
 	if can_attack and is_network_master():
-		rpc_unreliable("do_attack")
+		do_attack()
 	
 func _process(_delta):
 	if len(in_area) > 0:
