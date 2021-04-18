@@ -25,21 +25,22 @@ var attack_cooldown = 1.5
 var jump_cooldown = 4
 
 var in_area = []
-onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
+#onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
 
 func _init():
 	stats["health"] = 25
 	
 func _ready():
-	if is_network_master():
-		attack_timer.wait_time = attack_cooldown	
-		jump_timer.wait_time = jump_cooldown
-		jump_timer.start()
-		var lvl_nr = GlobalSettings.level_nr
-		if self.is_in_group("boss"):
-			set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
-		else:
-			set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
+	init_gravity()
+	attack_timer.wait_time = attack_cooldown	
+	jump_timer.wait_time = jump_cooldown
+	jump_timer.start()
+#		var lvl_nr = GlobalSettings.level_nr
+	var lvl_nr = 0
+	if self.is_in_group("boss"):
+		set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
+	else:
+		set_initial_health(stats["health"] * (lvl_nr + 2) / 2)
 		
 
 func jump():
@@ -94,9 +95,9 @@ func solve_animation(velocity):
 			
 
 func out_of_bounds():
-	rpc("kill_mob")
+	kill_mob()
 	
-sync func kill_mob():
+func kill_mob():
 	is_dead = true
 	queue_free()
 	if spawner != null:
@@ -104,47 +105,46 @@ sync func kill_mob():
 	pass
 	
 func _physics_process(delta):
-	if is_network_master():
-		follow_player()
-		velocity.y += delta * GRAVITY
-		
-		if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
-			velocity.y += jump()
-			can_jump = false
-		
-		solve_animation(velocity)
-		make_animation_calls()
-		solve_impulse()
-		
-		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
-		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
-		move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
-		
-		if is_on_floor():
-			velocity.y = 0
-			jump_intensity = 0
-			in_jump=false
-			impulse_current_x = 0
-			impulse_current_y = 0
-			
-		if is_on_ceiling():
-			velocity.y=max(0,velocity.y)
-			impulse_current_y /= collision_resistance_factor
+	follow_player()
+	velocity.y += delta * GRAVITY
 	
-		if is_on_wall():
-			impulse_current_x /= collision_resistance_factor
+	if can_jump and follow and len(in_area) > 0 and position.y >= player.position.y - 5:
+		velocity.y += jump()
+		can_jump = false
+	
+	solve_animation(velocity)
+	make_animation_calls()
+	solve_impulse()
+	
+	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+	move_and_slide(Vector2(velocity.x , vel_y), Vector2(0, -1))
+	
+	if is_on_floor():
+		velocity.y = 0
+		jump_intensity = 0
+		in_jump=false
+		impulse_current_x = 0
+		impulse_current_y = 0
 		
-		if in_impulse:
-			x_direction = 0
+	if is_on_ceiling():
+		velocity.y=max(0,velocity.y)
+		impulse_current_y /= collision_resistance_factor
 
-		for i in get_slide_count():
-			if get_slide_count() > i:
-				var collision = get_slide_collision(i)
-				if collision and collision.collider.is_in_group("players") and follow:
-					attack_player(collision.collider)
-		
-		rpc_unreliable("set_entity_position", position, velocity)
+	if is_on_wall():
+		impulse_current_x /= collision_resistance_factor
 	
+	if in_impulse:
+		x_direction = 0
+
+	for i in get_slide_count():
+		if get_slide_count() > i:
+			var collision = get_slide_collision(i)
+			if collision and collision.collider.is_in_group("players") and follow:
+				attack_player(collision.collider)
+	
+	set_entity_position(position, velocity)
+
 func on_take_damage(direction, impulse_force):
 #	TODO: check how to optimize this and normalize it since we use it on both player and mob
 	if not is_dead:

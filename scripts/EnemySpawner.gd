@@ -2,6 +2,7 @@ tool
 extends Node2D
 
 onready var mainscene = get_parent()
+onready var spawn_point = get_parent().get_node("YSort/Mobs")
 
 export (PackedScene) var enemyscene
 onready var enemy = load(enemyscene.get_path())
@@ -33,11 +34,11 @@ func _ready():
 		enabled = true
 
 
-sync func do_spawn():
+func do_spawn():
 	var inst = enemy.instance()
 #	maybe we should set a name for mobs?
 	inst.spawner = self
-	mainscene.add_child(inst)
+	spawn_point.add_child(inst)
 	inst.position = self.position
 	inst.velocity.x = 0
 	inst.velocity.y = 0
@@ -46,8 +47,9 @@ sync func do_spawn():
 
 func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
-		rpc("do_spawn")
-	pass
+#		do_spawn()
+		print("Spawning")
+
 
 func start_spawn():
 	if enabled == false:
@@ -79,8 +81,7 @@ func stop_spawner():
 	$Timer.stop()
 
 func _on_Timer_timeout():
-	if is_network_master():
-		spawn()
+	spawn()
 	
 	if spawn_continously:
 		$Timer.start()

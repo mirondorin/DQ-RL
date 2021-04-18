@@ -77,7 +77,7 @@ nodes/fragment/connections = PoolIntArray( 5, 0, 2, 0, 6, 0, 7, 2, 7, 0, 2, 1, 7
 render_priority = 1
 shader = SubResource( 6 )
 
-[sub_resource type="PackedScene" id=9]
+[sub_resource type="PackedScene" id=8]
 _bundled = {
 "conn_count": 0,
 "conns": PoolIntArray(  ),
@@ -90,25 +90,25 @@ _bundled = {
 "version": 2
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 122.827, 15.5711 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 49.2089, 10 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 58.6902, 10 )
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 91.3622, 10 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 60.9763, 10 )
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 54.805, 10 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 65.4601, 10 )
 
 [node name="LevelRoot" type="Node2D"]
@@ -160,8 +160,9 @@ position = Vector2( 27.622, 688.062 )
 
 [node name="DynamicSpawner" type="Node2D" parent="."]
 script = ExtResource( 2 )
-enemyscene = SubResource( 9 )
+enemyscene = SubResource( 8 )
 max_spawns = 6
+start_enabled = true
 spawn_delay = 3
 spawn_continously = true
 spawn_list = {
@@ -175,7 +176,7 @@ spawn_list = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D"]
 modulate = Color( 1, 0.0156863, 0.568627, 1 )
 position = Vector2( 456.791, 702.864 )
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 
 [node name="Timer" type="Timer" parent="DynamicSpawner"]
 wait_time = 3.0
@@ -191,35 +192,35 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D2"]
 position = Vector2( 295.703, 567.189 )
-shape = SubResource( 8 )
+shape = SubResource( 10 )
 
 [node name="Area2D3" type="Area2D" parent="DynamicSpawner"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D3"]
 position = Vector2( 690.182, 598.428 )
-shape = SubResource( 14 )
+shape = SubResource( 11 )
 
 [node name="Area2D4" type="Area2D" parent="DynamicSpawner"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D4"]
 position = Vector2( 381.802, 841.004 )
-shape = SubResource( 15 )
+shape = SubResource( 12 )
 
 [node name="Area2D5" type="Area2D" parent="DynamicSpawner"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D5"]
 position = Vector2( 607.641, 795.448 )
-shape = SubResource( 11 )
+shape = SubResource( 13 )
 
 [node name="Area2D6" type="Area2D" parent="DynamicSpawner"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D6"]
 position = Vector2( 163.879, 970.369 )
-shape = SubResource( 12 )
+shape = SubResource( 14 )
 
 [node name="Area2D7" type="Area2D" parent="DynamicSpawner"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D7"]
 position = Vector2( -46.6164, 939.744 )
-shape = SubResource( 13 )
+shape = SubResource( 15 )
 [connection signal="timeout" from="DynamicSpawner/Timer" to="DynamicSpawner" method="_on_Timer_timeout"]

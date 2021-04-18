@@ -117,7 +117,7 @@ follow = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="MobStatic"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 flip_h = true
 
@@ -235,7 +235,7 @@ position = Vector2( 2.80615, -26.9391 )
 shape = SubResource( 9 )
 
 [node name="respawn0" type="Position2D" parent="."]
-position = Vector2( 207.785, 401.904 )
+position = Vector2( -39.3475, 433.255 )
 
 [node name="respawn1" type="Position2D" parent="."]
 position = Vector2( 546.301, 370.263 )

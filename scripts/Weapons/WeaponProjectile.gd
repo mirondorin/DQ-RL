@@ -14,6 +14,6 @@ sync func do_attack():
 	bullet_inst.direction = -1 if int($AnimatedSprite.flip_h) else 1
 
 func attack():
-	rpc_unreliable("do_attack")
+	do_attack()
 
 

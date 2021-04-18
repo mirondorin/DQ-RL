@@ -19,12 +19,10 @@ sync func do_attack():
 	bullet_inst.impulse(200, Vector2(-1 if int($AnimatedSprite.flip_h) else 1, -2))
 
 func attack():
-	rpc_unreliable("do_attack")
+	do_attack()
 	
 
 func special_attack():
-#	if is_network_master():
-#		rpc_unreliable("play_animation", attack_anim_names['special-attack'])
 	pass
 
 func _on_Area2D_area_entered(area):

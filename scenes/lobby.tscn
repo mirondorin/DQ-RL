@@ -3,6 +3,7 @@
 [ext_resource path="res://scripts/lobby.gd" type="Script" id=1]
 
 [node name="Lobby" type="Control"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 2
@@ -13,6 +14,7 @@ __meta__ = {
 }
 
 [node name="Players" type="Panel" parent="."]
+pause_mode = 2
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -35,6 +37,7 @@ size_flags_vertical = 0
 text = "Awaiting Players..."
 
 [node name="Start" type="Button" parent="Players"]
+pause_mode = 2
 margin_left = 68.0
 margin_top = 307.0
 margin_right = 193.0
@@ -51,35 +54,21 @@ margin_bottom = 296.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="PortForward" type="Label" parent="Players"]
-margin_left = -124.0
-margin_top = 375.0
-margin_right = 128.0
-margin_bottom = 429.0
-custom_constants/line_spacing = 6
-text = "If you want non-LAN clients to connect,
-make sure the port 10567 in UDP
-is forwarded on your router."
-align = 1
-
-[node name="FindPublicIP" type="LinkButton" parent="Players"]
-margin_left = 168.0
-margin_top = 393.5
-margin_right = 341.0
-margin_bottom = 407.5
-text = "Find your public IP address"
-
 [node name="Connect" type="Panel" parent="."]
-anchor_left = 0.5
+pause_mode = 2
+anchor_left = 0.478
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.478
 anchor_bottom = 0.5
-margin_left = -138.5
-margin_top = -83.5
-margin_right = 138.5
-margin_bottom = 83.5
+margin_left = -95.76
+margin_top = -83.0
+margin_right = 97.24
+margin_bottom = 84.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="NameLabel" type="Label" parent="Connect"]
 margin_left = 14.0
@@ -116,24 +105,16 @@ margin_bottom = 109.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "127.0.0.1"
-
-[node name="Host" type="Button" parent="Connect"]
-margin_left = 181.0
-margin_top = 31.0
-margin_right = 246.0
-margin_bottom = 51.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-text = "Host"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Join" type="Button" parent="Connect"]
-margin_left = 181.0
-margin_top = 87.0
-margin_right = 246.0
-margin_bottom = 107.0
+pause_mode = 2
+margin_left = 17.0
+margin_top = 120.0
+margin_right = 173.0
+margin_bottom = 144.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Join"
@@ -142,10 +123,10 @@ __meta__ = {
 }
 
 [node name="ErrorLabel" type="Label" parent="Connect"]
-margin_left = 15.0
-margin_top = 125.0
-margin_right = 257.0
-margin_bottom = 139.0
+margin_left = 17.5612
+margin_top = 85.0
+margin_right = 173.561
+margin_bottom = 109.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 custom_colors/font_color = Color( 0.820312, 0.291595, 0.291595, 1 )
@@ -157,6 +138,4 @@ margin_bottom = 58.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 [connection signal="pressed" from="Players/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="Players/FindPublicIP" to="." method="_on_find_public_ip_pressed"]
-[connection signal="pressed" from="Connect/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Connect/Join" to="." method="_on_join_pressed"]

@@ -56,8 +56,7 @@ sync func do_spawn():
 
 
 func _on_Timer_timeout():
-	if is_network_master():
-		spawn()
+	spawn()
 	
 	if spawn_continously:
 		$Timer.start()

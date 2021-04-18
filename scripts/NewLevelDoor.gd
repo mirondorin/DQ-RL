@@ -3,9 +3,10 @@ extends Node2D
 func _ready():
 	pass
 
-sync func do_interact():
-	if is_network_master():
-		gamestate.change_level()
+
+func do_interact():
+	print("Changing new level door")
+
 
 func interact():
-	rpc("do_interact")
+	do_interact()
