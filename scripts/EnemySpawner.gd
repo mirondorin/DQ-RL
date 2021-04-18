@@ -47,7 +47,8 @@ func do_spawn():
 
 func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
-		do_spawn()
+#		do_spawn()
+		print("Spawning")
 
 
 func start_spawn():

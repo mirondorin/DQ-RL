@@ -28,8 +28,7 @@ shapes/navigation/geometry_color=Color( 1, 1, 1, 0.4 )
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
+window/size/width=800
 
 [editor_plugins]
 

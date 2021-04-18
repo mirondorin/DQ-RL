@@ -8,6 +8,8 @@ func _ready():
 	pass # Replace with function body.
 
 func MovePlayer(new_position):
+	print(new_position)
+	position = new_position
 	set_position(new_position)
 
 
@@ -17,4 +19,5 @@ func set_player_name(new_name):
 
 func set_start_position(pos):
 	position = pos
-	start_position = position
+	start_position = pos
+	

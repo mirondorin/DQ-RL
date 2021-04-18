@@ -15,7 +15,6 @@ __meta__ = {
 position = Vector2( -3676.5, -5886.09 )
 
 [node name="OtherPlayers" type="YSort" parent="YSort"]
-position = Vector2( 138, 78 )
 
 [node name="Mobs" type="YSort" parent="YSort"]
 position = Vector2( 36, 22 )
