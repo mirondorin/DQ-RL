@@ -31,6 +31,7 @@ func _init():
 	stats["health"] = 25
 	
 func _ready():
+	return 1
 	if is_network_master():
 		attack_timer.wait_time = attack_cooldown	
 		jump_timer.wait_time = jump_cooldown
@@ -105,6 +106,7 @@ sync func kill_mob():
 	pass
 	
 func _physics_process(delta):
+	return 1
 	if is_network_master():
 		follow_player()
 #		velocity.y += delta * GRAVITY

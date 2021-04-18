@@ -37,7 +37,11 @@ func set_player_name(new_name):
 	$DebugAction.text = new_name
 	pass
 
+var GRAVITY = 500.0
+
+
 func _init():
+	return 1
 	self.SPEED = 100
 	self.JUMPSPEED = 80
 	stats["damage_modifier"] = 0
@@ -45,13 +49,11 @@ func _init():
 	stats["max_health"] = 100
 
 func _ready():
-	if is_network_master():
-		camera = Camera2D.new()
-		self.add_child(camera)
-		camera.make_current()
-		camera.set_zoom(Vector2( 0.5, 0.5 ))
+	return 1
+	pass
 
 func jump():
+	return 1
 #	This method does not have to be synced
 #	since it only calculates jump speed
 #	client can cheat, but does he really?
@@ -71,23 +73,25 @@ func jump():
 	pass
 	
 func dash(_delta):
+	return 1
 	in_dash = true
 	$Hitbox.monitorable = false
 	var dir = -1 if $AnimatedSprite.flip_h else 1
-	self.GRAVITY = 0
+	GRAVITY = 0
 	velocity.y = 0
 	impulse(500, Vector2(dir, -0.001), 10, false)
 	yield(get_tree().create_timer(0.2), "timeout")
-	self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
 	$Hitbox.monitorable = true
 	in_dash = false
 	self.impulse_current_x = impulse_current_x/3
 	self.impulse_step = 5
 
 sync func play_special_attack():
+	return 1
 	$AnimationPlayer.play("special-attack")
 
 func solve_animation(velocity,delta):
+	return 1
 	if not is_network_master():
 		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
@@ -127,13 +131,16 @@ func solve_animation(velocity,delta):
 			animation_play_what = ""
 
 func on_gain_health():
+	return 1
 	$HealthLabel.text = String(stats['health'])
 
 sync func gain_health(value):
+	return 1
 	stats['health'] += value
 	on_gain_health()
 
 func solve_input(delta):
+	return 1
 #	theoretically should not require sync
 #	but we have to find a way to sync weapon attacks and animations
 	if Input.is_action_pressed("ui_left"):
@@ -170,11 +177,13 @@ func solve_input(delta):
 	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
 	if Input.is_action_just_pressed("change_level"):
-		gamestate.change_level()
+#		gamestate.change_level()
+		pass
 
 func _physics_process(delta):
+	return 1
 	if is_network_master():
-		velocity.y += delta * GRAVITY
+		velocity.y += delta * self.GRAVITY
 			
 		solve_animation(velocity,delta)
 		make_animation_calls()
@@ -210,6 +219,7 @@ func _physics_process(delta):
 			$DebugCollision.text = collision.collider.name
 
 sync func do_switch_weapon():
+	return 1
 	weapon = (1 + weapon) % 3
 	current_weapon.queue_free()
 	var wep
@@ -224,10 +234,12 @@ sync func do_switch_weapon():
 	add_child(inst)
 
 func switch_weapon():
+	return 1
 	rpc("do_switch_weapon")
 	
 	
 func out_of_bounds():
+	return 1
 	if is_network_master():
 		position = start_position
 		rset("puppet_pos", position)
@@ -236,6 +248,7 @@ func out_of_bounds():
 	pass
 
 func on_take_damage(direction, impulse_force):
+	return 1
 #	TODO: check this 
 #	CHECK: do we really need a diffrent on take damage for player?
 	$AnimatedSprite.set_material(flash_material)
@@ -253,6 +266,7 @@ func on_take_damage(direction, impulse_force):
 		$HealthLabel.add_color_override("font_color", Color(255, 0, 0))
 
 func _on_AnimatedSprite_animation_finished():
+	return 1
 	if $AnimatedSprite.animation == 'land':
 		landing = false
 		animation_play = true
@@ -261,30 +275,37 @@ func _on_AnimatedSprite_animation_finished():
 	pass
 
 func _on_Utility_CD_timeout():
+	return 1
 	cooldowns['can_utility'] = true
 	pass
 
 func grab_item():
+	return 1
 	print("Called grab item")
 
 func use_interact():
+	return 1
 	for i in interactables:
 		i.get_parent().interact()
 		return
 	
 sync func do_modify_stats(status, value):
+	return 1
 	stats[status] 	+= value
 	$HealthLabel.text = String(stats['health'])
 
 func modify_stats(status, value):
+	return 1
 	if is_network_master():
 		rpc("do_modify_stats", status, value)
 
 func _on_Hitbox_area_entered(area):
+	return 1
 	if area.is_in_group("interactable"):
 		interactables.append(area)
 
 func _on_Hitbox_area_exited(area):
+	return 1
 	if area.is_in_group("interactable"):
 		interactables.erase(area)
 		

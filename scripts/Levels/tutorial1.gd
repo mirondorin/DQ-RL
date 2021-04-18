@@ -9,8 +9,7 @@ var respawnhealth = 10
 onready var currentrespawn = $respawn0
 
 func _ready():
-	MobStaticpos = $MobStatic.position
-	$MobStatic.stats['health'] = 99999
+	pass
 	
 func _process(delta):
 #	for player in players:

@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Players/PlayableCharacterTemplate.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f1.png" type="Texture" id=3]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_run_anim_f2.png" type="Texture" id=4]
@@ -27,14 +27,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "hit",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
@@ -42,9 +42,9 @@ animations = [ {
 "name": "land",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
-"name": "hit",
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -142,12 +142,13 @@ tracks/4/keys = {
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 26.9215, 37.8014 )
 
-[node name="PlayableCharacter" type="KinematicBody2D" groups=[
+[node name="PlayableCharacterTemplate" type="KinematicBody2D" groups=[
 "players",
 ]]
 material = SubResource( 2 )
 position = Vector2( 0, -0.187286 )
 scale = Vector2( 0.25, 0.25 )
+collision_layer = 0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 231.853 ],

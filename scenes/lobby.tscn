@@ -3,6 +3,7 @@
 [ext_resource path="res://scripts/lobby.gd" type="Script" id=1]
 
 [node name="Lobby" type="Control"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 2
@@ -13,6 +14,7 @@ __meta__ = {
 }
 
 [node name="Players" type="Panel" parent="."]
+pause_mode = 2
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -35,6 +37,7 @@ size_flags_vertical = 0
 text = "Awaiting Players..."
 
 [node name="Start" type="Button" parent="Players"]
+pause_mode = 2
 margin_left = 68.0
 margin_top = 307.0
 margin_right = 193.0
@@ -51,18 +54,8 @@ margin_bottom = 296.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="PortForward" type="Label" parent="Players"]
-margin_left = -124.0
-margin_top = 375.0
-margin_right = 128.0
-margin_bottom = 429.0
-custom_constants/line_spacing = 6
-text = "If you want non-LAN clients to connect,
-make sure the port 10567 in UDP
-is forwarded on your router."
-align = 1
-
 [node name="Connect" type="Panel" parent="."]
+pause_mode = 2
 anchor_left = 0.478
 anchor_top = 0.5
 anchor_right = 0.478
@@ -73,6 +66,9 @@ margin_right = 97.24
 margin_bottom = 84.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="NameLabel" type="Label" parent="Connect"]
 margin_left = 14.0
@@ -114,6 +110,7 @@ __meta__ = {
 }
 
 [node name="Join" type="Button" parent="Connect"]
+pause_mode = 2
 margin_left = 17.0
 margin_top = 120.0
 margin_right = 173.0

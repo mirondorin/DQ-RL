@@ -75,3 +75,9 @@ remote func ReturnPlayerStats(s_stats):
 	print("Player stats: " + str(s_stats))
 
 
+remote func SpawnNewPlayer(player_id, spawn_position):
+	get_node("../SceneHandler/MainScene").SpawnNewPlayer(player_id, spawn_position)
+
+
+remote func DespawnPlayer(player_id):
+	get_node("../SceneHandler/MainScene").DespawnPlayer(player_id)
