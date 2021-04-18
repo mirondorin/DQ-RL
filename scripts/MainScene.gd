@@ -12,6 +12,8 @@ var player_spawn = preload("res://Scenes/Players/PlayableCharacterTemplate.tscn"
 var current_level = 0
 var last_worlds_state = 0
 var player_list
+var world_state_buffer = []
+var interpolation_offset = 100
 
 
 func _ready():
@@ -88,11 +90,25 @@ func start_game(s_spawn_positions):
 func update_world_state(s_world_state):
 	if s_world_state["T"] > last_worlds_state:
 		last_worlds_state = s_world_state["T"]
-		s_world_state.erase("T")
-		s_world_state.erase(get_tree().get_network_unique_id())
-		for player in s_world_state.keys():
+		world_state_buffer.append(s_world_state)
+
+
+func _physics_process(delta):
+	var render_time = OS.get_system_time_msecs() - interpolation_offset
+	if world_state_buffer.size() > 1:
+		while world_state_buffer.size() > 2 and render_time > world_state_buffer[1].T:
+			world_state_buffer.remove(0)
+		var interpolation_factor = float(render_time - world_state_buffer[0]["T"]) / float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"])
+		for player in world_state_buffer[1].keys():
+			if str(player) == "T":
+				continue
+			if player == get_tree().get_network_unique_id():
+				continue
+			if not world_state_buffer[0].has(player):
+				continue
 			if get_node("YSort/OtherPlayers").has_node(str(player)):
-				get_node("YSort/OtherPlayers/" + str(player)).MovePlayer(s_world_state[player]["P"])
+				var new_position = lerp(world_state_buffer[0][player]["P"], world_state_buffer[1][player]["P"], interpolation_factor)
+				get_node("YSort/OtherPlayers/" + str(player)).MovePlayer(new_position)
 			else:
 				print("spawning player")
-				SpawnNewPlayer(player, s_world_state[player]["P"])
+				SpawnNewPlayer(player, world_state_buffer[1][player]["P"])

@@ -49,7 +49,6 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	print(position)
 	MovementLoop(delta)
 	DefinePlayerState()
 
