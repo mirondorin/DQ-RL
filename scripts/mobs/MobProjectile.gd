@@ -36,7 +36,7 @@ sync func do_attack():
 	attack_timer.start()
 
 func attack_player(_player): #player will be null here
-	if can_attack and is_network_master():
+	if can_attack:
 		do_attack()
 	
 func _process(_delta):

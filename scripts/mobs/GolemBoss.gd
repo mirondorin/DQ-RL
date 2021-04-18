@@ -106,7 +106,7 @@ func reset_pebble_attack():
 	pebble_attacking = false
 
 func _on_Hurtbox_area_entered(area):
-	if area.is_in_group('hitbox'): #  and is_network_master()
+	if area.is_in_group('hitbox'):
 		var owner = area.get_owner()
 		if owner.is_in_group('players'):
 			attack_player(owner)

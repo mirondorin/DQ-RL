@@ -122,13 +122,12 @@ func stop_animation():
 	do_stop_animation()
 
 func make_animation_calls():
-	if is_network_master(): # ? Redundant if?
-		if animation_stop and not animation_stopped:
-			stop_animation()
-		elif animation_play and old_animation_play_what != animation_play_what:
-			play_animation()
-		if animation_change:
-			change_animation()
+    if animation_stop and not animation_stopped:
+        stop_animation()
+    elif animation_play and old_animation_play_what != animation_play_what:
+        play_animation()
+    if animation_change:
+        change_animation()
 
 func key_has_value(dictionary, key, value):
 	if key in dictionary.keys():

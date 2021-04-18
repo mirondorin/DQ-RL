@@ -11,7 +11,7 @@ var stats = {
 }
 
 func take_damage(value, stagger, direction, impulse_force):
-	if not stats['invincible'] and is_network_master():
+	if not stats['invincible']:
 		do_take_damage(value, stagger, direction, impulse_force)
 
 
