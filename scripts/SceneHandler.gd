@@ -15,9 +15,7 @@ func _ready():
 	add_child(lobby_instance)
 	print(lobby_instance)
 	get_tree().paused = true
-#	yield(get_tree().create_timer(1), "timeout")
-#	Server.FetchGameData("a", get_instance_id())
-	
+
 
 func SetData(s_value):
 	game_data = s_value

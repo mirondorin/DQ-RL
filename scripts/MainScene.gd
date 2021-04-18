@@ -11,6 +11,7 @@ var player_spawn = preload("res://Scenes/Players/PlayableCharacterTemplate.tscn"
 
 var current_level = 0
 var last_worlds_state = 0
+var player_list
 
 
 func _ready():
@@ -18,8 +19,8 @@ func _ready():
 	
 
 func change_level():
+	print("Changing level")
 	delete_current_mobs()
-	print("Deleted mobs")
 	var next_level = "level" + str(current_level) + ".tscn"
 	var current_levels = level_root.get_children()
 	if current_level != null:
@@ -28,9 +29,11 @@ func change_level():
 			i.queue_free()
 	var new_level = load("res://scenes/levels/" + next_level).instance()
 	level_root.add_child(new_level)
+	print("New level loaded")
 
 
 func delete_current_mobs():
+	print("Deleting mobs")
 	var current_mobs = mobs_root.get_children()
 	if current_mobs == null:
 		return 1
@@ -60,9 +63,24 @@ func DespawnPlayer(player_id):
 		print("some sort of error when despawning player, player does not exist")
 
 
-func start_game():
-	get_tree().paused = false
+func start_game(s_spawn_positions):
+	var my_id = get_tree().get_network_unique_id()
 	get_node("YSort/PlayableCharacter").init_game_data()
+	for player in s_spawn_positions.keys():
+		if my_id == player:
+			get_node("YSort/PlayableCharacter").set_player_name(s_spawn_positions[player]["name"])
+			get_node("YSort/PlayableCharacter").set_start_position(s_spawn_positions[player]["pos"])
+		elif get_node("YSort/OtherPlayers").has_node(str(player)):
+			get_node("YSort/OtherPlayers/" + str(player)).set_player_name(s_spawn_positions[player]["name"])
+			get_node("YSort/OtherPlayers/" + str(player)).set_start_position(s_spawn_positions[player]["pos"])
+		else:
+			var new_player = player_spawn.instance()
+			new_player.set_start_position(s_spawn_positions[player]["pos"])
+			new_player.name = str(player)
+			new_player.set_player_name(s_spawn_positions[player]["name"])
+			other_players.add_child(new_player)
+	yield(get_tree().create_timer(1), "timeout")
+	get_tree().paused = false
 	get_node("YSort/PlayableCharacter").set_physics_process(true)
 	print("Game started")
 

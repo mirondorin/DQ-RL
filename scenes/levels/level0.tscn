@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f1.png" type="Texture" id=2]
@@ -17,30 +17,8 @@
 [ext_resource path="res://scenes/items/DamageBoost.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scenes/Players/PlayableCharacter.tscn" type="PackedScene" id=18]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 82.0744, 40.5701 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 76.3908, 10 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 68.7013, 10 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 69.3528, 160.267 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 18.6112, 190.528 )
-
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 10, 83.8634 )
-
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 217.193, 32.1834 )
-
-[sub_resource type="SpriteFrames" id=8]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 3 ) ],
 "loop": true,
@@ -53,11 +31,32 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10, 14.8159 )
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 10, 14.4904 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 82.0744, 40.5701 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 76.3908, 10 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 68.7013, 10 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 69.3528, 160.267 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 18.6112, 190.528 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 10, 83.8634 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 217.193, 32.1834 )
 
 [node name="LevelRoot" type="Node2D"]
 script = ExtResource( 11 )
@@ -103,6 +102,70 @@ position = Vector2( 22.9289, 433.445 )
 [node name="3" type="Position2D" parent="Spawn"]
 position = Vector2( 45.1772, 432.396 )
 
+[node name="MobStatic" type="KinematicBody2D" parent="." groups=[
+"mobs",
+]]
+position = Vector2( 703.526, 279.315 )
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+follow = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MobStatic"]
+frames = SubResource( 1 )
+animation = "idle"
+playing = true
+flip_h = true
+
+[node name="PhysicsCollision" type="CollisionShape2D" parent="MobStatic"]
+visible = false
+position = Vector2( 0, 3.374 )
+shape = SubResource( 2 )
+
+[node name="Hitbox" type="Area2D" parent="MobStatic" groups=[
+"hitbox",
+]]
+visible = false
+collision_layer = 2147483649
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobStatic/Hitbox"]
+light_mask = -2147483647
+position = Vector2( 0, 3.402 )
+shape = SubResource( 3 )
+
+[node name="Hurtbox" type="Area2D" parent="MobStatic" groups=[
+"hurtbox",
+]]
+scale = Vector2( 1.146, 1.128 )
+collision_layer = 2147483649
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobStatic/Hurtbox"]
+light_mask = -2147483647
+position = Vector2( 0, 3.402 )
+shape = SubResource( 3 )
+
+[node name="AttackCooldown" type="Timer" parent="MobStatic"]
+
+[node name="JumpCooldown" type="Timer" parent="MobStatic"]
+
+[node name="HealthLabel" type="Label" parent="MobStatic"]
+margin_left = -9.0
+margin_top = -26.0
+margin_right = 63.0
+margin_bottom = 33.0
+rect_scale = Vector2( 0.466, 0.444 )
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color = Color( 1, 0.741176, 0, 1 )
+text = "20
+
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="EnemySpawner" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1148.27, 574.629 )
 enemyscene = ExtResource( 12 )
@@ -133,20 +196,20 @@ spawn_continously = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/StartTrigger"]
 position = Vector2( 26.3826, 425.304 )
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="respawntrigger0" type="Area2D" parent="Triggers"]
 position = Vector2( 295.043, 530.734 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/respawntrigger0"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="respawntrigger1" type="Area2D" parent="Triggers"]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/respawntrigger1"]
 position = Vector2( 703.188, 531.772 )
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 
 [node name="fightareatrigger" type="Area2D" parent="Triggers"]
 position = Vector2( 914.139, 427.122 )
@@ -154,24 +217,24 @@ collision_layer = 2147483648
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/fightareatrigger"]
 position = Vector2( -57.0834, -74.3268 )
-shape = SubResource( 4 )
+shape = SubResource( 7 )
 
 [node name="fightareatrigger2" type="Area2D" parent="Triggers"]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/fightareatrigger2"]
 position = Vector2( 1506.42, 488.465 )
-shape = SubResource( 5 )
+shape = SubResource( 8 )
 
 [node name="dashtrigger" type="Area2D" parent="Triggers"]
 position = Vector2( 368.755, 343.966 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/dashtrigger"]
 position = Vector2( 2.80615, -26.9391 )
-shape = SubResource( 6 )
+shape = SubResource( 9 )
 
 [node name="respawn0" type="Position2D" parent="."]
-position = Vector2( -38.4566, 433.255 )
+position = Vector2( -39.3475, 433.255 )
 
 [node name="respawn1" type="Position2D" parent="."]
 position = Vector2( 546.301, 370.263 )
@@ -188,7 +251,7 @@ position = Vector2( 1134.98, 632.592 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MobSpawnArea"]
 position = Vector2( 14.6301, -72.2064 )
-shape = SubResource( 7 )
+shape = SubResource( 10 )
 
 [node name="healthspawn" type="Node2D" parent="."]
 visible = false
@@ -316,80 +379,9 @@ will stagger them"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="YSort" type="YSort" parent="."]
-
-[node name="PlayableCharacter" parent="YSort" instance=ExtResource( 18 )]
-position = Vector2( 20.7887, 425.666 )
-
-[node name="OtherPlayers" type="YSort" parent="YSort"]
-
-[node name="Mobs" type="YSort" parent="YSort"]
-
-[node name="MobStatic" type="KinematicBody2D" parent="YSort/Mobs" groups=[
-"mobs",
-]]
-position = Vector2( 703.526, 279.315 )
-collision_layer = 0
-collision_mask = 2
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_group_": true
-}
-follow = false
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="YSort/Mobs/MobStatic"]
-frames = SubResource( 8 )
-animation = "idle"
-frame = 1
-playing = true
-flip_h = true
-
-[node name="PhysicsCollision" type="CollisionShape2D" parent="YSort/Mobs/MobStatic"]
-visible = false
-position = Vector2( 0, 3.374 )
-shape = SubResource( 9 )
-
-[node name="Hitbox" type="Area2D" parent="YSort/Mobs/MobStatic" groups=[
-"hitbox",
-]]
-visible = false
-collision_layer = 2147483649
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Mobs/MobStatic/Hitbox"]
-light_mask = -2147483647
-position = Vector2( 0, 3.402 )
-shape = SubResource( 10 )
-
-[node name="Hurtbox" type="Area2D" parent="YSort/Mobs/MobStatic" groups=[
-"hurtbox",
-]]
-scale = Vector2( 1.146, 1.128 )
-collision_layer = 2147483649
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Mobs/MobStatic/Hurtbox"]
-light_mask = -2147483647
-position = Vector2( 0, 3.402 )
-shape = SubResource( 10 )
-
-[node name="AttackCooldown" type="Timer" parent="YSort/Mobs/MobStatic"]
-
-[node name="JumpCooldown" type="Timer" parent="YSort/Mobs/MobStatic"]
-
-[node name="HealthLabel" type="Label" parent="YSort/Mobs/MobStatic"]
-margin_left = -9.0
-margin_top = -26.0
-margin_right = 63.0
-margin_bottom = 33.0
-rect_scale = Vector2( 0.466, 0.444 )
-custom_fonts/font = ExtResource( 9 )
-custom_colors/font_color = Color( 1, 0.741176, 0, 1 )
-text = "20
-
-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[connection signal="area_entered" from="MobStatic/Hurtbox" to="MobStatic" method="_on_Hurtbox_area_entered"]
+[connection signal="timeout" from="MobStatic/AttackCooldown" to="MobStatic" method="_on_AttackCooldown_timeout"]
+[connection signal="timeout" from="MobStatic/JumpCooldown" to="MobStatic" method="_on_JumpCooldown_timeout"]
 [connection signal="area_entered" from="Triggers/StartTrigger" to="." method="_on_StartTrigger_area_entered"]
 [connection signal="area_entered" from="Triggers/respawntrigger0" to="." method="_on_respawntrigger0_area_entered"]
 [connection signal="area_entered" from="Triggers/respawntrigger1" to="." method="_on_respawntrigger1_area_entered"]
@@ -397,8 +389,5 @@ __meta__ = {
 [connection signal="area_entered" from="Triggers/fightareatrigger2" to="." method="_on_fightareatrigger2_area_entered"]
 [connection signal="area_entered" from="Triggers/dashtrigger" to="." method="_on_dashtrigger_area_entered"]
 [connection signal="area_entered" from="MobSpawnArea" to="." method="_on_MobSpawnArea_area_entered"]
-[connection signal="area_entered" from="YSort/Mobs/MobStatic/Hurtbox" to="YSort/Mobs/MobStatic" method="_on_Hurtbox_area_entered"]
-[connection signal="timeout" from="YSort/Mobs/MobStatic/AttackCooldown" to="YSort/Mobs/MobStatic" method="_on_AttackCooldown_timeout"]
-[connection signal="timeout" from="YSort/Mobs/MobStatic/JumpCooldown" to="YSort/Mobs/MobStatic" method="_on_JumpCooldown_timeout"]
 
 [editable path="NewLevelDoor"]

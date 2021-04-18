@@ -116,7 +116,6 @@ sync func do_stop_animation():
 
 
 func stop_animation():
-#	TODO: check if this doesn't affect animation_dict
 	animation_stop = false
 	animation_stopped = true
 	old_animation_play_what = "1"

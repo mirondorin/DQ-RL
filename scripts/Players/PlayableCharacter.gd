@@ -25,7 +25,6 @@ var jump_intensity
 
 
 func _init():
-	start_position = position
 	self.SPEED = 100
 	self.JUMPSPEED = 80
 	stats["damage_modifier"] = 0
@@ -56,6 +55,11 @@ func _physics_process(delta):
 
 func set_player_name(new_name):
 	$DebugAction.text = new_name
+
+
+func set_start_position(pos):
+	position = pos
+	start_position = position
 
 
 func MovementLoop(delta):

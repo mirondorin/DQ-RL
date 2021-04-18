@@ -83,13 +83,14 @@ remote func DespawnPlayer(player_id):
 	get_node("../SceneHandler/MainScene").DespawnPlayer(player_id)
 
 
-func SignalGameStart():
-	rpc_id(1, "SignalGameStart")
+func SignalGameStart(spawn_positions):
+	rpc_id(1, "SignalGameStart", spawn_positions)
 
 
-remote func ReturnGameStart():
+remote func ReturnGameStart(s_spawn_positions):
+	print("Returning game start")
 	get_tree().get_root().get_node("SceneHandler").lobby_instance.hide()
-	get_tree().get_root().get_node("SceneHandler").mainscene_instance.start_game()
+	get_tree().get_root().get_node("SceneHandler").mainscene_instance.start_game(s_spawn_positions)
 
 
 func SendPlayerState(player_state):

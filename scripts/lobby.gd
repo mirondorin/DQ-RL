@@ -76,7 +76,10 @@ func set_player_list(s_players):
 
 
 func _on_start_pressed():
-	Server.SignalGameStart()
+	var spawn_positions = []
+	for i in range(4):
+		spawn_positions.append(get_parent().get_node("MainScene/LevelRoot/LevelRoot/Spawn/" + str(i)).position)
+	Server.SignalGameStart(spawn_positions)
 	get_parent().FetchGameData()
 
 
