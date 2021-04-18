@@ -10,6 +10,7 @@ var player_spawn = preload("res://Scenes/Players/PlayableCharacterTemplate.tscn"
 
 
 var current_level = 0
+var last_worlds_state = 0
 
 
 func _ready():
@@ -43,17 +44,37 @@ func SpawnNewPlayer(player_id, spawn_position):
 	if get_tree().get_network_unique_id() == player_id:
 		pass
 	else:
-		print("spawning new player with id = " + str(player_id))
-		var new_player = player_spawn.instance()
-		new_player.position = spawn_position
-		new_player.name = str(player_id)
-		other_players.add_child(new_player)
+		if not get_node("YSort/OtherPlayers").has_node((str(player_id))):
+			print("spawning new player with id = " + str(player_id))
+			var new_player = player_spawn.instance()
+			new_player.position = spawn_position
+			new_player.name = str(player_id)
+			other_players.add_child(new_player)
 
 
 func DespawnPlayer(player_id):
 	print("Despawning player with id = " + str(player_id))
-	if get_node("YSort/OtherPlayers" + str(player_id)) != null:
-		get_node("YSort/OtherPlayers" + str(player_id)).queue_free()
+	if get_node("YSort/OtherPlayers/" + str(player_id)) != null:
+		get_node("YSort/OtherPlayers/" + str(player_id)).queue_free()
 	else:
 		print("some sort of error when despawning player, player does not exist")
 
+
+func start_game():
+	get_tree().paused = false
+	get_node("YSort/PlayableCharacter").init_game_data()
+	get_node("YSort/PlayableCharacter").set_physics_process(true)
+	print("Game started")
+
+
+func update_world_state(s_world_state):
+	if s_world_state["T"] > last_worlds_state:
+		last_worlds_state = s_world_state["T"]
+		s_world_state.erase("T")
+		s_world_state.erase(get_tree().get_network_unique_id())
+		for player in s_world_state.keys():
+			if get_node("YSort/OtherPlayers").has_node(str(player)):
+				get_node("YSort/OtherPlayers/" + str(player)).MovePlayer(s_world_state[player]["P"])
+			else:
+				print("spawning player")
+				SpawnNewPlayer(player, s_world_state[player]["P"])

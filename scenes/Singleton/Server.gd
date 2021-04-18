@@ -42,12 +42,12 @@ remote func ReturnJoinRequest(results):
 		print("Joined in lobby")
 
 
-func FetchGameData(data_name, requester):
-	rpc_id(1, "FetchGameData", data_name, requester)
+func FetchGameData(requester):
+	rpc_id(1, "FetchGameData", requester)
 
 
-remote func ReturnGameData(data_name, s_data, requester):
-	instance_from_id(requester).SetData(data_name, s_data)
+remote func ReturnGameData(s_data, requester):
+	instance_from_id(requester).SetData(s_data)
 
 
 func FetchPlayerList(requester):
@@ -81,3 +81,22 @@ remote func SpawnNewPlayer(player_id, spawn_position):
 
 remote func DespawnPlayer(player_id):
 	get_node("../SceneHandler/MainScene").DespawnPlayer(player_id)
+
+
+func SignalGameStart():
+	rpc_id(1, "SignalGameStart")
+
+
+remote func ReturnGameStart():
+	get_tree().get_root().get_node("SceneHandler").lobby_instance.hide()
+	get_tree().get_root().get_node("SceneHandler").mainscene_instance.start_game()
+
+
+func SendPlayerState(player_state):
+	rpc_unreliable_id(1, "ReceivePlayerState", player_state)
+
+
+remote func ReceiveWorldState(s_world_state):
+	get_tree().get_root().get_node("SceneHandler").mainscene_instance.update_world_state(s_world_state)
+
+

@@ -1,77 +1,124 @@
 extends "res://scripts/Entity.gd"
+
+
 const flash_material = preload("res://materials/white.tres")
 
+
 onready var current_weapon = $Weapon
+onready var scene_handler = get_tree().get_root().get_node("SceneHandler")
 
-var screen_size # Size of the game window
 
-var player_pos = Vector2()
-puppet var puppet_velocity = Vector2()
-puppet var puppet_pos = Vector2()
-
-var start_time = -100
-var jump_intensity
-var in_jump = false
-var did_move = false
-var landing = false
-var in_dash = false
+var player_state
+var GRAVITY = 500.0
+var start_position
+var interactables = []
+var weapon = 0
 var cooldowns = {
 	"can_light_attack" : true,
 	"can_special_attack" : true,
 	"can_utility" : true
-		}
-var weapon = 0
-
-
-var camera
-var interactables = []
-
-#export var health = 100
-#puppet var puppet_health = health
-# !! maybe it's not needed, as it doesn't change periodically
-
-var start_position
-
-func set_player_name(new_name):
-#	get_node("label").set_text(new_name)
-	$DebugAction.text = new_name
-	pass
-
-var GRAVITY = 500.0
+}
+var in_jump = false
+var did_move = false
+var landing = false
+var in_dash = false
+var start_time = -100
+var jump_intensity
 
 
 func _init():
-	return 1
+	start_position = position
 	self.SPEED = 100
 	self.JUMPSPEED = 80
 	stats["damage_modifier"] = 0
 	stats["health"] = 100
 	stats["max_health"] = 100
 
+
+func init_game_data():
+	init_gravity()
+
+
+func init_gravity():
+	if scene_handler.game_data.has("GRAVITY"):
+		GRAVITY = scene_handler.game_data["GRAVITY"]
+
+
 func _ready():
-	return 1
+	set_physics_process(false)
+
+
+func _unhandled_input(event):
 	pass
 
+
+func _process(delta):
+	pass
+
+
+func _physics_process(delta):
+	MovementLoop(delta)
+	DefinePlayerState()
+
+
+func set_player_name(new_name):
+	$DebugAction.text = new_name
+
+
+func MovementLoop(delta):
+	velocity.y += delta * self.GRAVITY
+	solve_animation(velocity,delta)
+	make_animation_calls()
+	solve_impulse()
+	velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
+	var vel_y = velocity.y + impulse_dir.y * impulse_current_y
+	var vel = Vector2(velocity.x, vel_y)
+	move_and_slide(vel, Vector2(0, -1))
+	if is_on_floor():
+		velocity.y=0
+		jump_intensity = 0
+		in_jump=false
+		impulse_current_x = 0
+		impulse_current_y = 0
+	if is_on_ceiling():
+		velocity.y=max(0,velocity.y)
+		impulse_current_y /= collision_resistance_factor
+	if is_on_wall():
+		impulse_current_x /= collision_resistance_factor
+	solve_input(delta)
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision and collision.collider.name == 'Mob':
+			$DebugCollision.text = 'MOB'
+		elif collision and collision.collider.name != 'Obstacles':
+			$DebugCollision.text = collision.collider.name
+
+
+func DefinePlayerState():
+	player_state = {
+		"T": OS.get_system_time_msecs(), 
+		"P": position,
+		"V": velocity  # TODO: try to send as less as possible, velocity shouldn't be necessary
+	}
+	Server.SendPlayerState(player_state)
+
+
 func jump():
-	return 1
-#	This method does not have to be synced
-#	since it only calculates jump speed
-#	client can cheat, but does he really?
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
 		jump_intensity = 21
 		start_time = OS.get_ticks_msec()
 	var current_time = OS.get_ticks_msec()
-	if current_time-start_time>50:
+	if current_time-start_time > 50:
 		jump_intensity = 0
 	else:
 		start_time=current_time
 	jump_intensity *= 0.80
 	speed *= jump_intensity
 	return speed
-	pass
-	
+
+
 func dash(_delta):
 	return 1
 	in_dash = true
@@ -86,24 +133,19 @@ func dash(_delta):
 	self.impulse_current_x = impulse_current_x/3
 	self.impulse_step = 5
 
-sync func play_special_attack():
-	return 1
+
+func play_special_attack():
 	$AnimationPlayer.play("special-attack")
 
+
 func solve_animation(velocity,delta):
-	return 1
-	if not is_network_master():
-		return 1
 	if $AnimationPlayer.current_animation != 'special-attack':
 		if x_direction !=0:
-			if not key_has_value(animation_dict, "flip_h", (x_direction < 0))\
-				 and not Input.is_action_pressed("hold_direction"):
+			if not key_has_value(animation_dict, "flip_h", (x_direction < 0)) and not Input.is_action_pressed("hold_direction"):
 				animation_dict["flip_h"] = (x_direction < 0) 
 				new_animation_dict["flip_h"] = (x_direction < 0)
 				animation_change = true
-	
 	current_weapon.update_orientation($AnimatedSprite.flip_h)
-			
 	if in_jump or velocity.y > delta * GRAVITY + 0.1: #in jump/falling
 		if not key_has_value(animation_dict, "animation", "jump"):
 			animation_dict["animation"] = "jump"
@@ -115,7 +157,6 @@ func solve_animation(velocity,delta):
 			animation_play = true
 			animation_play_what = "land"
 			if not key_has_value(animation_dict, "animation", "land"):
-
 				animation_change = true
 			landing = true
 		else:
@@ -130,96 +171,50 @@ func solve_animation(velocity,delta):
 			animation_play = true
 			animation_play_what = ""
 
+
 func on_gain_health():
-	return 1
 	$HealthLabel.text = String(stats['health'])
 
-sync func gain_health(value):
-	return 1
+
+func gain_health(value):
 	stats['health'] += value
 	on_gain_health()
 
+
 func solve_input(delta):
-	return 1
-#	theoretically should not require sync
-#	but we have to find a way to sync weapon attacks and animations
 	if Input.is_action_pressed("ui_left"):
 		x_direction = -1
 	elif Input.is_action_pressed("ui_right"):
 		x_direction = 1
 	else:
 		x_direction = 0
-		
 	if Input.is_action_pressed("ui_up"):
 		if not in_impulse:
 			velocity.y += jump()
-		
 	if Input.is_action_pressed("ui_attack") and current_weapon.can_attack:
 		current_weapon.attack()
 		current_weapon.LightAttack_CD.start()
 		current_weapon.can_attack = false
 	elif Input.is_action_pressed("special_attack") and current_weapon.can_attack and weapon == 0:
-		rpc_unreliable("play_special_attack")
+		play_special_attack()
 		current_weapon.SpecialAttack_CD.start()
 		current_weapon.can_attack = false
 	if Input.is_action_pressed("utility") and cooldowns['can_utility']:
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
 		dash(delta)
-	
 	if Input.is_action_just_pressed("interact"):
 		use_interact()
-		
 	if Input.is_action_just_pressed("debug_test"): 
 		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 		impulse(400, dir)
-		
 	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
 	if Input.is_action_just_pressed("change_level"):
-#		gamestate.change_level()
-		pass
+		scene_handler.change_level()
 
-func _physics_process(delta):
-	return 1
-	if is_network_master():
-		velocity.y += delta * self.GRAVITY
-			
-		solve_animation(velocity,delta)
-		make_animation_calls()
-		solve_impulse()
-		
-		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
-		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
-		var vel = Vector2(velocity.x, vel_y)
-		move_and_slide(vel, Vector2(0, -1))
-	
-		if is_on_floor():
-			velocity.y=0
-			jump_intensity = 0
-			in_jump=false
-			impulse_current_x = 0
-			impulse_current_y = 0
-		
-		if is_on_ceiling():
-			velocity.y=max(0,velocity.y)
-			impulse_current_y /= collision_resistance_factor
-		
-		if is_on_wall():
-			impulse_current_x /= collision_resistance_factor
 
-		solve_input(delta)
-		rpc_unreliable("set_entity_position", position, velocity)
-
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision and collision.collider.name == 'Mob':
-			$DebugCollision.text = 'MOB'
-		elif collision and collision.collider.name != 'Obstacles':
-			$DebugCollision.text = collision.collider.name
-
-sync func do_switch_weapon():
-	return 1
+func do_switch_weapon():
 	weapon = (1 + weapon) % 3
 	current_weapon.queue_free()
 	var wep
@@ -233,24 +228,16 @@ sync func do_switch_weapon():
 	current_weapon = inst
 	add_child(inst)
 
+
 func switch_weapon():
-	return 1
-	rpc("do_switch_weapon")
-	
-	
+	do_switch_weapon()
+
+
 func out_of_bounds():
-	return 1
-	if is_network_master():
-		position = start_position
-		rset("puppet_pos", position)
-	else:
-		position = puppet_pos
-	pass
+	position = start_position
+
 
 func on_take_damage(direction, impulse_force):
-	return 1
-#	TODO: check this 
-#	CHECK: do we really need a diffrent on take damage for player?
 	$AnimatedSprite.set_material(flash_material)
 	yield(get_tree().create_timer(0.15), "timeout")
 	$AnimatedSprite.set_material(null)
@@ -265,47 +252,44 @@ func on_take_damage(direction, impulse_force):
 		$HealthLabel.text = 'dead!'
 		$HealthLabel.add_color_override("font_color", Color(255, 0, 0))
 
+
 func _on_AnimatedSprite_animation_finished():
-	return 1
 	if $AnimatedSprite.animation == 'land':
 		landing = false
 		animation_play = true
 		animation_play_what = "walk"
 	animation_stop = true
-	pass
+
 
 func _on_Utility_CD_timeout():
-	return 1
 	cooldowns['can_utility'] = true
-	pass
+
 
 func grab_item():
-	return 1
 	print("Called grab item")
 
+
 func use_interact():
-	return 1
 	for i in interactables:
 		i.get_parent().interact()
 		return
-	
-sync func do_modify_stats(status, value):
-	return 1
+
+
+func do_modify_stats(status, value):
 	stats[status] 	+= value
 	$HealthLabel.text = String(stats['health'])
 
+
 func modify_stats(status, value):
-	return 1
-	if is_network_master():
-		rpc("do_modify_stats", status, value)
+	do_modify_stats(status, value)
+
 
 func _on_Hitbox_area_entered(area):
-	return 1
 	if area.is_in_group("interactable"):
 		interactables.append(area)
 
+
 func _on_Hitbox_area_exited(area):
-	return 1
 	if area.is_in_group("interactable"):
 		interactables.erase(area)
-		
+

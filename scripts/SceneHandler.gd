@@ -19,7 +19,14 @@ func _ready():
 #	Server.FetchGameData("a", get_instance_id())
 	
 
-func SetData(key, s_value):
-	game_data[key] = s_value
+func SetData(s_value):
+	game_data = s_value
 	print(game_data)
 
+
+func FetchGameData():
+	Server.FetchGameData(get_instance_id())
+
+
+func change_level():
+	print("Trying to change level")

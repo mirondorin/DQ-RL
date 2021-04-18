@@ -20,6 +20,7 @@ func _process(delta):
 			
 
 func _on_StartTrigger_area_entered(area):
+	return 1
 	players = get_tree().get_nodes_in_group('players')
 	for player in players:
 		player.modify_stats("health",-90)
@@ -27,21 +28,27 @@ func _on_StartTrigger_area_entered(area):
 	
 
 func _on_respawntrigger0_area_entered(area):
+	return 1
 	area.get_parent().position = currentrespawn.position
 
 func _on_respawntrigger1_area_entered(area):
+	return 1
 	area.get_parent().position = currentrespawn.position
 	
 func _on_fightareatrigger_area_entered(area):
+	return 1
 	respawnhealth = 40
 	currentrespawn = $respawn2
 	
 func _on_MobSpawnArea_area_entered(area):
+	return 1
 	mobs.append(area.get_parent())
 
 func _on_fightareatrigger2_area_entered(area):
+	return 1
 	respawnhealth = 40
 	currentrespawn = $respawn3
 
 func _on_dashtrigger_area_entered(area):
+	return 1
 	currentrespawn = $respawn1

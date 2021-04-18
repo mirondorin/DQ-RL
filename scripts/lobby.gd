@@ -76,6 +76,7 @@ func set_player_list(s_players):
 
 
 func _on_start_pressed():
-	Server.FetchPlayerStats()
+	Server.SignalGameStart()
+	get_parent().FetchGameData()
 
 
