@@ -138,7 +138,8 @@ func _physics_process(delta):
 					continue
 				if get_node("YSort/OtherPlayers").has_node(str(player)):
 					var new_position = lerp(world_state_buffer[1][player]["P"], world_state_buffer[2][player]["P"], interpolation_factor)
-					get_node("YSort/OtherPlayers/" + str(player)).MovePlayer(new_position)
+					var animation_data = world_state_buffer[2][player]["A"]
+					get_node("YSort/OtherPlayers/" + str(player)).MovePlayer(new_position, animation_data)
 				else:
 					print("spawning player")
 					SpawnNewPlayer(player, world_state_buffer[2][player]["P"])

@@ -22,6 +22,7 @@ var landing = false
 var in_dash = false
 var start_time = -100
 var jump_intensity
+var animation_vector = {}
 
 
 func _init():
@@ -94,9 +95,17 @@ func MovementLoop(delta):
 
 func DefinePlayerState():
 	player_state = {
-		"T": OS.get_system_time_msecs(), 
+		"T": Server.client_clock, 
 		"P": position,
-		"V": velocity  # TODO: try to send as less as possible, velocity shouldn't be necessary
+		"A": {
+			"animation_stop": animation_stop,
+			"animation_stopped": animation_stopped,
+			"animation_play": animation_play,
+			"old_animation_play_what": old_animation_play_what,
+			"animation_play_what": animation_play_what,
+			"animation_change": animation_change,
+			"new_animation_dict": new_animation_dict
+		}
 	}
 	Server.SendPlayerState(player_state)
 
@@ -118,7 +127,6 @@ func jump():
 
 
 func dash(_delta):
-	return 1
 	in_dash = true
 	$Hitbox.monitorable = false
 	var dir = -1 if $AnimatedSprite.flip_h else 1
