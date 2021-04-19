@@ -60,6 +60,7 @@ func set_player_name(new_name):
 func set_start_position(pos):
 	position = pos
 	start_position = position
+	$Camera2D.current = true
 
 
 func MovementLoop(delta):
