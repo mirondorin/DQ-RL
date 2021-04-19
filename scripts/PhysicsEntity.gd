@@ -115,7 +115,7 @@ func stop_animation():
 func make_animation_calls():
 	if animation_stop:
 		stop_animation()
-	elif animation_play != "None":
+	if animation_play != "None":
 		play_animation()
 	change_animation()
 

@@ -160,6 +160,7 @@ func solve_animation(velocity,delta):
 			animation_stop = true
 		else:
 			animation_play = ""
+			animation_stop = false
 
 
 func on_gain_health():
@@ -244,6 +245,7 @@ func _on_AnimatedSprite_animation_finished():
 		landing = false
 		animation_play = "walk"
 	animation_stop = true
+	print("AICI")
 
 
 func _on_Utility_CD_timeout():

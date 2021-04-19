@@ -28,7 +28,6 @@ func _process(delta):
 
 func solve_animation(velocity):
 	if x_direction != 0:
-		animation_change = true
 		if jump_attacking:
 			animation_dict["animation"] = "idle" 
 		else:

@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 
-var start_position : int
+var start_position : Vector2
 var animation_stop : bool
 var animation_play : String
 var animation_dict : Dictionary
@@ -49,14 +49,14 @@ func make_animation_calls():
 
 
 func stop_animation():
-	$AnimationPlayer.stop()
+	$AnimatedSprite.stop()
 
 
 func play_animation(what):
-	$AnimationPlayer.play(what)
+	$AnimatedSprite.play(what)
 
 
 func change_animation(animation_dict):
 	for key in animation_dict.keys():
-		$AnimationPlayer[key] = animation_dict[key]
+		$AnimatedSprite[key] = animation_dict[key]
 
