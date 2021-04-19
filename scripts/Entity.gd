@@ -23,11 +23,9 @@ func do_take_damage(value, stagger, direction, impulse_force):
 func on_take_damage(direction, impulse_force):
 	if stats['stagger_health'] <= 0:
 		animation_dict["animation"] = "hit"
-		animation_change = true
 		stats['stagger_health'] = stats['stagger_default']
 	$Health.text = String(stats['health'])
-	animation_play = true
-	animation_play_what = ""
+	animation_play = ""
 	if stats['health'] <= 0:
 		$Health.text = 'dead!'
 		$Health.add_color_override("font_color", Color(255, 0, 0))

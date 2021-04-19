@@ -56,8 +56,7 @@ func ChangeStats(s_stats):
 
 
 func OnDeath():
-	get_node("HitBox").set_deferred("disabled", true)
-	get_node("HurtBox").set_deferred("disabled", true)
+	queue_free()
 
 
 func _physics_process(delta):
@@ -122,20 +121,11 @@ func attack_player(_player):
 
 func solve_animation(velocity):
 	if x_direction != 0:
-		if not key_has_value(animation_dict, "flip_h", (x_direction < 0)):
-			animation_dict["flip_h"] = (x_direction < 0)
-			new_animation_dict["flip_h"] = (x_direction < 0)
-			animation_change = true
-		if not key_has_value(animation_dict, "animation", "walk"):
-			animation_dict["animation"] = 'walk'
-			new_animation_dict["animation"] = 'walk'
-			animation_change = true
+		animation_dict["flip_h"] = (x_direction < 0)
+		animation_dict["animation"] = 'walk'
 	if velocity.x == 0:
-		if not key_has_value(animation_dict, "animation", "idle"):
-			animation_dict["animation"] = 'idle'
-			new_animation_dict["animation"] = 'idle'
-			animation_change = true
-			
+		animation_dict["animation"] = 'idle'
+
 
 func out_of_bounds():
 	kill_mob()

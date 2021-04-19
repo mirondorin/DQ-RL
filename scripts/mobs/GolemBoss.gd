@@ -30,31 +30,17 @@ func solve_animation(velocity):
 	if x_direction != 0:
 		animation_change = true
 		if jump_attacking:
-			if not key_has_value(animation_dict, "animation", "idle"):
-				animation_dict["animation"] = "idle" 
-				new_animation_dict["animation"] = "idle" 
-				animation_change = true
+			animation_dict["animation"] = "idle" 
 		else:
-			if not key_has_value(animation_dict, "flip_h", (x_direction < 0)):
-				animation_dict["flip_h"] = (x_direction < 0)
-				new_animation_dict["flip_h"] = (x_direction < 0)
-				animation_change = true
-			if not key_has_value(animation_dict, "animation", "walk"):
-				animation_dict["animation"] = 'walk'
-				new_animation_dict["animation"] = 'walk'
-				animation_change = true
+			animation_dict["flip_h"] = (x_direction < 0)
+			animation_dict["animation"] = 'walk'
 	if velocity.x == 0:
 		if pebble_attacking:
-			if not key_has_value(animation_dict, "animation", "rock_throw"):
-				animation_dict["animation"] = "rock_throw" 
-				new_animation_dict["animation"] = "rock_throw" 
-				animation_change = true
+			animation_dict["animation"] = "rock_throw" 
 		else:
-			if not key_has_value(animation_dict, "animation", "idle"):
-				animation_dict["animation"] = "idle" 
-				new_animation_dict["animation"] = "idle" 
-				animation_change = true
-	
+			animation_dict["animation"] = "idle" 
+
+
 func jump_attack_init():
 	if can_jump and can_jump_attack and not pebble_attacking and player != null:
 		can_jump_attack = false
@@ -63,7 +49,8 @@ func jump_attack_init():
 		follow = false
 		jump_attacking = true
 		jump_attack_exec()
-		
+
+
 func jump_attack_exec():
 	var dir_x = 1 if self.position.x < player.position.x else -1
 	move_and_slide(Vector2(0, -10))
@@ -82,7 +69,7 @@ func jump_attack_reset():
 func attack_player(player):
 	player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 		
-sync func pebble_attack_init():
+func pebble_attack_init():
 	if can_pebble_attack and not jump_attacking:
 		$AnimationPlayer.play("rock_throw")
 		follow = false

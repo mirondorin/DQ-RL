@@ -21,14 +21,9 @@ var x_direction = 0
 var velocity = Vector2()
 
 
-var animation_play = false
-var animation_stop = false
-var animation_stopped = false
-var animation_change = false
-var animation_dict = {}
-var new_animation_dict = {}
-var animation_play_what = ""
-var old_animation_play_what = "1"
+var animation_play : String = "None"
+var animation_stop : bool = false
+var animation_dict : Dictionary = {}
 
 
 var GRAVITY = 500.0
@@ -96,19 +91,16 @@ func do_change_animation(new_animation_dict):
 
 
 func change_animation():
-	animation_change = false
-	do_change_animation(new_animation_dict)
-	new_animation_dict = {}
+	do_change_animation(animation_dict)
 
 
 func do_play_animation(what):
 	$AnimatedSprite.play(what)
 
+
 func play_animation():
-	animation_play = true
-	animation_stopped = false
-	old_animation_play_what = animation_play_what
-	do_play_animation(animation_play_what)
+	do_play_animation(animation_play)
+	animation_play = "None"
 
 	
 sync func do_stop_animation():
@@ -117,17 +109,16 @@ sync func do_stop_animation():
 
 func stop_animation():
 	animation_stop = false
-	animation_stopped = true
-	old_animation_play_what = "1"
 	do_stop_animation()
 
+
 func make_animation_calls():
-	if animation_stop and not animation_stopped:
+	if animation_stop:
 		stop_animation()
-	elif animation_play and old_animation_play_what != animation_play_what:
+	elif animation_play != "None":
 		play_animation()
-	if animation_change:
-		change_animation()
+	change_animation()
+
 
 func key_has_value(dictionary, key, value):
 	if key in dictionary.keys():

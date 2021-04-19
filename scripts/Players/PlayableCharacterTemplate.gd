@@ -23,7 +23,7 @@ func set_position(pos):
 func set_animation(animation_data):
 	animation_stop = animation_data["animation_stop"]
 	animation_play = animation_data["animation_play"]
-	animation_dict = animation_data["new_animation_dict"]
+	animation_dict = animation_data["animation_dict"]
 
 
 func set_player_name(new_name):
@@ -44,6 +44,7 @@ func make_animation_calls():
 		stop_animation()
 	elif animation_play != "None":
 		play_animation(animation_play)
+		animation_play = "None"
 	change_animation(animation_dict)
 
 
