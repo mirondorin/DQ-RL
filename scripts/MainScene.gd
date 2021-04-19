@@ -7,6 +7,10 @@ onready var other_players = get_node("YSort/OtherPlayers")
 
 
 var player_spawn = preload("res://Scenes/Players/PlayableCharacterTemplate.tscn")
+var mob = preload("res://scenes/Mobs/Mob.tscn")
+var mob_projectile = preload("res://scenes/Mobs/MobProjectile.tscn")
+var mob_homing_projectile = preload("res://scenes/Mobs/MobHomingProjectile.tscn")
+var golem_boss = preload("res://scenes/Mobs/GolemBoss.tscn")
 
 
 var current_level = 0
@@ -18,7 +22,19 @@ var interpolation_offset = 100
 
 func _ready():
 	change_level()
-	
+
+
+func get_new_enemy_instance(type):
+	if type == "Mob":
+		return mob.instance()
+	if type == "MobProjectile":
+		return mob_projectile.instance()
+	if type == "MobHomingProjectile":
+		return mob_homing_projectile.instance()
+	if type == "GolemBoss":
+		return golem_boss.instance()
+	return mob.instance()
+
 
 func change_level():
 	print("Changing level")
@@ -66,6 +82,16 @@ func DespawnPlayer(player_id):
 		print("some sort of error when despawning player, player does not exist")
 
 
+func SpawnNewEnemy(enemy_id, enemy_dict):
+	var new_enemy = get_new_enemy_instance(enemy_dict["type"])
+	new_enemy.position = enemy_dict["pos"]
+	new_enemy.ChangeStats(enemy_dict["stats"])
+#	new_enemy.type = enemy_dict["type"]
+	new_enemy.state = enemy_dict["state"]
+	new_enemy.name = str(enemy_id)
+	get_node("YSort/Mobs/").add_child(new_enemy, true)
+
+
 func start_game(s_spawn_positions):
 	var my_id = get_tree().get_network_unique_id()
 	get_node("YSort/PlayableCharacter").init_game_data()
@@ -95,7 +121,7 @@ func update_world_state(s_world_state):
 
 
 func _physics_process(delta):
-	var render_time = OS.get_system_time_msecs() - interpolation_offset
+	var render_time = Server.client_clock - interpolation_offset
 	if world_state_buffer.size() > 1:
 		while world_state_buffer.size() > 2 and render_time > world_state_buffer[2].T:
 			world_state_buffer.remove(0)
@@ -103,6 +129,8 @@ func _physics_process(delta):
 			var interpolation_factor = float(render_time - world_state_buffer[1]["T"]) / float(world_state_buffer[2]["T"] - world_state_buffer[1]["T"])
 			for player in world_state_buffer[2].keys():
 				if str(player) == "T":
+					continue
+				if str(player) == "Enemies":
 					continue
 				if player == get_tree().get_network_unique_id():
 					continue
@@ -114,10 +142,21 @@ func _physics_process(delta):
 				else:
 					print("spawning player")
 					SpawnNewPlayer(player, world_state_buffer[2][player]["P"])
+			for enemy in world_state_buffer[2]["Enemies"].keys():
+				if not world_state_buffer[1]["Enemies"].has(enemy):
+					continue
+				if get_node("YSort/Mobs").has_node(str(enemy)):
+					var new_position = lerp(world_state_buffer[1]["Enemies"][enemy]["pos"], world_state_buffer[2]["Enemies"][enemy]["pos"], interpolation_factor)
+					get_node("YSort/Mobs/" + str(enemy)).MoveEnemy(new_position)
+					get_node("YSort/Mobs/" + str(enemy)).ChangeStats(world_state_buffer[1]["Enemies"][enemy]["stats"])
+				else:
+					SpawnNewEnemy(enemy, world_state_buffer[2]["Enemies"][enemy])
 		elif render_time > world_state_buffer[1].T:
 			var extrapolation_factor = float(render_time - world_state_buffer[0]["T"]) / float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"]) - 1.00
 			for player in world_state_buffer[1].keys():
 				if str(player) == "T":
+					continue
+				if str(player) == "Enemies":
 					continue
 				if player == get_tree().get_network_unique_id():
 					continue

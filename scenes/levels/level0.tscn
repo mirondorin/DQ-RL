@@ -1,15 +1,6 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f1.png" type="Texture" id=2]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_idle_anim_f0.png" type="Texture" id=3]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_idle_anim_f1.png" type="Texture" id=4]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f0.png" type="Texture" id=5]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f3.png" type="Texture" id=6]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_idle_anim_f2.png" type="Texture" id=7]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f2.png" type="Texture" id=8]
-[ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=9]
-[ext_resource path="res://scripts/mobs/Mob.gd" type="Script" id=10]
 [ext_resource path="res://scripts/Levels/tutorial1.gd" type="Script" id=11]
 [ext_resource path="res://scenes/Mobs/Mob.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=13]
@@ -17,25 +8,6 @@
 [ext_resource path="res://scenes/items/DamageBoost.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=17]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 3 ) ],
-"loop": true,
-"name": "idle",
-"speed": 2.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-} ]
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 10, 14.8159 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 10, 14.4904 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 82.0744, 40.5701 )
@@ -102,73 +74,8 @@ position = Vector2( 22.9289, 433.445 )
 [node name="3" type="Position2D" parent="Spawn"]
 position = Vector2( 45.1772, 432.396 )
 
-[node name="MobStatic" type="KinematicBody2D" parent="." groups=[
-"mobs",
-]]
-position = Vector2( 703.526, 279.315 )
-collision_layer = 0
-collision_mask = 2
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_group_": true
-}
-follow = false
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="MobStatic"]
-frames = SubResource( 1 )
-animation = "idle"
-frame = 2
-playing = true
-flip_h = true
-
-[node name="PhysicsCollision" type="CollisionShape2D" parent="MobStatic"]
-visible = false
-position = Vector2( 0, 3.374 )
-shape = SubResource( 2 )
-
-[node name="Hitbox" type="Area2D" parent="MobStatic" groups=[
-"hitbox",
-]]
-visible = false
-collision_layer = 2147483649
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MobStatic/Hitbox"]
-light_mask = -2147483647
-position = Vector2( 0, 3.402 )
-shape = SubResource( 3 )
-
-[node name="Hurtbox" type="Area2D" parent="MobStatic" groups=[
-"hurtbox",
-]]
-scale = Vector2( 1.146, 1.128 )
-collision_layer = 2147483649
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MobStatic/Hurtbox"]
-light_mask = -2147483647
-position = Vector2( 0, 3.402 )
-shape = SubResource( 3 )
-
-[node name="AttackCooldown" type="Timer" parent="MobStatic"]
-
-[node name="JumpCooldown" type="Timer" parent="MobStatic"]
-
-[node name="HealthLabel" type="Label" parent="MobStatic"]
-margin_left = -9.0
-margin_top = -26.0
-margin_right = 63.0
-margin_bottom = 33.0
-rect_scale = Vector2( 0.466, 0.444 )
-custom_fonts/font = ExtResource( 9 )
-custom_colors/font_color = Color( 1, 0.741176, 0, 1 )
-text = "20
-
-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="EnemySpawner" parent="." instance=ExtResource( 13 )]
-position = Vector2( 1148.27, 574.629 )
+position = Vector2( 1148.27, 572.847 )
 enemyscene = ExtResource( 12 )
 max_spawns = 1
 spawn_continously = true
@@ -180,7 +87,7 @@ max_spawns = 1
 spawn_continously = true
 
 [node name="EnemySpawner4" parent="." instance=ExtResource( 13 )]
-position = Vector2( 2105.26, 626.066 )
+position = Vector2( 2099.91, 627.848 )
 enemyscene = ExtResource( 16 )
 max_spawns = 1
 spawn_continously = true
@@ -380,9 +287,6 @@ will stagger them"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="area_entered" from="MobStatic/Hurtbox" to="MobStatic" method="_on_Hurtbox_area_entered"]
-[connection signal="timeout" from="MobStatic/AttackCooldown" to="MobStatic" method="_on_AttackCooldown_timeout"]
-[connection signal="timeout" from="MobStatic/JumpCooldown" to="MobStatic" method="_on_JumpCooldown_timeout"]
 [connection signal="area_entered" from="Triggers/StartTrigger" to="." method="_on_StartTrigger_area_entered"]
 [connection signal="area_entered" from="Triggers/respawntrigger0" to="." method="_on_respawntrigger0_area_entered"]
 [connection signal="area_entered" from="Triggers/respawntrigger1" to="." method="_on_respawntrigger1_area_entered"]

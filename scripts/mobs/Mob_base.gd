@@ -25,13 +25,56 @@ var attack_cooldown = 1.5
 var jump_cooldown = 4
 
 var in_area = []
-#onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
+
+
+
+
+
+
+
+
+
+
+var state
+
+
+func _ready():
+	init_gravity()
+	if state == "idle":
+		animation_dict["animation"] = "idle"
+	
+
+
+func MoveEnemy(s_pos):
+	position = s_pos
+
+
+func ChangeStats(s_stats):
+	stats = s_stats
+	if stats["health"] <= 0:
+		OnDeath()
+
+
+func OnDeath():
+	get_node("HitBox").set_deferred("disabled", true)
+	get_node("HurtBox").set_deferred("disabled", true)
+
+
+func _physics_process(delta):
+	return 1
+
+
+func OnHit(damage):
+	Server.NPCHit(int(get_name()), damage)
+
+
+
 
 func _init():
 	stats["health"] = 25
 	
-func _ready():
-	init_gravity()
+func _ready_2():
+	
 	attack_timer.wait_time = attack_cooldown	
 	jump_timer.wait_time = jump_cooldown
 	jump_timer.start()
@@ -104,7 +147,7 @@ func kill_mob():
 		spawner.decrease_spawned()
 	pass
 	
-func _physics_process(delta):
+func _physics_process_2(delta):
 	follow_player()
 	velocity.y += delta * GRAVITY
 	

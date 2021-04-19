@@ -2,7 +2,7 @@ tool
 extends Node2D
 
 onready var mainscene = get_parent()
-onready var spawn_point = get_parent().get_node("YSort/Mobs")
+#onready var spawn_point = get_parent().get_node("YSort/Mobs")
 
 export (PackedScene) var enemyscene
 onready var enemy = load(enemyscene.get_path())
@@ -38,7 +38,7 @@ func do_spawn():
 	var inst = enemy.instance()
 #	maybe we should set a name for mobs?
 	inst.spawner = self
-	spawn_point.add_child(inst)
+#	spawn_point.add_child(inst)
 	inst.position = self.position
 	inst.velocity.x = 0
 	inst.velocity.y = 0

@@ -147,3 +147,6 @@ remote func ReceiveWorldState(s_world_state):
 	get_tree().get_root().get_node("SceneHandler").mainscene_instance.update_world_state(s_world_state)
 
 
+func NPCHit(enemy_id, damage):
+	rpc_id(1, "SendNPCHit", enemy_id, damage)
+

@@ -27,14 +27,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "hit",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
@@ -42,9 +42,9 @@ animations = [ {
 "name": "land",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "jump",
+"name": "hit",
 "speed": 5.0
 } ]
 
