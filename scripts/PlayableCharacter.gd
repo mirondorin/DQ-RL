@@ -159,27 +159,23 @@ func solve_input(delta):
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
 		dash(delta)
-	
 	if Input.is_action_just_pressed("interact"):
 		use_interact()
-		
 	if Input.is_action_just_pressed("debug_test"): 
 		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 		impulse(400, dir)
-		
 	if Input.is_action_just_pressed("debug_switch_weapon"):
 		switch_weapon()
 	if Input.is_action_just_pressed("change_level"):
 		gamestate.change_level()
 
+
 func _physics_process(delta):
 	if is_network_master():
 		velocity.y += delta * GRAVITY
-			
 		solve_animation(velocity,delta)
 		make_animation_calls()
 		solve_impulse()
-		
 		velocity.x = x_direction * SPEED + impulse_dir.x * impulse_current_x
 		var vel_y = velocity.y + impulse_dir.y * impulse_current_y
 		var vel = Vector2(velocity.x, vel_y)
@@ -200,14 +196,8 @@ func _physics_process(delta):
 			impulse_current_x /= collision_resistance_factor
 
 		solve_input(delta)
-		rpc_unreliable("set_entity_position", position, velocity)
+		rpc_unreliable("set_entity_position", position)
 
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision and collision.collider.name == 'Mob':
-			$DebugCollision.text = 'MOB'
-		elif collision and collision.collider.name != 'Obstacles':
-			$DebugCollision.text = collision.collider.name
 
 sync func do_switch_weapon():
 	weapon = (1 + weapon) % 3
@@ -223,21 +213,12 @@ sync func do_switch_weapon():
 	current_weapon = inst
 	add_child(inst)
 
+
 func switch_weapon():
 	rpc("do_switch_weapon")
-	
-	
-func out_of_bounds():
-	if is_network_master():
-		position = start_position
-		rset("puppet_pos", position)
-	else:
-		position = puppet_pos
-	pass
+
 
 func on_take_damage(direction, impulse_force):
-#	TODO: check this 
-#	CHECK: do we really need a diffrent on take damage for player?
 	$AnimatedSprite.set_material(flash_material)
 	yield(get_tree().create_timer(0.15), "timeout")
 	$AnimatedSprite.set_material(null)
@@ -252,6 +233,7 @@ func on_take_damage(direction, impulse_force):
 		$HealthLabel.text = 'dead!'
 		$HealthLabel.add_color_override("font_color", Color(255, 0, 0))
 
+
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == 'land':
 		landing = false
@@ -260,29 +242,36 @@ func _on_AnimatedSprite_animation_finished():
 	animation_stop = true
 	pass
 
+
 func _on_Utility_CD_timeout():
 	cooldowns['can_utility'] = true
 	pass
 
+
 func grab_item():
 	print("Called grab item")
+
 
 func use_interact():
 	for i in interactables:
 		i.get_parent().interact()
 		return
-	
+
+
 sync func do_modify_stats(status, value):
 	stats[status] 	+= value
 	$HealthLabel.text = String(stats['health'])
+
 
 func modify_stats(status, value):
 	if is_network_master():
 		rpc("do_modify_stats", status, value)
 
+
 func _on_Hitbox_area_entered(area):
 	if area.is_in_group("interactable"):
 		interactables.append(area)
+
 
 func _on_Hitbox_area_exited(area):
 	if area.is_in_group("interactable"):

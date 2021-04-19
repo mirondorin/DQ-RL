@@ -61,11 +61,11 @@ func solve_impulse():
 
 func out_of_bounds():
 	queue_free()
-	
-sync func set_entity_position(pos, v):
+
+
+sync func set_entity_position(pos):
 	position = pos 
-	velocity = v  # do we really need to sync velocity?
-#	TODO: try to not sync velocity or position
+
 
 sync func do_change_animation(new_animation_dict):
 	for what in new_animation_dict.keys():

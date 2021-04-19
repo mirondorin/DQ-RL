@@ -2,13 +2,11 @@ extends Control
 
 
 func _ready():
-	# Called every time the node is added to the scene.
 	gamestate.connect("connection_failed", self, "_on_connection_failed")
 	gamestate.connect("connection_succeeded", self, "_on_connection_success")
 	gamestate.connect("player_list_changed", self, "refresh_lobby")
 	gamestate.connect("game_ended", self, "_on_game_ended")
 	gamestate.connect("game_error", self, "_on_game_error")
-	# Set the player name according to the system username. Fallback to the path.
 	if OS.has_environment("USERNAME"):
 		$Connect/Name.text = OS.get_environment("USERNAME")
 	else:
@@ -17,37 +15,29 @@ func _ready():
 
 
 func _on_host_pressed():
-	print("ok 1")
+	print("Now player is host")
 	if $Connect/Name.text == "":
 		$Connect/ErrorLabel.text = "Invalid name!"
 		return
-
 	$Connect.hide()
 	$Players.show()
 	$Connect/ErrorLabel.text = ""
-
 	var player_name = $Connect/Name.text
-	print("ok 2")
 	gamestate.host_game(player_name)
-	print("ok 3")
 	refresh_lobby()
 
 
 func _on_join_pressed():
-	
 	if $Connect/Name.text == "":
 		$Connect/ErrorLabel.text = "Invalid name!"
 		return
-
 	var ip = $Connect/IPAddress.text
 	if not ip.is_valid_ip_address():
 		$Connect/ErrorLabel.text = "Invalid IP address!"
 		return
-
 	$Connect/ErrorLabel.text = ""
 	$Connect/Host.disabled = true
 	$Connect/Join.disabled = true
-
 	var player_name = $Connect/Name.text
 	gamestate.join_game(ip, player_name)
 
@@ -85,7 +75,6 @@ func refresh_lobby():
 	$Players/List.add_item(gamestate.get_player_name() + " (You)")
 	for p in players:
 		$Players/List.add_item(p)
-
 	$Players/Start.disabled = not get_tree().is_network_server()
 
 

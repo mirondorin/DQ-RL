@@ -12,8 +12,15 @@ export var spawn_continously = false
 
 var current_spawns = 0
 var enabled = false
-
 var cleanup = true
+var mob_health
+var mob_type
+
+
+func _init():
+	mob_health = 25 # viata se face in functie de level in main_scene, unde se adauga mob-ul
+	mob_type = "Mob"
+
 
 func tool_cleanup():
 	if Engine.is_editor_hint():
@@ -33,43 +40,25 @@ func _ready():
 		enabled = true
 
 
-sync func do_spawn():
-	var inst = enemy.instance()
-#	maybe we should set a name for mobs?
-	inst.spawner = self
-	mainscene.add_child(inst)
-	inst.position = self.position
-	inst.velocity.x = 0
-	inst.velocity.y = 0
+func do_spawn():
+	get_parent().get_parent().add_new_mob(mob_type, mob_health, self.position)
 	current_spawns += 1
-	pass
+
 
 func spawn():
 	if current_spawns < max_spawns or max_spawns == 0:
-		rpc("do_spawn")
-	pass
+		do_spawn()
+
 
 func start_spawn():
 	if enabled == false:
 		$Timer.start()
 		enabled = true
 
-# V 02. sync
-# Godot docs say that "Use sync because it will be called everywhere"
-# I don't think sync works, try remotesync
-#func spawn():
-#	if current_spawns < max_spawns or max_spawns == 0:
-#		var inst = enemy.instance()
-#		inst.spawner = self
-#		mainscene.add_child(inst)
-#		inst.position = self.position
-#		inst.velocity.x = 0
-#		inst.velocity.y = 0
-#		current_spawns += 1
 
 func decrease_spawned():
 	current_spawns -= 1
-	pass
+
 
 func start_spawner():
 	$Timer.start()
@@ -78,10 +67,10 @@ func start_spawner():
 func stop_spawner():
 	$Timer.stop()
 
+
 func _on_Timer_timeout():
 	if is_network_master():
 		spawn()
-	
 	if spawn_continously:
 		$Timer.start()
 	else:
