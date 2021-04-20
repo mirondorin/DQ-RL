@@ -21,23 +21,7 @@ void vertex() {
 }
 
 void fragment() {
-// Input:3
-	vec3 n_out3p0 = COLOR.rgb;
-
-// Input:2
-
-// Texture:4
-	vec3 n_out4p0;
-	float n_out4p1;
-	{
-		vec4 _tex_read = texture(TEXTURE , UV.xy);
-		n_out4p0 = _tex_read.rgb;
-		n_out4p1 = _tex_read.a;
-	}
-
 // Output:0
-	COLOR.rgb = n_out3p0;
-	COLOR.a = n_out4p1;
 
 }
 

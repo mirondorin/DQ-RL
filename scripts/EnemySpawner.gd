@@ -4,6 +4,7 @@ extends Node2D
 onready var mainscene = get_parent()
 
 export (PackedScene) var enemyscene
+export (String) var mob_type
 onready var enemy = load(enemyscene.get_path())
 export var max_spawns = 2 #use 0 to spawn infinitely
 export var start_enabled = true
@@ -14,12 +15,10 @@ var current_spawns = 0
 var enabled = false
 var cleanup = true
 var mob_health
-var mob_type
 
 
 func _init():
 	mob_health = 25 # viata se face in functie de level in main_scene, unde se adauga mob-ul
-	mob_type = "Mob"
 
 
 func tool_cleanup():

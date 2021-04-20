@@ -9,25 +9,25 @@
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=17]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 82.0744, 40.5701 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 76.3908, 10 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 68.7013, 10 )
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 69.3528, 160.267 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 18.6112, 190.528 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 10, 83.8634 )
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 217.193, 32.1834 )
 
 [node name="LevelRoot" type="Node2D"]
@@ -75,26 +75,30 @@ position = Vector2( 22.9289, 433.445 )
 position = Vector2( 45.1772, 432.396 )
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 13 )]
-position = Vector2( 1148.27, 574.629 )
+position = Vector2( 1150.05, 575.52 )
 enemyscene = ExtResource( 12 )
+mob_type = "Mob"
 max_spawns = 1
 spawn_continously = true
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1890.35, 705.489 )
 enemyscene = ExtResource( 12 )
+mob_type = "Mob"
 max_spawns = 1
 spawn_continously = true
 
 [node name="EnemySpawner4" parent="." instance=ExtResource( 13 )]
 position = Vector2( 2105.26, 626.066 )
 enemyscene = ExtResource( 16 )
+mob_type = "MobProjectile"
 max_spawns = 1
 spawn_continously = true
 
 [node name="EnemySpawner3" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1764.88, 637.413 )
 enemyscene = ExtResource( 12 )
+mob_type = "Mob"
 max_spawns = 1
 spawn_continously = true
 
@@ -104,20 +108,20 @@ spawn_continously = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/StartTrigger"]
 position = Vector2( 26.3826, 425.304 )
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 
 [node name="respawntrigger0" type="Area2D" parent="Triggers"]
 position = Vector2( 295.043, 530.734 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/respawntrigger0"]
-shape = SubResource( 5 )
+shape = SubResource( 2 )
 
 [node name="respawntrigger1" type="Area2D" parent="Triggers"]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/respawntrigger1"]
 position = Vector2( 703.188, 531.772 )
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
 [node name="fightareatrigger" type="Area2D" parent="Triggers"]
 position = Vector2( 914.139, 427.122 )
@@ -125,21 +129,21 @@ collision_layer = 2147483648
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/fightareatrigger"]
 position = Vector2( -57.0834, -74.3268 )
-shape = SubResource( 7 )
+shape = SubResource( 4 )
 
 [node name="fightareatrigger2" type="Area2D" parent="Triggers"]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/fightareatrigger2"]
 position = Vector2( 1506.42, 488.465 )
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 
 [node name="dashtrigger" type="Area2D" parent="Triggers"]
 position = Vector2( 368.755, 343.966 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/dashtrigger"]
 position = Vector2( 2.80615, -26.9391 )
-shape = SubResource( 9 )
+shape = SubResource( 6 )
 
 [node name="respawn0" type="Position2D" parent="."]
 position = Vector2( 207.785, 401.904 )
@@ -159,7 +163,7 @@ position = Vector2( 1134.98, 632.592 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MobSpawnArea"]
 position = Vector2( 14.6301, -72.2064 )
-shape = SubResource( 10 )
+shape = SubResource( 7 )
 
 [node name="healthspawn" type="Node2D" parent="."]
 visible = false
