@@ -21,7 +21,8 @@ func _ready():
 	animation_change = true
 	animation_dict["animation"] = "explosion"
 	change_animation()
-	yield(get_tree().create_timer(0.24), "timeout")
+	on_explosion_sfx()
+	yield(get_tree().create_timer(0.33), "timeout") #TODO change timer back to original value?
 	self.queue_free()
 
 func change_animation():
@@ -59,3 +60,6 @@ func _on_Hurtbox_area_entered(area):
 			var dir = (owner.position - self.position).normalized()
 			dir.y -= 1
 			owner.take_damage(attack_damage, 15, dir, 400)
+
+func on_explosion_sfx():
+	$ExplosionSfx.play()

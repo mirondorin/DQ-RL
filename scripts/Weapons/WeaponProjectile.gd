@@ -7,6 +7,7 @@ func _init():
 	LightAttack_CD.wait_time = 0.6
 
 sync func do_attack():
+	on_attack_sfx()
 	var bullet_inst = bullet.instance()
 	get_tree().get_root().add_child(bullet_inst)
 	bullet_inst.global_position = self.global_position
@@ -16,4 +17,5 @@ sync func do_attack():
 func attack():
 	rpc_unreliable("do_attack")
 
-
+func on_attack_sfx():
+	$ProjectileSfx.play()

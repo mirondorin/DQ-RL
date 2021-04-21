@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f1.png" type="Texture" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_run_anim_f2.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_idle_anim_f1.png" type="Texture" id=7]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_demon_idle_anim_f2.png" type="Texture" id=8]
 [ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=9]
+[ext_resource path="res://sounds/enemy_demonmob_dead.wav" type="AudioStream" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -105,6 +106,9 @@ text = "20
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="DeathSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="DetectArea" to="." method="_on_DetectArea_body_entered"]
 [connection signal="body_exited" from="DetectArea" to="." method="_on_DetectArea_body_exited"]

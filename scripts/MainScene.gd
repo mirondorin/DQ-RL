@@ -39,8 +39,9 @@ func add_new_mob(mob_type, mob_health, position, spawner):
 
 sync func do_add_mob(mob_id, mob_type, mob_health, position, spawner):
 	var lvl_nr = get_node("GlobalSettings").level_nr
-	mob_health *= (lvl_nr + 2) / 2
+	mob_health = int(mob_health * float(lvl_nr + 2) / 2)
 	var new_mob = get_new_enemy_instance(mob_type)
+	new_mob.get_node("HealthLabel").text = str(mob_health)
 	new_mob.stats["health"] = mob_health
 	new_mob.position = position
 	new_mob.name = str(mob_id)

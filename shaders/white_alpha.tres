@@ -21,7 +21,23 @@ void vertex() {
 }
 
 void fragment() {
+// Input:3
+	vec3 n_out3p0 = COLOR.rgb;
+
+// Input:2
+
+// Texture:4
+	vec3 n_out4p0;
+	float n_out4p1;
+	{
+		vec4 _tex_read = texture(TEXTURE , UV.xy);
+		n_out4p0 = _tex_read.rgb;
+		n_out4p1 = _tex_read.a;
+	}
+
 // Output:0
+	COLOR.rgb = n_out3p0;
+	COLOR.a = n_out4p1;
 
 }
 
@@ -30,7 +46,7 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -356, -4.75 )
+graph_offset = Vector2( -354.667, -313.5 )
 mode = 1
 flags/light_only = false
 nodes/fragment/2/node = SubResource( 1 )
@@ -39,4 +55,4 @@ nodes/fragment/3/node = SubResource( 2 )
 nodes/fragment/3/position = Vector2( 60, 60 )
 nodes/fragment/4/node = SubResource( 3 )
 nodes/fragment/4/position = Vector2( 60, 240 )
-nodes/fragment/connections = PoolIntArray( 2, 1, 4, 2 )
+nodes/fragment/connections = PoolIntArray( 2, 1, 4, 2, 3, 0, 0, 0, 4, 1, 0, 1 )

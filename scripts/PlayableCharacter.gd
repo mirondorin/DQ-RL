@@ -71,6 +71,7 @@ func jump():
 	pass
 	
 func dash(_delta):
+	on_dash_sfx()
 	in_dash = true
 	$Hitbox.monitorable = false
 	var dir = -1 if $AnimatedSprite.flip_h else 1
@@ -277,3 +278,5 @@ func _on_Hitbox_area_exited(area):
 	if area.is_in_group("interactable"):
 		interactables.erase(area)
 		
+func on_dash_sfx():
+	$DashSfx.play()

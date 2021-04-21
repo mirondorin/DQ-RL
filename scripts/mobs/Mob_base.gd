@@ -6,8 +6,8 @@ var spawner = null
 export var follow = true
 
 var player
-onready var attack_timer = $'AttackCooldown'
-onready var jump_timer = $'JumpCooldown'
+onready var attack_timer = $AttackCooldown
+onready var jump_timer = $JumpCooldown
 
 var is_dead = false
 
@@ -145,9 +145,10 @@ func on_take_damage(direction, impulse_force):
 			yield(get_tree().create_timer(0.15), "timeout")
 			SPEED = stats['default_speed']
 			$AnimatedSprite.set_material(null)
+			attack_timer.start()
 		else:
+			on_death_sfx() #TODO we should move the sounds to mainscene maybe?
 			kill_mob()
-	attack_timer.start()
 
 
 func _on_DetectArea_body_entered(body):
@@ -171,4 +172,5 @@ func _on_AttackCooldown_timeout():
 func _on_JumpCooldown_timeout():
 	can_jump = true
 
-
+func on_death_sfx():
+	$DeathSfx.play()

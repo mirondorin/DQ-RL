@@ -14,12 +14,7 @@ export var spawn_continously = false
 var current_spawns = 0
 var enabled = false
 var cleanup = true
-var mob_health
-
-
-func _init():
-	mob_health = 25 # viata se face in functie de level in main_scene, unde se adauga mob-ul
-
+var mob_health = 25
 
 func tool_cleanup():
 	if Engine.is_editor_hint():

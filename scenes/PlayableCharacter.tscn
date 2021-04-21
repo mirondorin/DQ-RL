@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://scenes/Weapons/Weapon.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/Cooldown.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=14]
+[ext_resource path="res://sounds/dash.wav" type="AudioStream" id=15]
 
 [sub_resource type="Shader" id=1]
 
@@ -226,6 +227,10 @@ position = Vector2( -3.3371, 28.0316 )
 shape = SubResource( 7 )
 
 [node name="HUD" parent="." instance=ExtResource( 14 )]
+
+[node name="DashSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+volume_db = -15.0
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="Cooldown_Root/Utility_CD" to="." method="_on_Utility_CD_timeout"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

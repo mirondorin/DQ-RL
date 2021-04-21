@@ -47,20 +47,21 @@ func get_weighted_mob():
 		for i in range(spawn_list[mob]):
 			selected.append(mob)
 	randomize()
-	return selected[randi() % 100 + 1]
+	return selected[randi() % len(selected)]
 	
 sync func do_spawn():
-	var enemy = get_weighted_mob()	
-	var inst = load(enemy).instance()
-	inst.spawner = self
-	mainscene.add_child(inst)
-	
+	var enemy = get_weighted_mob()
 	var area = area_list[randi() % area_list.size()]
-	
-	inst.position = get_rand_pos(area)
-	inst.velocity.x = 0
-	inst.velocity.y = 0
+
+	var position = get_rand_pos(area)
 	current_spawns += 1
+	
+	get_parent().get_parent().add_new_mob(mob_type, mob_health, position, self)	
+#	var inst = load(enemy).instance()
+#	inst.spawner = self
+#	mainscene.add_child(inst)
+#
+
 
 
 func _on_Timer_timeout():
