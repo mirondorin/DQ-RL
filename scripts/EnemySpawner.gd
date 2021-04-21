@@ -40,7 +40,7 @@ func _ready():
 
 
 func do_spawn():
-	get_parent().get_parent().add_new_mob(mob_type, mob_health, self.position)
+	get_parent().get_parent().add_new_mob(mob_type, mob_health, self.position, self)
 	current_spawns += 1
 
 

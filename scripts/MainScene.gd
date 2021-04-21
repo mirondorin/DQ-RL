@@ -32,12 +32,12 @@ func get_new_enemy_instance(type):
 	return mob.instance()
 
 
-func add_new_mob(mob_type, mob_health, position):
+func add_new_mob(mob_type, mob_health, position, spawner):
 	mob_id += 1
-	rpc("do_add_mob", mob_id, mob_type, mob_health, position)
+	rpc("do_add_mob", mob_id, mob_type, mob_health, position, spawner)
 
 
-sync func do_add_mob(mob_id, mob_type, mob_health, position):
+sync func do_add_mob(mob_id, mob_type, mob_health, position, spawner):
 	var lvl_nr = get_node("GlobalSettings").level_nr
 	mob_health *= (lvl_nr + 2) / 2
 	var new_mob = get_new_enemy_instance(mob_type)
@@ -45,8 +45,10 @@ sync func do_add_mob(mob_id, mob_type, mob_health, position):
 	new_mob.position = position
 	new_mob.name = str(mob_id)
 	new_mob.z_index = 2
+	new_mob.spawner = spawner
 	get_node("Mobs").add_child(new_mob, true)
 	all_mobs.append(mob_id)
+
 
 sync func do_remove_mob(id):
 	if get_node("Mobs").get_node(str(id)) != null:
@@ -61,7 +63,7 @@ func remove_mob(id):
 
 
 func remove_all_mobs():
-	while all_mobs.size() > 0:
-		remove_mob(all_mobs[-1])
+	for n in get_node("Mobs").get_children():
+		remove_mob(n.name)
 
 

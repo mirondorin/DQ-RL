@@ -11,7 +11,8 @@ func _ready():
 	
 func _init():
 	stats['default_speed'] = 100
-	self.stats['health'] = 200
+	self.stats['health'] = 100
+	self.stats['max_health'] = 100
 	self.stats['stagger_default'] = 300
 	self.stats['stagger_health'] = 300
 	self.SPEED = stats['default_speed'] 

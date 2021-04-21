@@ -148,7 +148,6 @@ func end_game():
 remote func peer_change_level(spawn_points):
 	get_tree().call_group("projectile", "queue_free")	
 	var world = get_tree().get_root().get_node("MainScene")
-	world.remove_all_mobs()
 	var GlobalSettings = get_node("/root/MainScene/GlobalSettings")
 	GlobalSettings.level_nr +=1
 	var level = world.get_node("LevelRoot")
@@ -170,6 +169,8 @@ remote func peer_change_level(spawn_points):
 
 
 sync func master_change_level():
+	var world = get_tree().get_root().get_node("MainScene")
+	world.remove_all_mobs()
 	get_tree().set_pause(true)
 	if not get_tree().is_network_server():
 		return 1

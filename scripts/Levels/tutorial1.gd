@@ -10,7 +10,7 @@ onready var currentrespawn = $respawn0
 
 func _ready():
 	if is_network_master():
-		get_parent().add_new_mob("Mob", 99999, Vector2(703.526, 279.315))
+		get_parent().add_new_mob("Mob", 99999, Vector2(703.526, 279.315), null)
 
 
 func _process(delta):
