@@ -16,7 +16,7 @@ _bundled = {
 }
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 122.827, 15.5711 )
+extents = Vector2( 66.2538, 15.5711 )
 
 [node name="DynamicSpawner" type="Node2D"]
 script = ExtResource( 1 )
@@ -24,9 +24,9 @@ enemyscene = SubResource( 1 )
 spawn_delay = 3
 spawn_continously = true
 spawn_list = {
-"res://scenes/Mobs/Mob.tscn": 0.5,
-"res://scenes/Mobs/MobHomingProjectile.tscn": 0.4,
-"res://scenes/Mobs/MobProjectile.tscn": 0.1
+"res://scenes/Mobs/Mob.tscn": 50,
+"res://scenes/Mobs/MobHomingProjectile.tscn": 10,
+"res://scenes/Mobs/MobProjectile.tscn": 40
 }
 
 [node name="Area2D" type="Area2D" parent="."]

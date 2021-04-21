@@ -77,28 +77,24 @@ position = Vector2( 45.1772, 432.396 )
 [node name="EnemySpawner" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1150.05, 575.52 )
 enemyscene = ExtResource( 12 )
-mob_type = "Mob"
 max_spawns = 1
 spawn_continously = true
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1890.35, 705.489 )
 enemyscene = ExtResource( 12 )
-mob_type = "Mob"
 max_spawns = 1
 spawn_continously = true
 
 [node name="EnemySpawner4" parent="." instance=ExtResource( 13 )]
 position = Vector2( 2105.26, 626.066 )
 enemyscene = ExtResource( 16 )
-mob_type = "MobProjectile"
 max_spawns = 1
 spawn_continously = true
 
 [node name="EnemySpawner3" parent="." instance=ExtResource( 13 )]
 position = Vector2( 1764.88, 637.413 )
 enemyscene = ExtResource( 12 )
-mob_type = "Mob"
 max_spawns = 1
 spawn_continously = true
 
@@ -231,8 +227,9 @@ margin_left = 1088.0
 margin_top = 439.0
 margin_right = 1202.0
 margin_bottom = 470.0
-text = "J - Attack. 
-K - Special Attack."
+text = "J - Attack
+K - Special Attack
+I - Hold Direction"
 __meta__ = {
 "_edit_use_anchors_": false
 }

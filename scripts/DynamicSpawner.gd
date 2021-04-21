@@ -4,9 +4,9 @@ extends "res://scripts/EnemySpawner.gd"
 func _get_tool_buttons(): return ["new_area"]
 
 export(Dictionary) var spawn_list = {
-	'res://scenes/Mobs/Mob.tscn' : 0.5,
-	'res://scenes/Mobs/MobHomingProjectile.tscn' : 0.4,
-	'res://scenes/Mobs/MobProjectile.tscn' : 0.1
+	'res://scenes/Mobs/Mob.tscn' : 70,
+	'res://scenes/Mobs/MobHomingProjectile.tscn' : 10,
+	'res://scenes/Mobs/MobProjectile.tscn' : 30
 }
 
 var area_list = []
@@ -40,9 +40,17 @@ func get_rand_pos(area):
 		rand_range(-size.y, size.y) + centerpos.y)
 		
 	return position
+
+func get_weighted_mob():
+	var selected = []
+	for mob in spawn_list:
+		for i in range(spawn_list[mob]):
+			selected.append(mob)
+	randomize()
+	return selected[randi() % 100 + 1]
 	
 sync func do_spawn():
-	var enemy = spawn_list.keys()[randi() % spawn_list.size()]	
+	var enemy = get_weighted_mob()	
 	var inst = load(enemy).instance()
 	inst.spawner = self
 	mainscene.add_child(inst)
