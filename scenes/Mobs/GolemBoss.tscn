@@ -199,7 +199,7 @@ script = ExtResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 23 )
 animation = "idle"
-frame = 7
+frame = 1
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
@@ -261,6 +261,8 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/jump_attack = SubResource( 28 )
 anims/rock_throw = SubResource( 29 )
+
+[node name="DeathSfx" type="AudioStreamPlayer" parent="."]
 [connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="DetectArea" to="." method="_on_DetectArea_body_entered"]
