@@ -9,6 +9,7 @@
 
 ## Paraschiv Tudor
 * Added dynamic spawners with probabilities for enemies
+* Added button for player direction hold
 
 ## Stoica George
 * Merged network branch with main branch
