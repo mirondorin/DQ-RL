@@ -3,10 +3,16 @@ extends "res://scripts/EnemySpawner.gd"
 
 func _get_tool_buttons(): return ["new_area"]
 
-export(Dictionary) var spawn_list = {
+export (Dictionary) var spawn_list = {
 	'res://scenes/Mobs/Mob.tscn' : 70,
 	'res://scenes/Mobs/MobHomingProjectile.tscn' : 10,
 	'res://scenes/Mobs/MobProjectile.tscn' : 30
+}
+
+var spawn_list_name : Dictionary = {
+	"Mob" : 70,
+	"MobHomingProjectile" : 10,
+	"MobProjectile" :30,
 }
 
 var area_list = []
@@ -48,6 +54,21 @@ func get_weighted_mob():
 			selected.append(mob)
 	randomize()
 	return selected[randi() % len(selected)]
+
+func get_weighted_mob_name():
+	var mob_names = spawn_list_name.keys()
+	var weights = spawn_list_name.values()
+	var max_sum = 0
+	for i in weights:
+		max_sum += i
+	randomize()
+	var selected = randi() % max_sum
+	var sum = 0
+	for i in range(len(weights)):
+		sum += weights[i]
+		if sum > selected:
+			return mob_names[i]
+	
 	
 sync func do_spawn():
 	var enemy = get_weighted_mob()
@@ -55,7 +76,8 @@ sync func do_spawn():
 
 	var position = get_rand_pos(area)
 	current_spawns += 1
-	
+
+	mob_type = get_weighted_mob_name()
 	get_parent().get_parent().add_new_mob(mob_type, mob_health, position, self)	
 #	var inst = load(enemy).instance()
 #	inst.spawner = self
