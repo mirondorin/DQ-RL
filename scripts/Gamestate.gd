@@ -29,7 +29,7 @@ func _player_connected(id):
 
 
 func _player_disconnected(id):
-	if has_node("/root/MainSceneDorin"):
+	if has_node("/root/MainScene"):
 		if get_tree().is_network_server():
 			emit_signal("game_error", "Player " + players[id] + " disconnected")
 			end_game()
@@ -148,7 +148,6 @@ func end_game():
 remote func peer_change_level(spawn_points):
 	get_tree().call_group("projectile", "queue_free")	
 	var world = get_tree().get_root().get_node("MainScene")
-	var GlobalSettings = get_node("/root/MainScene/GlobalSettings")
 	GlobalSettings.level_nr +=1
 	var level = world.get_node("LevelRoot")
 	var next_level = "level" + str(GlobalSettings.level_nr) + ".tscn"
