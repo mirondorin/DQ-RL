@@ -22,7 +22,7 @@ func _ready():
 	animation_dict["animation"] = "explosion"
 	change_animation()
 	on_explosion_sfx()
-	yield(get_tree().create_timer(0.24), "timeout") #TODO change timer back to original value?
+	yield(get_tree().create_timer(0.24), "timeout")
 	self.queue_free()
 
 

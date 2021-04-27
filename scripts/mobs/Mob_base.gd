@@ -25,7 +25,6 @@ var attack_cooldown = 1.5
 var jump_cooldown = 4
 
 var in_area = []
-onready var	GlobalSettings = get_node("/root/MainScene/GlobalSettings")
 
 func _init():
 	stats["health"] = 25

@@ -39,3 +39,25 @@ sync func do_set_health(value):
 func set_initial_health(value):
 #	Should be called only from master
 	rpc("do_set_health", value)
+
+
+sync func do_modify_stats(status, value):
+	stats[status] 	+= value
+	if status == 'health':
+		$HealthLabel.text = String(stats['health'])
+
+
+func modify_stats(status, value):
+	if is_network_master():
+		rpc("do_modify_stats", status, value)
+
+
+sync func do_set_stats(status, value):
+	stats[status] 	= value
+	if status == 'health':
+		$HealthLabel.text = String(stats['health'])
+
+
+func set_stats(status, value):
+	if is_network_master():
+		rpc("do_set_stats", status, value)

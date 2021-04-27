@@ -24,7 +24,7 @@ func _process(delta):
 func _on_StartTrigger_area_entered(area):
 	players = get_tree().get_nodes_in_group('players')
 	for player in players:
-		player.modify_stats("health",-90)
+		player.set_stats("health", 10)
 	$Triggers/StartTrigger/CollisionShape2D.call_deferred("set", "disabled", true)
 
 

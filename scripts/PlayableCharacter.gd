@@ -79,7 +79,7 @@ func dash(_delta):
 	velocity.y = 0
 	impulse(500, Vector2(dir, -0.001), 10, false)
 	yield(get_tree().create_timer(0.2), "timeout")
-	self.GRAVITY = get_node('../../GlobalSettings').GRAVITY
+	self.GRAVITY = GlobalSettings.GRAVITY
 	$Hitbox.monitorable = true
 	in_dash = false
 	self.impulse_current_x = impulse_current_x/3
@@ -87,6 +87,8 @@ func dash(_delta):
 
 sync func play_special_attack():
 	$AnimationPlayer.play("special-attack")
+	animation_dict["flip_h"] = false
+
 
 func solve_animation(velocity,delta):
 	if not is_network_master():
@@ -257,16 +259,6 @@ func use_interact():
 	for i in interactables:
 		i.get_parent().interact()
 		return
-
-
-sync func do_modify_stats(status, value):
-	stats[status] 	+= value
-	$HealthLabel.text = String(stats['health'])
-
-
-func modify_stats(status, value):
-	if is_network_master():
-		rpc("do_modify_stats", status, value)
 
 
 func _on_Hitbox_area_entered(area):

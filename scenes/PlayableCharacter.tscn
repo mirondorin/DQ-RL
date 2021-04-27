@@ -28,16 +28,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "land",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "jump",
@@ -46,6 +36,16 @@ animations = [ {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "land",
 "speed": 5.0
 } ]
 
@@ -149,6 +149,7 @@ extents = Vector2( 26.9215, 37.8014 )
 material = SubResource( 2 )
 position = Vector2( 0, -0.187286 )
 scale = Vector2( 0.25, 0.25 )
+collision_mask = 2147483649
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 231.853 ],

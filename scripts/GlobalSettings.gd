@@ -3,7 +3,7 @@ extends Node
 export var GRAVITY = 500.0
 var level_nr = 0
 
-onready var settingsmenu = load("res://scenes//Menu.tscn") # To be added
+onready var settingsmenu = load("res://scenes/Menu.tscn")
 var filepath = "res://keybinds.ini"
 var configfile
 
@@ -12,7 +12,6 @@ var keybinds = {}
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		add_child(settingsmenu.instance())
-		get_tree().paused = true
 
 
 func _ready():
@@ -26,8 +25,7 @@ func _ready():
 			else:
 				keybinds[key] = null
 	else:
-		print("CONFIG FILE NOT FOUND")
-		get_tree().quit()
+		print("CONFIG FILE NOT FOUND") # Config should be created somehow
 	
 	set_game_binds()
 
