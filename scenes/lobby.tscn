@@ -82,6 +82,9 @@ margin_right = 138.5
 margin_bottom = 83.5
 size_flags_horizontal = 2
 size_flags_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="NameLabel" type="Label" parent="Connect"]
 margin_left = 14.0
@@ -100,6 +103,9 @@ margin_bottom = 54.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "The Warrior"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="IPLabel" type="Label" parent="Connect"]
 margin_left = 15.0

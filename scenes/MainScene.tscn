@@ -12,11 +12,33 @@ __meta__ = {
 
 [node name="LevelRoot" parent="." instance=ExtResource( 1 )]
 
+[node name="EnemySpawner" parent="LevelRoot" index="4"]
+mob_type = ""
+start_enabled = true
+spawn_delay = 1
+
+[node name="EnemySpawner2" parent="LevelRoot" index="5"]
+mob_type = ""
+start_enabled = true
+spawn_delay = 1
+
+[node name="EnemySpawner4" parent="LevelRoot" index="6"]
+mob_type = ""
+start_enabled = true
+spawn_delay = 1
+
+[node name="EnemySpawner3" parent="LevelRoot" index="7"]
+mob_type = ""
+start_enabled = true
+spawn_delay = 1
+
 [node name="GlobalSettings" type="Node" parent="."]
 script = ExtResource( 4 )
 
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Mobs" type="Node" parent="."]
+
+[node name="GlobalSounds" type="Node2D" parent="."]
 
 [editable path="LevelRoot"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/empty_hit_sword.ogg-82adde0538f705b377f8704bb273f54b.oggstr"
+
+[deps]
+
+source_file="res://sounds/empty_hit_sword.ogg"
+dest_files=[ "res://.import/empty_hit_sword.ogg-82adde0538f705b377f8704bb273f54b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -12,6 +12,7 @@ func _ready():
 
 func attack():
 	if is_network_master():
+		on_emptyhit_sfx()
 		rpc_unreliable("play_animation", attack_anim_names['attack'])
 
 func special_attack():
@@ -29,6 +30,7 @@ func _on_Area2D_area_entered(area):
 
 func on_emptyhit_sfx():
 	$EmptyHit.play()
+
 
 func on_enemyhit_sfx():
 	$EnemyHit.play()

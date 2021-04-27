@@ -68,8 +68,10 @@ func follow_player():
 	if not follow or abs(position.x - player.position.x) < 10:
 		x_direction = 0
 
+
 func attack_player(_player):
 	pass
+
 
 func solve_animation(velocity):
 	if x_direction != 0:
@@ -173,5 +175,10 @@ func _on_AttackCooldown_timeout():
 func _on_JumpCooldown_timeout():
 	can_jump = true
 
+
 func on_death_sfx():
-	$DeathSfx.play()
+	var target = get_tree().get_root().get_node("MainScene/GlobalSounds")
+	var source = $DeathSfx
+	self.remove_child(source)
+	target.add_child(source)
+	source.play()

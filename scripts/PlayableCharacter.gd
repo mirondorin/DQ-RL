@@ -137,18 +137,18 @@ sync func gain_health(value):
 func solve_input(delta):
 #	theoretically should not require sync
 #	but we have to find a way to sync weapon attacks and animations
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("left"):
 		x_direction = -1
-	elif Input.is_action_pressed("ui_right"):
+	elif Input.is_action_pressed("right"):
 		x_direction = 1
 	else:
 		x_direction = 0
 		
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("up"):
 		if not in_impulse:
 			velocity.y += jump()
 		
-	if Input.is_action_pressed("ui_attack") and current_weapon.can_attack:
+	if Input.is_action_pressed("attack") and current_weapon.can_attack:
 		current_weapon.attack()
 		current_weapon.LightAttack_CD.start()
 		current_weapon.can_attack = false
