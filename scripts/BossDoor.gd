@@ -1,4 +1,4 @@
-extends Node2D
+extends "res://scripts/DoorBase.gd"
 
 var boss_spawner
 var boss_alive = false
@@ -8,7 +8,8 @@ func _ready():
 	boss_spawner.mob_health = 100
 
 
-sync func do_interact():
+sync func do_interact(initiator):
+	.do_interact(initiator)
 	if boss_spawner.enabled == true:
 		if not is_network_master():
 			return 1
@@ -22,5 +23,5 @@ sync func do_interact():
 	else:
 		boss_spawner.start_spawn()
 
-func interact():
-	rpc("do_interact")
+func interact(initiator):
+	rpc("do_interact", initiator)

@@ -18,3 +18,45 @@ texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -40.363
+margin_top = -38.6812
+margin_right = -0.362999
+margin_bottom = -24.6812
+text = "Votes:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VotesLabel" type="Label" parent="."]
+margin_left = 0.840897
+margin_top = -38.2608
+margin_right = 40.8409
+margin_bottom = -7.26078
+text = "0
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 10.5112
+margin_top = -37.8403
+margin_right = 50.5112
+margin_bottom = -23.8403
+text = "/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MinVotesLabel" type="Label" parent="."]
+margin_left = 18.9202
+margin_top = -37.8403
+margin_right = 58.9202
+margin_bottom = -6.8403
+text = "0
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}

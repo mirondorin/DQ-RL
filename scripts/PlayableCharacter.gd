@@ -257,7 +257,7 @@ func grab_item():
 
 func use_interact():
 	for i in interactables:
-		i.get_parent().interact()
+		i.get_parent().interact(self)
 		return
 
 

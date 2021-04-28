@@ -1,11 +1,9 @@
-extends Node2D
+extends "res://scripts/DoorBase.gd"
 
-func _ready():
-	pass
+sync func do_interact(initiator):
+	.do_interact(initiator)
+	if voted_list.size() == player_num:	
+		if is_network_master():
+			gamestate.change_level()
 
-sync func do_interact():
-	if is_network_master():
-		gamestate.change_level()
 
-func interact():
-	rpc("do_interact")
