@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -38,14 +38,14 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "land",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "hit",
 "speed": 5.0
 } ]
 
@@ -143,6 +143,9 @@ tracks/4/keys = {
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 26.9215, 37.8014 )
 
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 225.234, 138.827 )
+
 [node name="PlayableCharacter" type="KinematicBody2D" groups=[
 "players",
 ]]
@@ -232,10 +235,20 @@ shape = SubResource( 7 )
 [node name="DashSfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 15 )
 volume_db = -15.0
+
+[node name="RegenArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RegenArea"]
+shape = SubResource( 8 )
+
+[node name="RegenTimer" type="Timer" parent="."]
+autostart = true
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="Cooldown_Root/Utility_CD" to="." method="_on_Utility_CD_timeout"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="area_exited" from="Hitbox" to="." method="_on_Hitbox_area_exited"]
+[connection signal="timeout" from="RegenTimer" to="." method="_on_RegenTimer_timeout"]
 
 [editable path="Weapon"]
 

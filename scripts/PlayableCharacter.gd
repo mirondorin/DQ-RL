@@ -43,6 +43,10 @@ func _init():
 	stats["damage_modifier"] = 0
 	stats["health"] = 100
 	stats["max_health"] = 100
+	stats["regen_delay"] = 1
+	stats["regen_value"] = 2
+	
+
 
 func _ready():
 	if is_network_master():
@@ -201,6 +205,13 @@ func _physics_process(delta):
 		solve_input(delta)
 		rpc_unreliable("set_entity_position", position)
 
+func regen_health():
+	if stats["health"] < stats["max_health"]: 
+		var bodies = $RegenArea.get_overlapping_bodies()
+		for entity in bodies:
+			if entity.is_in_group("players") and entity != self:			
+				set_stats("health", clamp(stats["health"] + stats["regen_value"], 0, stats["max_health"]))
+				break
 
 sync func do_switch_weapon():
 	weapon = (1 + weapon) % 3
@@ -272,3 +283,7 @@ func _on_Hitbox_area_exited(area):
 		
 func on_dash_sfx():
 	$DashSfx.play()
+
+
+func _on_RegenTimer_timeout():
+	regen_health()
