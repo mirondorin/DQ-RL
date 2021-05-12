@@ -53,7 +53,8 @@ func change_bind(key, value):
 
 
 func back():
-	queue_free()
+	is_opened = false
+	$Panel.visible = false
 	get_tree().paused = false
 
 
