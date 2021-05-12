@@ -90,7 +90,7 @@ func solve_animation(velocity):
 			
 
 func out_of_bounds():
-	rpc("kill_mob")
+	kill_mob()
 
 
 func kill_mob():
