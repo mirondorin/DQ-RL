@@ -16,12 +16,12 @@ var did_move = false
 var landing = false
 var in_dash = false
 var cooldowns = {
-	"can_light_attack" : true,
-	"can_special_attack" : true,
 	"can_utility" : true
 		}
 var weapon = 0
-
+var weapon_animations = {0 : "special-attack-sword",
+						1 : "special-attack-staff"
+}
 
 var camera
 var interactables = []
@@ -90,14 +90,16 @@ func dash(_delta):
 	self.impulse_step = 5
 
 sync func play_special_attack():
-	$AnimationPlayer.play("special-attack")
-	animation_dict["flip_h"] = false
+	$AnimationPlayer.play(weapon_animations[weapon])
+	current_weapon.get_node("AnimationPlayer").play("special-attack")
+	if weapon == 0:
+		animation_dict["flip_h"] = false
 
 
 func solve_animation(velocity,delta):
 	if not is_network_master():
 		return 1
-	if $AnimationPlayer.current_animation != 'special-attack':
+	if current_weapon.get_node("AnimationPlayer").current_animation != 'special-attack':
 		if x_direction !=0:
 			if not key_has_value(animation_dict, "flip_h", (x_direction < 0))\
 				 and not Input.is_action_pressed("hold_direction"):
@@ -158,10 +160,10 @@ func solve_input(delta):
 		current_weapon.attack()
 		current_weapon.LightAttack_CD.start()
 		current_weapon.can_attack = false
-	elif Input.is_action_pressed("special_attack") and current_weapon.can_attack and weapon == 0:
+	elif Input.is_action_pressed("special_attack") and current_weapon.can_special_attack:
 		rpc_unreliable("play_special_attack")
 		current_weapon.SpecialAttack_CD.start()
-		current_weapon.can_attack = false
+		current_weapon.can_special_attack = false
 	if Input.is_action_pressed("utility") and cooldowns['can_utility']:
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false

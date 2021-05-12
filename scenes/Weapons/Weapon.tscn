@@ -85,65 +85,16 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id=3]
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 90.0, -90.0, 90.0, -90.0, 90.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Hurtbox/CollisionShape2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( 0.317, -13.203 ), Vector2( 0.317, 13.203 ), Vector2( 0.317, -13.203 ), Vector2( 0.317, 13.203 ), Vector2( 0.317, -13.203 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Hurtbox/CollisionShape2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ false, true, false, true, false, true, false, true, false ]
-}
+resource_name = "special-attack"
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 5.05209, 12.3614 )
 
 [node name="Weapon" type="Node2D"]
-rotation = -0.00989461
 scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="Sprite" parent="."]
-position = Vector2( 15, 0 )
 rotation = 1.5708
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
@@ -165,7 +116,6 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0.317, -13.203 )
 shape = SubResource( 4 )
-disabled = true
 
 [node name="EmptyHit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )

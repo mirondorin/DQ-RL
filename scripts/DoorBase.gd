@@ -1,6 +1,6 @@
 extends Node
 
-var player_num = 2
+var player_num = 1
 var voted_list = []
 
 func _ready():

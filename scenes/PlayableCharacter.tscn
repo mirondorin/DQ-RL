@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -78,7 +78,11 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
+[sub_resource type="Animation" id=9]
+resource_name = "special-attack-staff"
+
 [sub_resource type="Animation" id=6]
+resource_name = "special-attack-sword"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Weapon/AnimatedSprite:position")
 tracks/0/interp = 1
@@ -163,6 +167,7 @@ __meta__ = {
 scale = Vector2( 5, 5 )
 frames = SubResource( 3 )
 animation = "idle"
+flip_h = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 position = Vector2( -3.51978, 28.5693 )
@@ -208,14 +213,15 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 5 )
-anims/special-attack = SubResource( 6 )
+anims/special-attack-staff = SubResource( 9 )
+anims/special-attack-sword = SubResource( 6 )
 
 [node name="Weapon" parent="." instance=ExtResource( 12 )]
 position = Vector2( 46.6849, 49.3108 )
-rotation = 0.0
 
 [node name="CollisionShape2D" parent="Weapon/Hurtbox" index="0"]
 position = Vector2( 0.168517, -13.3515 )
+disabled = true
 
 [node name="Cooldown_Root" parent="." instance=ExtResource( 13 )]
 

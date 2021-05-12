@@ -4,14 +4,19 @@ export var GRAVITY = 500.0
 var level_nr = 0
 
 onready var settingsmenu = load("res://scenes/Menu.tscn")
+onready var menu = settingsmenu.instance()
 var filepath = "res://keybinds.ini"
 var configfile
-
 var keybinds = {}
 
 func _input(event):
-	if Input.is_key_pressed(KEY_ESCAPE):
-		add_child(settingsmenu.instance())
+	if Input.is_key_pressed(KEY_ESCAPE) and menu != null:
+		if menu.is_opened:
+			menu.get_node("Panel").visible = false
+			menu.is_opened = false
+		else:
+			menu.get_node("Panel").visible = true
+			menu.is_opened = true
 
 
 func _ready():
@@ -26,7 +31,7 @@ func _ready():
 				keybinds[key] = null
 	else:
 		print("CONFIG FILE NOT FOUND") # Config should be created somehow
-	
+	add_child(menu)
 	set_game_binds()
 
 

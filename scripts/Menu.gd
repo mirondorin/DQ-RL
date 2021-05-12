@@ -5,9 +5,11 @@ onready var buttonscript = load("res://scripts/KeyButton.gd")
 
 var keybinds
 var buttons = {}
+var is_opened = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Panel.visible = false
 	keybinds = GlobalSettings.keybinds.duplicate()
 	for key in keybinds.keys():
 		var hbox = HBoxContainer.new()

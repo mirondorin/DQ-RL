@@ -2,6 +2,7 @@ extends Node2D
 
 export var attack_damage = 10
 var can_attack = true
+var can_special_attack = true
 var offset_position = Vector2(50, 40)
 
 var attack_anim_names = {
@@ -27,7 +28,7 @@ func _on_LightAttack_CD_timeout():
 
 
 func _on_SpecialAttack_CD_timeout():
-	can_attack = true
+	can_special_attack = true
 	pass
 
 
