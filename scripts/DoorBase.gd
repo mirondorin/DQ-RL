@@ -9,6 +9,10 @@ func _ready():
 	$MinVotesLabel.text = String(player_num)
 
 sync func do_interact(initiator):
+	player_num = gamestate.get_player_list().size()
+	$MinVotesLabel.text = String(player_num)
+	print("DA")
+	print(gamestate.get_player_list())
 	if not initiator in voted_list:
 		voted_list.append(initiator)
 		$VotesLabel.text = String(voted_list.size())

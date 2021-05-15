@@ -90,14 +90,16 @@ func solve_animation(velocity):
 			
 
 func out_of_bounds():
-	kill_mob()
-
-
-func kill_mob():
+	rpc("kill_mob")
 	get_node("/root/MainScene/").remove_mob(self.name)
+
+
+sync func kill_mob():
 	if self.spawner != null:
 		if self.spawner.current_spawns != null:
 			self.spawner.current_spawns -= 1
+	
+	
 
 
 func _physics_process(delta):
