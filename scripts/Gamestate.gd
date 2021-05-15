@@ -10,7 +10,7 @@ var peer = null
 
 
 var player_name = "The Warrior"
-
+var first_level : bool = true
 
 
 var players = {}
@@ -90,6 +90,10 @@ remote func pre_start_game(spawn_points):
 
 remote func post_start_game():
 	get_tree().set_pause(false) # Unpause and unleash the game!
+	if first_level:
+		get_node("/root/MainScene/LevelRoot/NewLevelDoor").reinit() # reinit new level door
+		first_level = false
+	
 
 
 remote func ready_to_start(id):
@@ -119,6 +123,9 @@ func join_game(ip, new_player_name):
 func get_player_list():
 	return players.values()
 
+
+func get_player_dict():
+	return players
 
 func get_player_name():
 	return player_name
