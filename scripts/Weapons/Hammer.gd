@@ -36,12 +36,12 @@ func _on_Area2D_area_entered(area):
 sync func do_update_orientation(orientation):
 	if orientation:
 		#LOOKING LEFT
-		self.rotation_degrees = -220
+		self.scale.x = -2
 		if self.position.x > 0:
 			self.position.x = -self.position.x
 	else:
 		#LOOKING RIGHT
-		self.rotation_degrees = 0
+		self.scale.x = 2
 		if self.position.x < 0:
 			self.position.x = -self.position.x
 	update_weapon_postion(self.position.x, self.rotation_degrees)
