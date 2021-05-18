@@ -1,40 +1,41 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/weapon_golden_sword.png" type="Texture" id=1]
-[ext_resource path="res://scripts/Weapons/Weapon.gd" type="Script" id=2]
+[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/weapon_hammer.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Weapons/Hammer.gd" type="Script" id=2]
 [ext_resource path="res://sounds/empty_hit_sword.ogg" type="AudioStream" id=3]
 [ext_resource path="res://sounds/enemy_hit_sword.wav" type="AudioStream" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack"
-length = 0.2
+length = 0.25
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("../Hurtbox/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0561505, 0.1256 ),
+"times": PoolRealArray( 0, 0.0504128, 0.148675 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( -15, 0 ), Vector2( 15, 0 ) ]
+"values": [ true, false, true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("../Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath(".:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.0571483, 0.127777 ),
+"times": PoolRealArray( 0, 0.15, 0.25 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true ]
+"update": 0,
+"values": [ 120.0, -20.0, 120.0 ]
 }
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -57,48 +58,25 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 90.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Hurtbox/CollisionShape2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0.317, -13.203 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Hurtbox/CollisionShape2D:rotation_degrees")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
+"values": [ 120.0 ]
 }
 
 [sub_resource type="Animation" id=3]
 resource_name = "special-attack"
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 5.05209, 12.3614 )
+extents = Vector2( 15.6742, 23.9482 )
 
-[node name="Weapon" type="Node2D"]
+[node name="Hammer" type="Node2D"]
 scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="Sprite" parent="."]
-position = Vector2( 15, 0 )
-rotation = 1.5708
+position = Vector2( -11.6541, 4.10806 )
+rotation = 2.0944
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -12.118 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite")
@@ -109,13 +87,12 @@ anims/special-attack = SubResource( 3 )
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
 ]]
-rotation = 1.5708
 scale = Vector2( 3, 3 )
 input_pickable = false
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2( 0.317, -13.203 )
+position = Vector2( 11.26, -0.177 )
 shape = SubResource( 4 )
 disabled = true
 

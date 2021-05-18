@@ -114,13 +114,12 @@ func solve_animation(velocity,delta):
 			animation_dict["animation"] = "jump"
 			new_animation_dict["animation"] = "jump"
 			animation_change = true
-		landing=false
+		landing = false
 	elif is_on_floor():
 		if $AnimatedSprite.animation == 'jump':
 			animation_play = true
 			animation_play_what = "land"
 			if not key_has_value(animation_dict, "animation", "land"):
-
 				animation_change = true
 			landing = true
 		else:
@@ -147,8 +146,10 @@ func solve_input(delta):
 #	but we have to find a way to sync weapon attacks and animations
 	if Input.is_action_pressed("left"):
 		x_direction = -1
+		current_orientation = -1
 	elif Input.is_action_pressed("right"):
 		x_direction = 1
+		current_orientation = 1
 	else:
 		x_direction = 0
 		
@@ -216,7 +217,7 @@ func regen_health():
 				break
 
 sync func do_switch_weapon():
-	weapon = (1 + weapon) % 3
+	weapon = (1 + weapon) % 4
 	current_weapon.queue_free()
 	var wep
 	if weapon == 1:
@@ -225,6 +226,8 @@ sync func do_switch_weapon():
 		wep = load("res://scenes/Weapons/Weapon.tscn")
 	elif weapon == 2:
 		wep = load("res://scenes/Weapons/WeaponBomb.tscn")
+	elif weapon == 3:
+		wep = load("res://scenes/Weapons/Hammer.tscn")
 	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)

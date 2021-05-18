@@ -95,6 +95,7 @@ func out_of_bounds():
 
 
 sync func kill_mob():
+	get_node("/root/MainScene/").remove_mob(self.name)
 	if self.spawner != null:
 		if self.spawner.current_spawns != null:
 			self.spawner.current_spawns -= 1

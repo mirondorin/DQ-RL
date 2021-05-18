@@ -78,11 +78,10 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 resource_name = "special-attack-staff"
 
-[sub_resource type="Animation" id=6]
-resource_name = "special-attack-sword"
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Weapon/AnimatedSprite:position")
 tracks/0/interp = 1
@@ -144,10 +143,10 @@ tracks/4/keys = {
 "values": [ false, true, false, true, false, true, false, true, true ]
 }
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 26.9215, 37.8014 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 225.234, 138.827 )
 
 [node name="PlayableCharacter" type="KinematicBody2D" groups=[
@@ -213,15 +212,14 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 5 )
-anims/special-attack-staff = SubResource( 9 )
-anims/special-attack-sword = SubResource( 6 )
+anims/special-attack-staff = SubResource( 10 )
+anims/special-attack-sword = SubResource( 11 )
 
 [node name="Weapon" parent="." instance=ExtResource( 12 )]
 position = Vector2( 46.6849, 49.3108 )
 
 [node name="CollisionShape2D" parent="Weapon/Hurtbox" index="0"]
 position = Vector2( 0.168517, -13.3515 )
-disabled = true
 
 [node name="Cooldown_Root" parent="." instance=ExtResource( 13 )]
 
@@ -234,7 +232,7 @@ wait_time = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( -3.3371, 28.0316 )
-shape = SubResource( 7 )
+shape = SubResource( 12 )
 
 [node name="HUD" parent="." instance=ExtResource( 14 )]
 
@@ -246,7 +244,7 @@ volume_db = -15.0
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RegenArea"]
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="RegenTimer" type="Timer" parent="."]
 autostart = true

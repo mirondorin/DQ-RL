@@ -13,6 +13,7 @@ var impulse_dir = Vector2(0, 0)
 var in_impulse = false
 var impulse_step = 5
 
+var current_orientation = 1
 var x_direction = 0
 var velocity = Vector2()
 
