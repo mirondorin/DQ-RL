@@ -8,6 +8,8 @@ func _init():
 	self.attack_damage = 5
 	LightAttack_CD.wait_time = 0.6
 	SpecialAttack_CD.wait_time = 4
+	attack_anim_names['attack'] = 'attack'
+	attack_anim_names['special-attack'] = 'special-attack'
 
 sync func do_attack():
 	on_attack_sfx()

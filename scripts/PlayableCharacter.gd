@@ -20,7 +20,8 @@ var cooldowns = {
 		}
 var weapon = 0
 var weapon_animations = {0 : "special-attack-sword",
-						1 : "special-attack-staff"
+						1 : "special-attack-staff",
+						3 : "special-attack-staff"
 }
 
 var camera
@@ -157,12 +158,13 @@ func solve_input(delta):
 		if not in_impulse:
 			velocity.y += jump()
 		
-	if Input.is_action_pressed("attack") and current_weapon.can_attack:
+	if Input.is_action_just_pressed("attack") and current_weapon.can_attack:
 		current_weapon.attack()
 		current_weapon.LightAttack_CD.start()
 		current_weapon.can_attack = false
-	elif Input.is_action_pressed("special_attack") and current_weapon.can_special_attack:
+	elif Input.is_action_just_pressed("special_attack") and current_weapon.can_special_attack:
 		rpc_unreliable("play_special_attack")
+		current_weapon.special_attack()
 		current_weapon.SpecialAttack_CD.start()
 		current_weapon.can_special_attack = false
 	if Input.is_action_pressed("utility") and cooldowns['can_utility']:

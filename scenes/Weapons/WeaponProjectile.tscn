@@ -172,7 +172,7 @@ scale = Vector2( 3, 3 )
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2( 0.690693, -141.164 )
+position = Vector2( 4.19069, -141.497 )
 shape = SubResource( 4 )
 disabled = true
 
