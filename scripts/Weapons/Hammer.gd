@@ -11,6 +11,7 @@ func _init():
 	attack_anim_names['special-attack'] = 'special-attack'
 	attack_anim_names['special-attack-fall'] = 'special-attack-fall'
 	LightAttack_CD.wait_time = 1
+	SpecialAttack_CD.wait_time = 3
 
 func _ready():
 	position = Vector2(50, 40)
@@ -22,6 +23,7 @@ func _process(delta):
 			in_special = false
 			yield(get_tree().create_timer(0.1), "timeout")
 			$Hurtbox2/CollisionShapeSpecial.disabled = true
+			can_attack = true
 			rpc_unreliable("play_animation", attack_anim_names['idle'])
 			
 func attack():
@@ -34,8 +36,10 @@ func attack():
 func special_attack():
 	if is_network_master():
 		rpc_unreliable("play_animation", attack_anim_names['special-attack'])
+	can_attack = false
 	get_parent().impulse(500, Vector2(0, -1), 10, false)
 	yield(get_tree().create_timer(0.5), "timeout")
+	can_attack = false
 	in_special = true
 	get_parent().impulse(700, Vector2(0, 1), 10, false)
 	if is_network_master():
