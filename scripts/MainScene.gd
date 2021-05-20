@@ -15,6 +15,7 @@ var golem_boss = preload("res://scenes/Mobs/GolemBoss.tscn")
 var mob_id = 0
 var all_mobs = []
 var dead_players : Dictionary = {}
+var respawn_queue : Array = []
 
 
 func _ready():
@@ -81,6 +82,7 @@ sync func do_remove_player(player_id, player_name):
 		player.queue_free()
 		if get_tree().is_network_server():
 			dead_players[player_id] = player_name
+			respawn_queue.append(player_id)
 			treat_revival()
 	print(dead_players)
 
@@ -89,12 +91,18 @@ func treat_revival():
 	if len(get_node("Players").get_children()) == 0:
 		restart_game()
 	else:
-		print("Create timer for resummon")
+		var respawn_timer = Timer.new()
+		add_child(respawn_timer)
+		respawn_timer.connect("timeout", self, "_on_respawn_timeout")
+		respawn_timer.wait_time = 30.0
+		respawn_timer.start()
 
 
 func restart_game():
 	print("TODO: Create a short timer here")
 	rpc("do_restart_game", dead_players)
+	dead_players = {}
+	respawn_queue = []
 	
 	
 sync func do_restart_game(dead_players):
@@ -108,3 +116,28 @@ sync func do_restart_game(dead_players):
 		player.set_player_name(dead_players[player_id])
 		get_node("Players").add_child(player)
 	gamestate.master_change_level() # nu e nevoie de rpc pt ca functia curenta se executa la toti
+
+
+func _on_respawn_timeout():
+	var player_id = respawn_queue.front()
+	var player_name
+	while true:
+		if player_id == null:
+			return 1
+		respawn_queue.erase(player_id)
+		if dead_players.has(player_id):
+			player_name = dead_players[player_id]
+			dead_players.erase(player_id)
+			break
+		player_id = respawn_queue.front()
+	rpc("do_respawn_player", player_id, player_name)
+	
+
+sync func do_respawn_player(player_id, player_name):
+	var player_scene = load("res://scenes/PlayableCharacter.tscn")
+	var player = player_scene.instance()
+	player.set_name(str(player_id))
+	player.set_network_master(int(player_id))
+	player.set_player_name(player_name)
+	get_node("Players").add_child(player)
+	player.position = get_node("LevelRoot/Spawn/0").position
