@@ -14,6 +14,7 @@ var mob_homing_projectile = preload("res://scenes/Mobs/MobHomingProjectile.tscn"
 var golem_boss = preload("res://scenes/Mobs/GolemBoss.tscn")
 var mob_id = 0
 var all_mobs = []
+var dead_players : Dictionary = {}
 
 
 func _ready():
@@ -56,7 +57,7 @@ sync func do_remove_mob(id):
 		all_mobs.erase(id)
 		var mob = get_node("Mobs").get_node(str(id))
 		get_node("Mobs").remove_child(mob)
-		mob.queue_free()
+		mob.queue_free() 
 
 
 func remove_mob(id):
@@ -68,3 +69,42 @@ func remove_all_mobs():
 		remove_mob(n.name)
 
 
+func remove_player(player_id, player_name):
+	rpc("do_remove_player", player_id, player_name)
+#	TODO: change camera (or not)
+
+
+sync func do_remove_player(player_id, player_name):
+	var player = get_node("Players").get_node(str(player_id))
+	if player != null:
+		get_node("Players").remove_child(player)
+		player.queue_free()
+		if get_tree().is_network_server():
+			dead_players[player_id] = player_name
+			treat_revival()
+	print(dead_players)
+
+
+func treat_revival():
+	if len(get_node("Players").get_children()) == 0:
+		restart_game()
+	else:
+		print("Create timer for resummon")
+
+
+func restart_game():
+	print("TODO: Create a short timer here")
+	rpc("do_restart_game", dead_players)
+	
+	
+sync func do_restart_game(dead_players):
+	get_tree().set_pause(true)
+	GlobalSettings.level_nr = 0
+	var player_scene = load("res://scenes/PlayableCharacter.tscn")
+	for player_id in dead_players:
+		var player = player_scene.instance()
+		player.set_name(str(player_id))
+		player.set_network_master(int(player_id))
+		player.set_player_name(dead_players[player_id])
+		get_node("Players").add_child(player)
+	gamestate.master_change_level() # nu e nevoie de rpc pt ca functia curenta se executa la toti
