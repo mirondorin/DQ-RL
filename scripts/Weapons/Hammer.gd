@@ -58,11 +58,20 @@ func _on_Hurtbox2_area_entered(area):
 	if area.is_in_group("hitbox"):
 		var owner = area.get_owner()
 		if owner.is_in_group('mobs'):
+			print("Special attack")
 			on_enemyhit_sfx()
-			owner.take_damage(special_damage + get_parent().stats['damage_modifier'],
-			stagger_damage,
-			Vector2(0, -1), 500)
+			rpc_unreliable("force_special_attack_damage", owner.name)
 			#owner.impulse(300, Vector2(player_orientation, -0.8), 10, false)
+
+
+sync func force_special_attack_damage(mob_name):
+#	I don't know why but _on_Area2D_area_entered executes on both master and peer, but _on_Hurtbox2_area_entered not??
+	var owner = get_node("/root/MainScene/Mobs/" + mob_name)
+	if owner != null:
+		owner.take_damage(special_damage + get_parent().stats['damage_modifier'],
+		stagger_damage,
+		Vector2(0, -1), 500)
+
 
 sync func do_update_orientation(orientation):
 	if orientation:
