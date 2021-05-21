@@ -66,11 +66,12 @@ func _on_Hurtbox2_area_entered(area):
 
 sync func force_special_attack_damage(mob_name):
 #	I don't know why but _on_Area2D_area_entered executes on both master and peer, but _on_Hurtbox2_area_entered not??
-	var owner = get_node("/root/MainScene/Mobs/" + mob_name)
-	if owner != null:
-		owner.take_damage(special_damage + get_parent().stats['damage_modifier'],
-		stagger_damage,
-		Vector2(0, -1), 500)
+	if is_network_master():
+		var owner = get_node("/root/MainScene/Mobs/" + mob_name)
+		if owner != null:
+			owner.take_damage(special_damage + get_parent().stats['damage_modifier'],
+			stagger_damage,
+			Vector2(0, -1), 500)
 
 
 sync func do_update_orientation(orientation):
