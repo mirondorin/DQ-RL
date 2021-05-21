@@ -42,6 +42,7 @@ func impulse(force, direction, step = 5, additive = true):
 	impulse_step = step
 	in_impulse = true
 
+
 func solve_impulse():
 	if impulse_current_x > 0:
 		impulse_current_x -= impulse_step + abs(x_direction) * SPEED/air_resistance_factor

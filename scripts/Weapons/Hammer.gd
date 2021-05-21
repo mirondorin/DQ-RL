@@ -25,25 +25,22 @@ func _process(delta):
 			$Hurtbox2/CollisionShapeSpecial.disabled = true
 			can_attack = true
 			rpc_unreliable("play_animation", attack_anim_names['idle'])
-			
+
 func attack():
-	if is_network_master():
-		var player_orientation = get_parent().current_orientation
-		get_parent().impulse(300, Vector2(player_orientation, -1), 10, false)
-		on_emptyhit_sfx()
-		rpc_unreliable("play_animation", attack_anim_names['attack'])
+	var player_orientation = get_parent().current_orientation
+	get_parent().impulse(300, Vector2(player_orientation, -1), 10, false)
+	on_emptyhit_sfx()
+	rpc_unreliable("play_animation", attack_anim_names['attack'])
 
 func special_attack():
-	if is_network_master():
-		rpc_unreliable("play_animation", attack_anim_names['special-attack'])
+	rpc_unreliable("play_animation", attack_anim_names['special-attack'])
 	can_attack = false
 	get_parent().impulse(500, Vector2(0, -1), 10, false)
 	yield(get_tree().create_timer(0.5), "timeout")
 	can_attack = false
 	in_special = true
 	get_parent().impulse(700, Vector2(0, 1), 10, false)
-	if is_network_master():
-		rpc_unreliable("play_animation", attack_anim_names['special-attack-fall'])
+	rpc_unreliable("play_animation", attack_anim_names['special-attack-fall'])
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("hitbox"):
@@ -51,10 +48,11 @@ func _on_Area2D_area_entered(area):
 		var owner = area.get_owner()
 		if owner.is_in_group('mobs'):
 			on_enemyhit_sfx()
+			owner.impulse(300, Vector2(player_orientation, -0.8), 10, false) # This should be first otherwise when monster dies owner is null
 			owner.take_damage(attack_damage + get_parent().stats['damage_modifier'],
 			stagger_damage,
 			Vector2(player_orientation, 0), 50)
-			owner.impulse(300, Vector2(player_orientation, -0.8), 10, false)
+			
 
 func _on_Hurtbox2_area_entered(area):
 	if area.is_in_group("hitbox"):

@@ -95,9 +95,10 @@ func out_of_bounds():
 
 
 sync func kill_mob():
-	if self.spawner != null:
-		if self.spawner.current_spawns != null:
-			self.spawner.current_spawns -= 1
+	if self != null: # I just got an error that self is null? Maybe it was debug?
+		if self.spawner != null:
+			if self.spawner.current_spawns != null:
+				self.spawner.current_spawns -= 1
 	get_node("/root/MainScene/").remove_mob(self.name)
 
 
