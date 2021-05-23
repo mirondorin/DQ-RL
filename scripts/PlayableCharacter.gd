@@ -137,6 +137,7 @@ func solve_animation(velocity,delta):
 
 func on_gain_health():
 	$HealthLabel.text = String(stats['health'])
+	get_tree().call_group("hud", "update_healthbar")
 
 sync func gain_health(value):
 	stats['health'] += value
@@ -242,19 +243,20 @@ func switch_weapon():
 
 func on_take_damage(direction, impulse_force):
 	$AnimatedSprite.set_material(flash_material)
+	$HealthLabel.text = String(stats['health'])
+	if stats['health'] > 0:
+		get_tree().call_group("hud", "update_healthbar")
 	yield(get_tree().create_timer(0.15), "timeout")
 	$AnimatedSprite.set_material(null)
 	if not key_has_value(animation_dict, "animation", "hit"):
 		animation_dict["animation"] = "hit"
 		new_animation_dict["animation"] = "hit"
 		animation_change = true
-	$HealthLabel.text = String(stats['health'])
 	animation_play = true
 	animation_play_what = ""
 	if stats['health'] <= 0:
 		get_node("/root/MainScene/").remove_player(self.name, $DebugAction.text)
-	else:
-		get_tree().call_group("hud", "update_healthbar")
+	
 
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == 'land':
