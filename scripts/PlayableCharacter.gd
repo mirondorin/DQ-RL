@@ -217,6 +217,7 @@ func regen_health():
 			if entity.is_in_group("players") and entity != self:			
 				set_stats("health", clamp(stats["health"] + stats["regen_value"], 0, stats["max_health"]))
 				break
+	get_tree().call_group("hud", "update_healthbar")
 
 sync func do_switch_weapon():
 	weapon = (1 + weapon) % 4
@@ -252,7 +253,8 @@ func on_take_damage(direction, impulse_force):
 	animation_play_what = ""
 	if stats['health'] <= 0:
 		get_node("/root/MainScene/").remove_player(self.name, $DebugAction.text)
-
+	else:
+		get_tree().call_group("hud", "update_healthbar")
 
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == 'land':

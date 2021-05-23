@@ -2,6 +2,8 @@ extends Node
 
 export var GRAVITY = 500.0
 var level_nr = 0
+signal changed_binds
+
 
 onready var settingsmenu = load("res://scenes/Menu.tscn")
 onready var menu = settingsmenu.instance()
@@ -10,7 +12,7 @@ var configfile
 var keybinds = {}
 
 func _input(event):
-	if Input.is_key_pressed(KEY_ESCAPE) and menu != null:
+	if Input.is_action_just_pressed("ui_home") and menu != null:
 		if menu.is_opened:
 			menu.get_node("Panel").visible = false
 			menu.is_opened = false
@@ -50,6 +52,7 @@ func set_game_binds():
 
 
 func write_config():
+	get_tree().call_group("hud", "set_ui_key_labels")
 	for key in keybinds.keys():
 		var key_value = keybinds[key]
 		if key_value != null:
@@ -57,3 +60,4 @@ func write_config():
 		else:
 			configfile.set_value("keybinds", key, "")
 	configfile.save(filepath)
+

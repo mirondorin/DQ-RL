@@ -38,14 +38,14 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "land",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "land",
 "speed": 5.0
 } ]
 
@@ -78,10 +78,10 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=6]
 resource_name = "special-attack-staff"
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Weapon/AnimatedSprite:position")
 tracks/0/interp = 1
@@ -143,7 +143,7 @@ tracks/4/keys = {
 "values": [ false, true, false, true, false, true, false, true, true ]
 }
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 26.9215, 37.8014 )
 
 [sub_resource type="RectangleShape2D" id=9]
@@ -212,8 +212,8 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 5 )
-anims/special-attack-staff = SubResource( 10 )
-anims/special-attack-sword = SubResource( 11 )
+anims/special-attack-staff = SubResource( 6 )
+anims/special-attack-sword = SubResource( 7 )
 
 [node name="Weapon" parent="." instance=ExtResource( 12 )]
 position = Vector2( 46.6849, 49.3108 )
@@ -232,7 +232,7 @@ wait_time = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( -3.3371, 28.0316 )
-shape = SubResource( 12 )
+shape = SubResource( 8 )
 
 [node name="HUD" parent="." instance=ExtResource( 14 )]
 
