@@ -18,11 +18,13 @@ var in_dash = false
 var cooldowns = {
 	"can_utility" : true
 		}
+var weapon_bomb
 var weapon = 0
 var weapon_animations = {0 : "special-attack-sword",
 						1 : "special-attack-staff",
 						3 : "special-attack-staff"
 }
+
 
 var camera
 var interactables = []
@@ -39,6 +41,10 @@ func set_player_name(new_name):
 	pass
 
 func _init():
+	var l = load("res://scenes/Weapons/WeaponBomb.tscn")
+	weapon_bomb = l.instance()
+	add_child(weapon_bomb)
+	
 	self.SPEED = 100
 	self.JUMPSPEED = 80
 	stats["damage_modifier"] = 0
@@ -172,6 +178,11 @@ func solve_input(delta):
 		$Cooldown_Root/Utility_CD.start()
 		cooldowns['can_utility'] = false
 		dash(delta)
+	if Input.is_action_pressed("attack_bomb"):
+		if weapon_bomb.can_attack:
+			weapon_bomb.attack()
+			weapon_bomb.LightAttack_CD.start()
+			weapon_bomb.can_attack = false
 	if Input.is_action_just_pressed("interact"):
 		use_interact()
 	if Input.is_action_just_pressed("debug_test"): 
@@ -221,16 +232,16 @@ func regen_health():
 	get_tree().call_group("hud", "update_healthbar")
 
 sync func do_switch_weapon():
-	weapon = (1 + weapon) % 4
+	weapon = (1 + weapon) % 3
 	current_weapon.queue_free()
 	var wep
 	if weapon == 1:
 		wep = load("res://scenes/Weapons/WeaponProjectile.tscn")
 	elif weapon == 0:
 		wep = load("res://scenes/Weapons/Weapon.tscn")
+	#elif weapon == 2:
+	#	wep = load("res://scenes/Weapons/WeaponBomb.tscn")
 	elif weapon == 2:
-		wep = load("res://scenes/Weapons/WeaponBomb.tscn")
-	elif weapon == 3:
 		wep = load("res://scenes/Weapons/Hammer.tscn")
 	var inst = wep.instance()
 	current_weapon = inst

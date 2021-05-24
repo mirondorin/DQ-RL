@@ -34,3 +34,4 @@ func _process(delta):
 	lightprogress.value = int(get_parent().current_weapon.LightAttack_CD.time_left / get_parent().current_weapon.LightAttack_CD.wait_time * 100)
 	specialprogress.value = int(get_parent().current_weapon.SpecialAttack_CD.time_left / get_parent().current_weapon.SpecialAttack_CD.wait_time * 100)
 	utilityprogress.value = int(get_parent().get_node("Cooldown_Root/Utility_CD").time_left / get_parent().get_node("Cooldown_Root/Utility_CD").wait_time * 100)
+	bombprogress.value = int(get_parent().weapon_bomb.LightAttack_CD.time_left / get_parent().weapon_bomb.LightAttack_CD.wait_time * 100)

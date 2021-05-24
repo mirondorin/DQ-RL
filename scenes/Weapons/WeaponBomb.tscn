@@ -63,8 +63,10 @@ scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
 frames = ExtResource( 1 )
 animation = "bomb_idle"
+frame = 1
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
