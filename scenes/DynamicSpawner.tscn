@@ -16,7 +16,7 @@ _bundled = {
 }
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 66.2538, 15.5711 )
+extents = Vector2( 249.245, 15.5711 )
 
 [node name="DynamicSpawner" type="Node2D"]
 script = ExtResource( 1 )

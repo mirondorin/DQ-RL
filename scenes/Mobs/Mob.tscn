@@ -11,7 +11,7 @@
 [ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=9]
 [ext_resource path="res://sounds/enemy_demonmob_dead.wav" type="AudioStream" id=10]
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 6 ) ],
 "loop": true,
@@ -24,20 +24,20 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10, 14.8159 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 10, 14.4904 )
 
-[sub_resource type="CapsuleShape2D" id=10]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 100.0
 height = 353.295
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.733333, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.219608, 0.219608, 0.219608, 1 )
 
 [node name="Mob" type="KinematicBody2D" groups=[
@@ -49,15 +49,14 @@ collision_mask = 2
 script = ExtResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 7 )
+frames = SubResource( 1 )
 animation = "idle"
-frame = 3
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 3.374 )
-shape = SubResource( 8 )
+shape = SubResource( 2 )
 
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "hitbox",
@@ -68,7 +67,7 @@ collision_layer = 2147483649
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 light_mask = -2147483647
 position = Vector2( 0, 3.402 )
-shape = SubResource( 9 )
+shape = SubResource( 3 )
 
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
@@ -79,7 +78,7 @@ collision_layer = 2147483649
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 light_mask = -2147483647
 position = Vector2( 0, 3.402 )
-shape = SubResource( 9 )
+shape = SubResource( 3 )
 
 [node name="DetectArea" type="Area2D" parent="."]
 show_behind_parent = true
@@ -89,7 +88,7 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = SubResource( 4 )
 
 [node name="AttackCooldown" type="Timer" parent="."]
 
@@ -103,8 +102,8 @@ margin_left = -16.2227
 margin_top = -23.009
 margin_right = 16.7773
 margin_bottom = -16.009
-custom_styles/fg = SubResource( 11 )
-custom_styles/bg = SubResource( 12 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
