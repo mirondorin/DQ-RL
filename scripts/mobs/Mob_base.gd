@@ -3,6 +3,12 @@ extends "res://scripts/Entity.gd"
 const flash_material = preload("res://materials/white.tres")
 var spawner = null
 
+export (Dictionary) var item_spawn_list = {
+	'res://scenes/items/DamageBoost.tscn' : 2,
+	'res://scenes/items/HealthPickup.tscn' : 10,
+	'none' : 88
+}
+
 export var follow = true
 
 var player
@@ -37,6 +43,21 @@ func _ready():
 		jump_timer.wait_time = jump_cooldown
 		jump_timer.start()
 
+
+func get_weighted_item():
+	var selected = []
+	for item in item_spawn_list:
+		for i in range(item_spawn_list[item]):
+			selected.append(item)
+	randomize()
+	return selected[randi() % len(selected)]
+	
+func spawn_potential_item():
+	var itemname = get_weighted_item()
+	if itemname != 'none':
+		var inst = load(itemname).instance()
+		inst.position = self.position
+		get_tree().get_root().add_child(inst)
 
 func jump():
 	var speed = -JUMPSPEED/20
@@ -102,6 +123,7 @@ sync func kill_mob():
 			if self.spawner != null:
 				if self.spawner.current_spawns != null:
 					self.spawner.current_spawns -= 1
+		spawn_potential_item()
 	get_node("/root/MainScene/").remove_mob(self.name)
 
 

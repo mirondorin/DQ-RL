@@ -17,8 +17,8 @@ sync func do_attack():
 		get_tree().get_root().add_child(bullet_inst)
 		bullet_inst.global_position = self.global_position
 		bullet_inst.attack_damage = self.attack_damage + get_parent().stats['damage_modifier']
-		bullet_inst.x_direction = -1 if int($AnimatedSprite.flip_h) else 1
-		bullet_inst.impulse(200, Vector2(-1 if int($AnimatedSprite.flip_h) else 1, -2))
+		bullet_inst.x_direction = -1 if int(get_parent().get_node("AnimatedSprite").flip_h) else 1
+		bullet_inst.impulse(200, Vector2(bullet_inst.x_direction, -2))
 
 func attack():
 	rpc_unreliable("do_attack")
