@@ -22,7 +22,7 @@ var weapon_bomb
 var weapon = 0
 var weapon_animations = {0 : "special-attack-sword",
 						1 : "special-attack-staff",
-						3 : "special-attack-staff"
+						2 : "special-attack-staff"
 }
 
 

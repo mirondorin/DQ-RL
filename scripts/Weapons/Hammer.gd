@@ -17,8 +17,6 @@ func _init():
 	LightAttack_CD.wait_time = 1
 	SpecialAttack_CD.wait_time = 3
 	
-	
-
 func _ready():
 	position = Vector2(50, 40)
 
