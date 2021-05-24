@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/weapon_golden_sword.png" type="Texture" id=1]
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=2]
@@ -10,6 +10,36 @@ bg_color = Color( 0.0156863, 0.694118, 0, 1 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.0327103, 0.490654, 0.957944, 1 )
+colors = PoolColorArray( 0.0901961, 0.501961, 0.745098, 1, 0.207843, 0.388235, 0.882353, 1, 0.515625, 0.750244, 1, 1, 0.207843, 0.388235, 0.882353, 1, 0.0901961, 0.501961, 0.745098, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[sub_resource type="NoiseTexture" id=3]
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.0327103, 0.490654, 0.96729, 1 )
+colors = PoolColorArray( 0.745098, 0.443137, 0.0901961, 1, 0.882353, 0.337255, 0.14902, 1, 0.996094, 0.598726, 0.404663, 1, 0.882353, 0.337255, 0.14902, 1, 0.745098, 0.443137, 0.0901961, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 8 )
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0.0327103, 0.490654, 0.976636 )
+colors = PoolColorArray( 0.584314, 0.14902, 0.882353, 1, 0.72298, 0.340576, 0.9375, 1, 0.584314, 0.14902, 0.882353, 1 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0.0327103, 0.490654, 0.976636 )
+colors = PoolColorArray( 0.882353, 0.2, 0.14902, 1, 0.898438, 0.533831, 0.5159, 1, 0.882353, 0.2, 0.14902, 1 )
+
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -73,13 +103,18 @@ alignment = 1
 margin_right = 60.0
 margin_bottom = 60.0
 
-[node name="ColorRect" type="ColorRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+[node name="TextureRect3" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-color = Color( 0.172549, 0.172549, 0.172549, 1 )
+rect_pivot_offset = Vector2( 30, 30 )
+texture = SubResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TextureRect2" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+[node name="lighticon" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
@@ -90,14 +125,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgress" type="TextureProgress" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer"]
-modulate = Color( 0.372549, 0.372549, 0.372549, 0.87451 )
-margin_left = 14.0
-margin_right = 44.0
+[node name="LightProgress" type="TextureProgress" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer"]
+modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
+margin_right = 60.0
 margin_bottom = 60.0
-rect_min_size = Vector2( 30, 60 )
-texture_progress = ExtResource( 1 )
-fill_mode = 4
+rect_min_size = Vector2( 60, 60 )
+max_value = 100.0
+texture_progress = SubResource( 3 )
+fill_mode = 5
 nine_patch_stretch = true
 
 [node name="CenterContainer2" type="CenterContainer" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer"]
@@ -105,34 +140,55 @@ margin_left = 64.0
 margin_right = 124.0
 margin_bottom = 60.0
 
-[node name="ColorRect" type="ColorRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
+[node name="TextureRect4" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-color = Color( 0.172549, 0.172549, 0.172549, 1 )
+rect_pivot_offset = Vector2( 30, 30 )
+texture = SubResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TextureRect2" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
+[node name="specialicon" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
+rect_pivot_offset = Vector2( 30, 30 )
 texture = ExtResource( 1 )
 stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SpecialProgress" type="TextureProgress" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer2"]
+modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+max_value = 100.0
+texture_progress = SubResource( 3 )
+fill_mode = 5
+nine_patch_stretch = true
+
 [node name="CenterContainer3" type="CenterContainer" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer"]
 margin_left = 128.0
 margin_right = 188.0
 margin_bottom = 60.0
 
-[node name="ColorRect" type="ColorRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer3"]
+[node name="TextureRect5" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer3"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-color = Color( 0.172549, 0.172549, 0.172549, 1 )
+rect_pivot_offset = Vector2( 30, 30 )
+texture = SubResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TextureRect2" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer3"]
+[node name="utilityicon" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer3"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
@@ -143,26 +199,52 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="UtilityProgress" type="TextureProgress" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer3"]
+modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+max_value = 100.0
+texture_progress = SubResource( 3 )
+fill_mode = 5
+nine_patch_stretch = true
+
 [node name="CenterContainer4" type="CenterContainer" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer"]
 margin_left = 192.0
 margin_right = 252.0
 margin_bottom = 60.0
 
-[node name="ColorRect" type="ColorRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer4"]
+[node name="TextureRect6" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer4"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-color = Color( 0.172549, 0.172549, 0.172549, 1 )
+rect_pivot_offset = Vector2( 30, 30 )
+texture = SubResource( 12 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TextureRect2" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer4"]
+[node name="bombicon" type="TextureRect" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer4"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
+rect_pivot_offset = Vector2( 30, 30 )
 texture = ExtResource( 3 )
 stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BombProgress" type="TextureProgress" parent="AbilitiesBox/CenterContainer/VBoxContainer/HBoxContainer/CenterContainer4"]
+modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+max_value = 100.0
+texture_progress = SubResource( 3 )
+fill_mode = 5
+nine_patch_stretch = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="AbilitiesBox/CenterContainer/VBoxContainer"]
 margin_top = 88.0

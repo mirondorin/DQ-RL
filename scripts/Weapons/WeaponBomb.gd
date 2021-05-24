@@ -2,7 +2,10 @@ extends 'res://scripts/Weapons/Weapon_base.gd'
 const bullet = preload("res://scenes/Weapons/WeaponBomb_bullet.tscn")
 
 
+
 func _init():
+	lighticon = null
+	specialicon = lighticon
 	attack_anim_names['attack'] = 'attack'
 	attack_anim_names['special-attack'] = 'special-attack'
 	attack_damage = 1 #just for fun

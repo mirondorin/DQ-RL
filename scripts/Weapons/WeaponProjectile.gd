@@ -1,10 +1,14 @@
 extends 'res://scripts/Weapons/Weapon_base.gd'
 
+
+
 const bullet = preload("res://scenes/Weapons/WeaponProjectile_bullet.tscn")
 
 var stagger_damage = 0
 
 func _init():
+	lighticon = preload("res://.import/weapon_red_magic_staff.png-a8006a78b318d13d52112b4cee52b729.stex")
+	specialicon = lighticon
 	self.attack_damage = 5
 	LightAttack_CD.wait_time = 0.6
 	SpecialAttack_CD.wait_time = 4

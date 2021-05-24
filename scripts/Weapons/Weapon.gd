@@ -3,6 +3,8 @@ extends 'res://scripts/Weapons/Weapon_base.gd'
 var stagger_damage = 5
 
 func _init():
+	lighticon = preload("res://.import/weapon_golden_sword.png-2d4627ce6a700a3263fd75d1206180db.stex")
+	specialicon = lighticon
 	attack_anim_names['attack'] = 'attack'
 	attack_anim_names['special-attack'] = 'special-attack'
 	LightAttack_CD.wait_time = 0.4

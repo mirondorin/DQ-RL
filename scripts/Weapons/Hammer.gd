@@ -4,7 +4,12 @@ var stagger_damage = 10
 var in_special = false
 var special_damage = 20
 
+
+
 func _init():
+	lighticon = preload("res://.import/weapon_hammer.png-a5ccd891de5d992a9bfc701a6f0b4e7c.stex")
+	specialicon = lighticon
+	
 	self.attack_damage = 15
 	attack_anim_names['idle'] = 'idle'
 	attack_anim_names['attack'] = 'attack'
@@ -12,6 +17,8 @@ func _init():
 	attack_anim_names['special-attack-fall'] = 'special-attack-fall'
 	LightAttack_CD.wait_time = 1
 	SpecialAttack_CD.wait_time = 3
+	
+	
 
 func _ready():
 	position = Vector2(50, 40)

@@ -159,7 +159,7 @@ func solve_input(delta):
 		if not in_impulse:
 			velocity.y += jump()
 		
-	if Input.is_action_just_pressed("attack") and current_weapon.can_attack:
+	if Input.is_action_pressed("attack") and current_weapon.can_attack:
 		current_weapon.attack()
 		current_weapon.LightAttack_CD.start()
 		current_weapon.can_attack = false
@@ -235,6 +235,7 @@ sync func do_switch_weapon():
 	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)
+	$HUD.update_icons()
 
 
 func switch_weapon():
@@ -268,6 +269,7 @@ func _on_AnimatedSprite_animation_finished():
 
 
 func _on_Utility_CD_timeout():
+	$Cooldown_Root/Utility_CD.stop()
 	cooldowns['can_utility'] = true
 	pass
 

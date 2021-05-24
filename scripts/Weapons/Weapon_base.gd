@@ -5,6 +5,9 @@ var can_attack = true
 var can_special_attack = true
 var offset_position = Vector2(50, 40)
 
+var lighticon = null
+var specialicon = null
+
 var attack_anim_names = {
 	'attack' : null,
 	'special-attack' : null,
@@ -23,11 +26,13 @@ func _init():
 
 
 func _on_LightAttack_CD_timeout():
+	LightAttack_CD.stop()
 	can_attack = true
 	pass
 
 
 func _on_SpecialAttack_CD_timeout():
+	SpecialAttack_CD.stop()
 	can_special_attack = true
 	pass
 
