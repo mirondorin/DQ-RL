@@ -5,7 +5,6 @@ var in_special = false
 var special_damage = 20
 
 
-
 func _init():
 	lighticon = preload("res://.import/weapon_hammer.png-a5ccd891de5d992a9bfc701a6f0b4e7c.stex")
 	specialicon = lighticon

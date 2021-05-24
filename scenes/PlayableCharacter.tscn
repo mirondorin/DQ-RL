@@ -187,18 +187,20 @@ __meta__ = {
 }
 
 [node name="DebugAction" type="Label" parent="."]
-margin_left = -26.0
-margin_top = -82.0
-margin_right = 76.0
-margin_bottom = -13.0
+margin_left = -50.8412
+margin_top = -59.7298
+margin_right = 51.1588
+margin_bottom = 11.2702
 custom_fonts/font = ExtResource( 11 )
-text = "action
-"
+custom_colors/font_color = Color( 0.364706, 1, 0.101961, 1 )
+text = "Name"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HealthLabel" type="Label" parent="."]
+visible = false
 margin_left = -26.0
 margin_top = -49.0
 margin_right = 16.0
@@ -244,6 +246,7 @@ volume_db = -15.0
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RegenArea"]
+visible = false
 shape = SubResource( 9 )
 
 [node name="RegenTimer" type="Timer" parent="."]

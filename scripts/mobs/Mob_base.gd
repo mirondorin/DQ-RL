@@ -30,6 +30,8 @@ func _init():
 	stats["health"] = 25
 	
 func _ready():
+	$HealthBar.max_value = stats["health"]
+	$HealthBar.value = stats["health"]
 	if is_network_master():
 		attack_timer.wait_time = attack_cooldown	
 		jump_timer.wait_time = jump_cooldown
@@ -154,6 +156,7 @@ func on_take_damage(direction, impulse_force):
 		else:
 			on_death_sfx() #TODO we should move the sounds to mainscene maybe?
 			kill_mob()
+		$HealthBar.value = stats["health"]
 
 
 func _on_DetectArea_body_entered(body):

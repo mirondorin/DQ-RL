@@ -1,152 +1,152 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://assets/Kauzz Cave/Sprites/Golem_Idle_strip10.png" type="Texture" id=1]
 [ext_resource path="res://assets/Kauzz Cave/Sprites/Golem_Running_strip12.png" type="Texture" id=3]
 [ext_resource path="res://scripts/mobs/GolemBoss.gd" type="Script" id=4]
 [ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=9]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=36]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 558, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=37]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 496, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=38]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 434, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=39]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 372, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=40]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 310, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=41]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 248, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=42]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 186, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=43]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 124, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=44]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 62, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=10]
+[sub_resource type="AtlasTexture" id=45]
 flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 62, 136 )
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=46]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 704, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=47]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 640, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=48]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 576, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=49]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 512, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=50]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 448, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=51]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 384, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=52]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 320, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=53]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 256, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=54]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 192, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=55]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 128, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=21]
+[sub_resource type="AtlasTexture" id=56]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 64, 0, 64, 133 )
 
-[sub_resource type="AtlasTexture" id=22]
+[sub_resource type="AtlasTexture" id=57]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 64, 133 )
 
-[sub_resource type="SpriteFrames" id=23]
+[sub_resource type="SpriteFrames" id=58]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"frames": [ SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ) ],
 "loop": true,
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
+"frames": [ SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ) ],
 "loop": true,
 "name": "walk",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 13 ), SubResource( 13 ), SubResource( 13 ), SubResource( 13 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ) ],
+"frames": [ SubResource( 48 ), SubResource( 48 ), SubResource( 48 ), SubResource( 48 ), SubResource( 50 ), SubResource( 50 ), SubResource( 50 ), SubResource( 50 ), SubResource( 50 ), SubResource( 50 ), SubResource( 50 ), SubResource( 50 ), SubResource( 50 ) ],
 "loop": true,
 "name": "rock_throw",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=24]
+[sub_resource type="RectangleShape2D" id=30]
 extents = Vector2( 33.805, 63.408 )
 
-[sub_resource type="RectangleShape2D" id=25]
+[sub_resource type="RectangleShape2D" id=31]
 extents = Vector2( 32.8914, 68.1644 )
 
-[sub_resource type="RectangleShape2D" id=26]
+[sub_resource type="RectangleShape2D" id=32]
 extents = Vector2( 44.669, 18.4748 )
 
-[sub_resource type="CapsuleShape2D" id=27]
+[sub_resource type="CapsuleShape2D" id=33]
 radius = 100.0
 height = 735.528
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=34]
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -159,7 +159,7 @@ tracks/0/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=35]
 length = 1.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -188,6 +188,12 @@ tracks/0/keys = {
 } ]
 }
 
+[sub_resource type="StyleBoxFlat" id=59]
+bg_color = Color( 0.733333, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=60]
+bg_color = Color( 0.219608, 0.219608, 0.219608, 1 )
+
 [node name="GolemBoss" type="KinematicBody2D" groups=[
 "mobs",
 ]]
@@ -197,14 +203,15 @@ collision_mask = 2
 script = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 23 )
+frames = SubResource( 58 )
 animation = "idle"
+frame = 4
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 3.374 )
-shape = SubResource( 24 )
+shape = SubResource( 30 )
 
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "hitbox",
@@ -212,7 +219,7 @@ shape = SubResource( 24 )
 collision_layer = 2147483650
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource( 25 )
+shape = SubResource( 31 )
 
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
@@ -223,7 +230,7 @@ collision_layer = 2147483649
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 light_mask = -2147483647
 position = Vector2( 0, 42.4264 )
-shape = SubResource( 26 )
+shape = SubResource( 32 )
 
 [node name="DetectArea" type="Area2D" parent="."]
 show_behind_parent = true
@@ -232,7 +239,7 @@ gravity_vec = Vector2( 0, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
 rotation = 1.5708
-shape = SubResource( 27 )
+shape = SubResource( 33 )
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 13.0
@@ -242,26 +249,39 @@ wait_time = 3.0
 
 [node name="JumpCooldown" type="Timer" parent="."]
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/jump_attack = SubResource( 34 )
+anims/rock_throw = SubResource( 35 )
+
+[node name="DeathSfx" type="AudioStreamPlayer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+margin_left = -40.0
+margin_top = -79.75
+margin_right = 41.0
+margin_bottom = -69.75
+custom_styles/fg = SubResource( 59 )
+custom_styles/bg = SubResource( 60 )
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HealthLabel" type="Label" parent="."]
-margin_left = -9.0
-margin_top = -26.0
-margin_right = 63.0
-margin_bottom = 33.0
+margin_left = -17.3618
+margin_top = -83.3326
+margin_right = 54.6382
+margin_bottom = 24.6674
 rect_scale = Vector2( 0.466, 0.444 )
 custom_fonts/font = ExtResource( 9 )
 custom_colors/font_color = Color( 1, 0.741176, 0, 1 )
 text = "100
 
 "
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/jump_attack = SubResource( 28 )
-anims/rock_throw = SubResource( 29 )
-
-[node name="DeathSfx" type="AudioStreamPlayer" parent="."]
 [connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="DetectArea" to="." method="_on_DetectArea_body_entered"]
