@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/DynamicSpawner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Mobs/Mob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/BossDoor.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/Mobs/BoDBoss.tscn" type="PackedScene" id=8]
 
 [node name="LevelRoot" type="Node2D"]
 
@@ -124,9 +125,6 @@ position = Vector2( 30, 0 )
 [node name="CollisionShape2D" parent="DynamicSpawner3/Area2D" index="0"]
 position = Vector2( 1124.51, 697.126 )
 
-[node name="NewLevelDoor" parent="." instance=ExtResource( 6 )]
-position = Vector2( 2882.59, 802.215 )
-
 [node name="Pickups" type="Node2D" parent="."]
 
 [node name="HealthPickup" parent="Pickups" instance=ExtResource( 7 )]
@@ -143,6 +141,16 @@ position = Vector2( 2213.88, 336.955 )
 
 [node name="HealthPickup5" parent="Pickups" instance=ExtResource( 7 )]
 position = Vector2( 2235.61, 337.704 )
+
+[node name="BossDoor" parent="." instance=ExtResource( 6 )]
+position = Vector2( 2742.57, 806.913 )
+
+[node name="EnemySpawner(Boss)" parent="." instance=ExtResource( 4 )]
+position = Vector2( 3158.08, 796.576 )
+enemyscene = ExtResource( 8 )
+mob_type = "BoDBoss"
+max_spawns = 1
+start_enabled = false
 
 [editable path="DynamicSpawner"]
 

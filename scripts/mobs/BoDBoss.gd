@@ -25,6 +25,10 @@ func _process(delta):
 
 func solve_animation(velocity):
 	if not key_has_value(animation_dict, "flip_h", (x_direction < 0)):
+		if x_direction == -1:
+			$AnimatedSprite.offset = Vector2(70, 0)
+		else:
+			$AnimatedSprite.offset = Vector2(0, 0)
 		animation_dict["flip_h"] = (x_direction < 0)
 		new_animation_dict["flip_h"] = (x_direction < 0)
 		animation_change = true
