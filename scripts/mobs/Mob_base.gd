@@ -123,7 +123,7 @@ sync func kill_mob():
 			if self.spawner != null:
 				if self.spawner.current_spawns != null:
 					self.spawner.current_spawns -= 1
-		spawn_potential_item()
+	spawn_potential_item()
 	get_node("/root/MainScene/").remove_mob(self.name)
 
 
