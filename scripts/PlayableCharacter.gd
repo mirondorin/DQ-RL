@@ -61,6 +61,11 @@ func _ready():
 		self.add_child(camera)
 		camera.make_current()
 		camera.set_zoom(Vector2( 0.5, 0.5 ))
+	else:
+		var hud = get_node("HUD")
+		remove_child(hud)
+		hud.queue_free()
+
 
 func jump():
 #	This method does not have to be synced
