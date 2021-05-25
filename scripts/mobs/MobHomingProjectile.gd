@@ -2,6 +2,7 @@ extends "res://scripts/mobs/MobProjectile.gd"
 
 func _init():
 	attack_cooldown = 2.5
+	stats['health'] = 25
 
 func _ready():
 	bullet = load("res://scenes/Weapons/HomingProjectile_bullet.tscn")

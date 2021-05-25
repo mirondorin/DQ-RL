@@ -5,17 +5,19 @@ var can_pebble_attack = true
 var can_jump_attack = true
 var pebble_attacking = false
 var jump_attacking = false
+	
 
 func _ready():
 	bullet = load("res://scenes/Weapons/GolemPebble.tscn")
-	
-func _init():
 	stats['default_speed'] = 100
 	self.stats['health'] = 100
 	self.stats['max_health'] = 100
 	self.stats['stagger_default'] = 300
 	self.stats['stagger_health'] = 300
 	self.SPEED = stats['default_speed'] 
+	$HealthLabel.text = str(self.stats['health'])
+	$HealthBar.max_value = self.stats['health']
+	$HealthBar.value = self.stats['health']
 	can_jump = false
 
 func _process(delta):

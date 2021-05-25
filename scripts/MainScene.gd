@@ -12,6 +12,7 @@ var mob = preload("res://scenes/Mobs/Mob.tscn")
 var mob_projectile = preload("res://scenes/Mobs/MobProjectile.tscn")
 var mob_homing_projectile = preload("res://scenes/Mobs/MobHomingProjectile.tscn")
 var golem_boss = preload("res://scenes/Mobs/GolemBoss.tscn")
+var bod_boss = preload("res://scenes/Mobs/BoDBoss.tscn")
 var mob_id = 0
 var all_mobs = []
 var dead_players : Dictionary = {}
@@ -31,6 +32,8 @@ func get_new_enemy_instance(type):
 		return mob_homing_projectile.instance()
 	if type == "GolemBoss":
 		return golem_boss.instance()
+	if type == "BoDBoss":
+		return bod_boss.instance()
 	return mob.instance()
 
 
@@ -43,8 +46,8 @@ sync func do_add_mob(mob_id, mob_type, mob_health, position, spawner):
 	var lvl_nr = GlobalSettings.level_nr
 	mob_health = int(mob_health * float(lvl_nr + 2) / 2)
 	var new_mob = get_new_enemy_instance(mob_type)
-	new_mob.get_node("HealthLabel").text = str(mob_health)
 	new_mob.stats["health"] = mob_health
+	new_mob.get_node("HealthLabel").text = str(mob_health)
 	new_mob.position = position
 	new_mob.name = str(mob_id)
 	new_mob.z_index = 2

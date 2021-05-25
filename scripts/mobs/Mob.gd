@@ -4,7 +4,7 @@ extends 'res://scripts/mobs/Mob_base.gd'
 func _init():
 	stats['default_speed'] = 65
 	self.SPEED = stats['default_speed']
-
+	stats['health'] = 25
 
 func attack_player(player):
 	if can_attack: 

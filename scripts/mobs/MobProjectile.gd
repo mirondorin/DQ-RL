@@ -6,6 +6,7 @@ var max_dist_player = 150
 func _init():
 	stats['default_speed'] = 20
 	self.SPEED = 20
+	stats['health'] = 25
 
 func follow_player():
 	if len(in_area) > 0:

@@ -5,7 +5,6 @@ var boss_alive = false
 
 func _ready():
 	boss_spawner = get_parent().get_node("EnemySpawner(Boss)")
-	boss_spawner.mob_health = 100
 
 
 sync func do_interact(initiator):
