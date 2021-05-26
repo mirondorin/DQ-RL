@@ -7,6 +7,7 @@ export (PackedScene) var enemyscene
 export (String) var mob_type
 onready var enemy = load(enemyscene.get_path())
 export var max_spawns = 2 #use 0 to spawn infinitely
+export var total_spawns = 0 # use this to limit how many mobs to spawn
 export var start_enabled = true
 export var spawn_delay = 1
 export var spawn_continously = false
@@ -37,6 +38,7 @@ func _ready():
 func do_spawn():
 	get_parent().get_parent().add_new_mob(mob_type, mob_health, self.position, self)
 	current_spawns += 1
+	total_spawns -= 1
 
 
 func spawn():
@@ -65,7 +67,7 @@ func stop_spawner():
 func _on_Timer_timeout():
 	if is_network_master():
 		spawn()
-	if spawn_continously:
+	if spawn_continously or total_spawns > 0:
 		$Timer.start()
 	else:
 		$Timer.stop()

@@ -58,7 +58,7 @@ func spawn_potential_item():
 	if itemname != 'none':
 		var inst = load(itemname).instance()
 		inst.position = self.position
-		get_tree().get_root().add_child(inst)
+		get_tree().get_root().call_deferred("add_child", inst)
 
 func jump():
 	var speed = -JUMPSPEED/20
@@ -157,11 +157,6 @@ func _physics_process(delta):
 			
 		if in_impulse:
 			x_direction = 0
-		for i in get_slide_count():
-			if get_slide_count() > i:
-				var collision = get_slide_collision(i)
-				if collision and collision.collider.is_in_group("players") and follow:
-					attack_player(collision.collider)
 		rpc_unreliable("set_entity_position", position)
 
 

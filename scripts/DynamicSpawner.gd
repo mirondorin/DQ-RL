@@ -71,7 +71,7 @@ func get_weighted_mob_name():
 	
 	
 sync func do_spawn():
-	var enemy = get_weighted_mob()
+#	var enemy = get_weighted_mob()
 	var area = area_list[randi() % area_list.size()]
 
 	var position = get_rand_pos(area)

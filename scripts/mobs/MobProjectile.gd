@@ -30,7 +30,7 @@ func follow_player():
 sync func do_attack():
 	var bullet_inst = bullet.instance()
 	bullet_inst.group_to_detect = 'players'
-	bullet_inst.direction = -1 if int($AnimatedSprite.flip_h) else 1
+	bullet_inst.direction = -1 if $AnimatedSprite.flip_h else 1
 	get_tree().get_root().add_child(bullet_inst)
 	bullet_inst.global_position = self.global_position
 	can_attack = false
