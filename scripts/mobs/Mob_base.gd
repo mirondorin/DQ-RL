@@ -99,7 +99,7 @@ func follow_player():
 		x_direction = 0
 
 
-func attack_player(_player):
+sync func attack_player(_player):
 	pass
 
 

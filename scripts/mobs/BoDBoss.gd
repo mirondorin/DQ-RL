@@ -59,11 +59,13 @@ func solve_animation(velocity):
 
 
 
-func attack_player(player):
+sync func attack_player(player_name):
+	print("Entered attacking player")
+	var player = get_node("/root/MainScene/Players/" + player_name)
 	player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 
 
-func slash_attack():
+sync func slash_attack():
 	if can_slash_attack:
 		follow = false
 		slash_attacking = true
@@ -82,7 +84,8 @@ func _on_Hurtbox_area_entered(area):
 	if area.is_in_group('hitbox'): #  and is_network_master()
 		var owner = area.get_owner()
 		if owner.is_in_group('players'):
-			attack_player(owner)
+			print("Hurtbox entered plz work")
+			rpc_unreliable("attack_player", owner.name)
 
 
 func _on_AnimatedSprite_frame_changed():
@@ -100,4 +103,5 @@ func _on_SlashAttackCooldown_timeout():
 func _on_AttackArea_body_entered(body):
 	if body in in_area:
 		if body.is_in_group("players"):
-			slash_attack()
+			print("Haduken")
+			rpc_unreliable("slash_attack")
