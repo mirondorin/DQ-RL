@@ -7,8 +7,6 @@ const MAX_PEERS = 12
 
 var peer = null
 
-
-
 var player_name = "The Warrior"
 var first_level : bool = true
 
@@ -194,6 +192,9 @@ func change_level():
 	print("change level")
 	rpc("master_change_level")
 	
+sync func set_character_index(new_name, index):
+	GlobalSettings.player_sprite_type[new_name] = index
+	rset('GlobalSettings.player_sprite_type', GlobalSettings.player_sprite_type)
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")

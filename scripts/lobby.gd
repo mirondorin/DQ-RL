@@ -25,6 +25,8 @@ func _on_host_pressed():
 	var player_name = $Connect/Name.text
 	gamestate.host_game(player_name)
 	refresh_lobby()
+	$SelectPanel.show()
+	gamestate.set_character_index(gamestate.player_name, 0)
 
 
 func _on_join_pressed():
@@ -40,11 +42,13 @@ func _on_join_pressed():
 	$Connect/Join.disabled = true
 	var player_name = $Connect/Name.text
 	gamestate.join_game(ip, player_name)
-
-
+	gamestate.set_character_index(gamestate.player_name, 0)
+	
 func _on_connection_success():
 	$Connect.hide()
 	$Players.show()
+	gamestate.set_character_index(gamestate.player_name, 0)
+	$SelectPanel.show()
 
 
 func _on_connection_failed():
@@ -80,7 +84,21 @@ func refresh_lobby():
 
 func _on_start_pressed():
 	gamestate.begin_game()
+	
 
 
 func _on_find_public_ip_pressed():
 	OS.shell_open("https://icanhazip.com/")
+
+
+func _on_Button_pressed():
+	gamestate.set_character_index(gamestate.player_name, 0)
+
+func _on_Button2_pressed():
+	gamestate.set_character_index(gamestate.player_name, 1)
+
+func _on_Button3_pressed():
+	gamestate.set_character_index(gamestate.player_name, 2)
+
+func _on_Button4_pressed():
+	gamestate.set_character_index(gamestate.player_name, 3)

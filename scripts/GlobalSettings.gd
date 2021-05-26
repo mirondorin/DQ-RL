@@ -4,6 +4,7 @@ export var GRAVITY = 500.0
 var level_nr = 0
 signal changed_binds
 
+var player_sprite_type = {}
 
 onready var settingsmenu = load("res://scenes/Menu.tscn")
 onready var menu = settingsmenu.instance()

@@ -4,7 +4,6 @@ const flash_material = preload("res://materials/white.tres")
 onready var current_weapon = $Weapon
 
 var screen_size # Size of the game window
-
 var player_pos = Vector2()
 puppet var puppet_velocity = Vector2()
 puppet var puppet_pos = Vector2()
@@ -25,6 +24,10 @@ var weapon_animations = {0 : "special-attack-sword",
 						2 : "special-attack-staff"
 }
 
+var sprite_char_selection = {
+	0 : 'AnimatedSprite',
+	1 : 'AnimatedSprite1',
+}
 
 var camera
 var interactables = []
@@ -38,9 +41,18 @@ var start_position
 func set_player_name(new_name):
 #	get_node("label").set_text(new_name)
 	$DebugAction.text = new_name
-	pass
 
+func set_player_character():
+	var old_sprite = get_node('AnimatedSprite')
+	print(GlobalSettings.player_sprite_type)
+	var new_sprite = get_node(sprite_char_selection[GlobalSettings.player_sprite_type[$DebugAction.text]])
+	old_sprite.name = 'AnimatedSpriteOld'
+	old_sprite.visible = false
+	new_sprite.name = 'AnimatedSprite'
+	new_sprite.visible = true
+	
 func _init():
+	
 	var l = load("res://scenes/Weapons/WeaponBomb.tscn")
 	weapon_bomb = l.instance()
 	add_child(weapon_bomb)
@@ -56,6 +68,7 @@ func _init():
 
 
 func _ready():
+	#set_player_character()
 	if is_network_master():
 		camera = Camera2D.new()
 		self.add_child(camera)
