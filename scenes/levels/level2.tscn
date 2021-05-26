@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scripts/DynamicSpawner.gd" type="Script" id=2]
@@ -137,6 +137,8 @@ extents = Vector2( 83.0385, 10 )
 
 [sub_resource type="RectangleShape2D" id=24]
 extents = Vector2( 64.0851, 10 )
+
+[sub_resource type="NavigationPolygon" id=25]
 
 [node name="LevelRoot" type="Node2D"]
 
@@ -318,4 +320,9 @@ shape = SubResource( 24 )
 
 [node name="NewLevelDoor" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1060.16, 573.224 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 25 )
 [connection signal="timeout" from="DynamicSpawner/Timer" to="DynamicSpawner" method="_on_Timer_timeout"]

@@ -32,7 +32,7 @@ extents = Vector2( 10, 14.8159 )
 extents = Vector2( 10, 14.4904 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 34.0679, 455.331 )
+extents = Vector2( 71.2288, 457.006 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.733333, 0, 0, 1 )

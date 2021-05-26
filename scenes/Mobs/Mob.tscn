@@ -31,7 +31,7 @@ extents = Vector2( 10, 14.8159 )
 extents = Vector2( 10, 14.4904 )
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 100.0
+radius = 149.646
 height = 353.295
 
 [sub_resource type="StyleBoxFlat" id=5]
@@ -51,7 +51,7 @@ script = ExtResource( 5 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]

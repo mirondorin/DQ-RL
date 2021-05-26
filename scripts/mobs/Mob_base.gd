@@ -63,7 +63,7 @@ func jump():
 	var speed = -JUMPSPEED/20
 	if is_on_floor():
 		in_jump = true
-		jump_intensity = 60
+		jump_intensity = 70
 		start_time = OS.get_ticks_msec()
 	var current_time = OS.get_ticks_msec()
 	if current_time-start_time>50:
@@ -146,11 +146,14 @@ func _physics_process(delta):
 			in_jump=false
 			impulse_current_x = 0
 			impulse_current_y = 0
+			if is_on_wall():
+				velocity.y += jump()
 		if is_on_ceiling():
 			velocity.y=max(0,velocity.y)
 			impulse_current_y /= collision_resistance_factor
 		if is_on_wall():
 			impulse_current_x /= collision_resistance_factor
+			
 		if in_impulse:
 			x_direction = 0
 		for i in get_slide_count():
