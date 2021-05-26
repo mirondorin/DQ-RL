@@ -20,7 +20,7 @@ func _init():
 func _ready():
 	position = Vector2(50, 40)
 
-func _process(delta):
+func _process(_delta):
 	if in_special:
 		if get_parent().is_on_floor():
 			$Hurtbox2/CollisionShapeSpecial.disabled = false

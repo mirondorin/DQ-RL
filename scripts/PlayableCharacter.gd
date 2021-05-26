@@ -203,7 +203,7 @@ func solve_input(delta):
 	if Input.is_action_just_pressed("debug_test"): 
 		var dir = (self.position - get_global_mouse_position()).normalized() * -1
 		impulse(400, dir)
-	if Input.is_action_just_pressed("debug_switch_weapon"):
+	if Input.is_action_just_pressed("debug_switch_weapon") and $AnimationPlayer.get_current_animation()!="special-attack-sword":
 		switch_weapon()
 	if Input.is_action_just_pressed("change_level"):
 		gamestate.change_level()

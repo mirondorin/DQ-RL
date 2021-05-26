@@ -33,10 +33,11 @@ func _init():
 	self.spawn_delay = 3
 	
 func _ready():
+	randomize()
 	for node in get_children():
 		if node is Area2D:
 			area_list.append(node)
-			print(typeof(node))
+			# print(typeof(node))
 	start_spawner()
 
 func get_rand_pos(area):
@@ -47,21 +48,12 @@ func get_rand_pos(area):
 		
 	return position
 
-func get_weighted_mob():
-	var selected = []
-	for mob in spawn_list:
-		for i in range(spawn_list[mob]):
-			selected.append(mob)
-	randomize()
-	return selected[randi() % len(selected)]
-
 func get_weighted_mob_name():
 	var mob_names = spawn_list_name.keys()
 	var weights = spawn_list_name.values()
 	var max_sum = 0
 	for i in weights:
 		max_sum += i
-	randomize()
 	var selected = randi() % max_sum
 	var sum = 0
 	for i in range(len(weights)):

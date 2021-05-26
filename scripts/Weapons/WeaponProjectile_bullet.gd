@@ -13,7 +13,7 @@ func _physics_process(delta):
 	lifespan -= delta
 	if lifespan<0 or is_on_floor() or is_on_wall() or is_on_ceiling():
 		queue_free()
-	move_and_slide(Vector2(speed*direction, 0), Vector2(1, 0))
+	var _unused = move_and_slide(Vector2(speed*direction, 0), Vector2(1, 0))
 		
 func _ready():
 	set_as_toplevel(true)

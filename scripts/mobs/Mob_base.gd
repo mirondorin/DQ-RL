@@ -37,6 +37,7 @@ func _init():
 	stats["health"] = 25
 	
 func _ready():
+	randomize()
 	$HealthBar.max_value = stats["health"]
 	$HealthBar.value = stats["health"]
 	if is_network_master():
@@ -46,13 +47,19 @@ func _ready():
 
 
 func get_weighted_item():
-	var selected = []
-	for item in item_spawn_list:
-		for i in range(item_spawn_list[item]):
-			selected.append(item)
-	randomize()
-	return selected[randi() % len(selected)]
-	
+	var items = item_spawn_list.keys()
+	var weights = item_spawn_list.values()
+	var max_sum = 0
+	for i in weights:
+		max_sum += i
+	var selected = randi() % max_sum
+	var sum = 0
+	for i in range(len(weights)):
+		sum += weights[i]
+		if sum > selected:
+			return items[i]
+
+
 func spawn_potential_item():
 	var itemname = get_weighted_item()
 	if itemname != 'none':
