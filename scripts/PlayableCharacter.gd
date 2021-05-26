@@ -155,6 +155,14 @@ sync func gain_health(value):
 	stats['health'] += value
 	on_gain_health()
 	
+func check_overheal():
+	var val = 3
+	if stats['health'] > stats['max_health']:
+		if stats['health'] - val < stats['max_health']:
+			stats['health'] = stats['max_health']
+		else:
+			gain_health(-val)
+		
 		
 func solve_input(delta):
 #	theoretically should not require sync
@@ -318,3 +326,4 @@ func on_dash_sfx():
 
 func _on_RegenTimer_timeout():
 	regen_health()
+	check_overheal()
