@@ -5,8 +5,9 @@ var spawner = null
 
 export (Dictionary) var item_spawn_list = {
 	'res://scenes/items/DamageBoost.tscn' : 2,
-	'res://scenes/items/HealthPickup.tscn' : 10,
-	'none' : 88
+	'res://scenes/items/MaxHealthPickup.tscn' : 2,
+	'res://scenes/items/HealthPickup.tscn' : 15,
+	'none' : 83
 }
 
 export var follow = true

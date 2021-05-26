@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/items/MaxHealthPickup.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Levels/tutorial1.gd" type="Script" id=11]
 [ext_resource path="res://scenes/Mobs/Mob.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=13]
@@ -249,8 +250,19 @@ margin_left = 950.829
 margin_top = 521.458
 margin_right = 1051.83
 margin_bottom = 555.458
-text = "This item gives 
+text = "This item adds
 10 health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label9" type="Label" parent="Labels"]
+margin_left = 1388.58
+margin_top = 421.369
+margin_right = 1513.58
+margin_bottom = 455.369
+text = "This item increases
+max health by 10"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -288,6 +300,9 @@ will stagger them"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HealthPickup" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1452.98, 495.557 )
 [connection signal="area_entered" from="Triggers/StartTrigger" to="." method="_on_StartTrigger_area_entered"]
 [connection signal="area_entered" from="Triggers/respawntrigger0" to="." method="_on_respawntrigger0_area_entered"]
 [connection signal="area_entered" from="Triggers/respawntrigger1" to="." method="_on_respawntrigger1_area_entered"]

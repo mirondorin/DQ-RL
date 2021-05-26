@@ -149,11 +149,13 @@ func solve_animation(velocity,delta):
 func on_gain_health():
 	$HealthLabel.text = String(stats['health'])
 	get_tree().call_group("hud", "update_healthbar")
+	
 
 sync func gain_health(value):
 	stats['health'] += value
 	on_gain_health()
-
+	
+		
 func solve_input(delta):
 #	theoretically should not require sync
 #	but we have to find a way to sync weapon attacks and animations
@@ -223,7 +225,8 @@ func _physics_process(delta):
 		
 		if is_on_wall():
 			impulse_current_x /= collision_resistance_factor
-
+		
+		
 		solve_input(delta)
 		rpc_unreliable("set_entity_position", position)
 
