@@ -25,11 +25,15 @@ func _process(delta):
 
 func flip_sprite():
 	if x_direction == -1:
-		$AnimatedSprite.offset = Vector2(70, 0)
+		animation_dict["offset"] = Vector2(70, 0)
+		new_animation_dict["offset"] = Vector2(70, 0)
+		animation_change = true
 		$Hurtbox.scale.x *= -1.0
 		$AttackArea.scale.x *= -1.0
 	else:
-		$AnimatedSprite.offset = Vector2(0, 0)
+		animation_dict["offset"] = Vector2(0, 0)
+		new_animation_dict["offset"] = Vector2(0, 0)
+		animation_change = true
 		$Hurtbox.scale.x = abs($Hurtbox.scale.x)
 		$AttackArea.scale.x = abs($AttackArea.scale.x)
 
