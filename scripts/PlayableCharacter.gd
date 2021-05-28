@@ -304,8 +304,9 @@ func on_take_damage(direction, impulse_force):
 	animation_play = true
 	animation_play_what = ""
 	if stats['health'] <= 0:
-		is_dead = true
-		get_node("/root/MainScene/").remove_player(self.name, $DebugAction.text)
+		if GlobalSettings.level_nr > 0:
+			is_dead = true
+			get_node("/root/MainScene/").remove_player(self.name, $DebugAction.text)
 	
 
 func _on_AnimatedSprite_animation_finished():
