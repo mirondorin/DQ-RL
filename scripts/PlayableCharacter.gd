@@ -45,7 +45,8 @@ func set_player_name(new_name):
 func set_player_character():
 	var old_sprite = get_node('AnimatedSprite')
 	print(GlobalSettings.player_sprite_type)
-	var new_sprite = get_node(sprite_char_selection[GlobalSettings.player_sprite_type[$DebugAction.text]])
+	var player_unique_id = int(self.name)
+	var new_sprite = get_node(sprite_char_selection[GlobalSettings.player_sprite_type[player_unique_id]])
 	old_sprite.name = 'AnimatedSpriteOld'
 	old_sprite.visible = false
 	new_sprite.name = 'AnimatedSprite'

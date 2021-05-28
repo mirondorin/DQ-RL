@@ -26,7 +26,7 @@ func _on_host_pressed():
 	gamestate.host_game(player_name)
 	refresh_lobby()
 	$SelectPanel.show()
-	gamestate.set_character_index(gamestate.player_name, 0)
+	gamestate.set_character_index(get_tree().get_network_unique_id(), 0)
 
 
 func _on_join_pressed():
@@ -46,7 +46,7 @@ func _on_join_pressed():
 func _on_connection_success():
 	$Connect.hide()
 	$Players.show()
-	gamestate.set_character_index(gamestate.player_name, 0)
+	gamestate.set_character_index(get_tree().get_network_unique_id(), 0)
 	$SelectPanel.show()
 
 
@@ -91,20 +91,20 @@ func _on_find_public_ip_pressed():
 
 
 func _on_Button_pressed():
-	gamestate.set_character_index(gamestate.player_name, 0)
+	gamestate.set_character_index(get_tree().get_network_unique_id(), 0)
 	$SelectPanel/Button2.pressed = false
 	$SelectPanel/Button3.pressed = false
 	$SelectPanel/Button4.pressed = false
 
 func _on_Button2_pressed():
-	gamestate.set_character_index(gamestate.player_name, 1)
+	gamestate.set_character_index(get_tree().get_network_unique_id(), 1)
 	$SelectPanel/Button.pressed = false
 	$SelectPanel/Button3.pressed = false
 	$SelectPanel/Button4.pressed = false
 	
 
 func _on_Button3_pressed():
-	gamestate.set_character_index(gamestate.player_name, 2)
+	gamestate.set_character_index(get_tree().get_network_unique_id(), 2)
 
 func _on_Button4_pressed():
-	gamestate.set_character_index(gamestate.player_name, 3)
+	gamestate.set_character_index(get_tree().get_network_unique_id(), 3)
