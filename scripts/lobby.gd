@@ -82,6 +82,7 @@ func refresh_lobby():
 
 
 func _on_start_pressed():
+	gamestate.sync_player_sprites_with_master()
 	gamestate.begin_game()
 	
 

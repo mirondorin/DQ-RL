@@ -200,6 +200,15 @@ sync func remote_set_char(new_name, index):
 	GlobalSettings.player_sprite_type[new_name] = index
 	print(GlobalSettings.player_sprite_type)
 
+
+func sync_player_sprites_with_master():
+	rpc("do_sync_player_sprites_with_master", GlobalSettings.player_sprite_type)
+
+
+sync func do_sync_player_sprites_with_master(master_player_sprites):
+	GlobalSettings.player_sprite_type = master_player_sprites
+
+
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self,"_player_disconnected")
