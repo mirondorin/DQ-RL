@@ -46,14 +46,14 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "land",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "land",
 "speed": 5.0
 } ]
 
@@ -74,14 +74,14 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 22 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 24 ) ],
-"loop": true,
-"name": "land",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 21 ) ],
 "loop": true,
 "name": "hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 22 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "land",
 "speed": 5.0
 } ]
 

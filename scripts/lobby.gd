@@ -42,7 +42,6 @@ func _on_join_pressed():
 	$Connect/Join.disabled = true
 	var player_name = $Connect/Name.text
 	gamestate.join_game(ip, player_name)
-	gamestate.set_character_index(gamestate.player_name, 0)
 	
 func _on_connection_success():
 	$Connect.hide()
