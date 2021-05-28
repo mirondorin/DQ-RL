@@ -27,6 +27,8 @@ var weapon_animations = {0 : "special-attack-sword",
 var sprite_char_selection = {
 	0 : 'AnimatedSprite',
 	1 : 'AnimatedSprite1',
+	2 : 'AnimatedSprite2',
+	3 : 'AnimatedSprite3',
 }
 
 var camera

@@ -105,6 +105,12 @@ func _on_Button2_pressed():
 
 func _on_Button3_pressed():
 	gamestate.set_character_index(get_tree().get_network_unique_id(), 2)
+	$SelectPanel/Button.pressed = false
+	$SelectPanel/Button2.pressed = false
+	$SelectPanel/Button4.pressed = false
 
 func _on_Button4_pressed():
 	gamestate.set_character_index(get_tree().get_network_unique_id(), 3)
+	$SelectPanel/Button.pressed = false
+	$SelectPanel/Button3.pressed = false
+	$SelectPanel/Button2.pressed = false

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/lobby.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f0.png" type="Texture" id=2]
+[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/knight_f_idle_anim_f0.png" type="Texture" id=3]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/wizzard_f_idle_anim_f0.png" type="Texture" id=4]
+[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_zombie_idle_anim_f0.png" type="Texture" id=5]
 
 [node name="Lobby" type="Control"]
 anchor_right = 1.0
@@ -162,7 +164,6 @@ custom_colors/font_color = Color( 0.820312, 0.291595, 0.291595, 1 )
 align = 1
 
 [node name="SelectPanel" type="Panel" parent="."]
-visible = false
 margin_left = 724.0
 margin_top = 148.0
 margin_right = 856.0
@@ -180,17 +181,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="SelectPanel/Button"]
+[node name="TextureButton" type="TextureRect" parent="SelectPanel/Button"]
 margin_left = 42.2063
 margin_top = -14.8425
 margin_right = 58.2063
 margin_bottom = 13.1575
 rect_scale = Vector2( 3, 3 )
-disabled = true
-texture_normal = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+texture = ExtResource( 2 )
 
 [node name="Button2" type="Button" parent="SelectPanel"]
 margin_top = 84.0
@@ -201,58 +198,47 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="SelectPanel/Button2"]
+[node name="TextureButton" type="TextureRect" parent="SelectPanel/Button2"]
 margin_left = 42.2063
 margin_top = -14.8425
 margin_right = 58.2063
 margin_bottom = 13.1575
 rect_scale = Vector2( 3, 3 )
-disabled = true
-texture_normal = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+texture = ExtResource( 4 )
 
 [node name="Button3" type="Button" parent="SelectPanel"]
 margin_top = 168.0
 margin_right = 133.0
 margin_bottom = 252.0
-disabled = true
 toggle_mode = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="SelectPanel/Button3"]
+[node name="TextureButton" type="TextureRect" parent="SelectPanel/Button3"]
 margin_left = 42.2063
 margin_top = -14.8425
 margin_right = 58.2063
 margin_bottom = 13.1575
 rect_scale = Vector2( 3, 3 )
-disabled = true
-texture_normal = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+texture = ExtResource( 3 )
 
 [node name="Button4" type="Button" parent="SelectPanel"]
 margin_top = 252.0
 margin_right = 133.0
 margin_bottom = 336.0
-disabled = true
 toggle_mode = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="SelectPanel/Button4"]
-margin_left = 42.2063
-margin_top = -14.8425
-margin_right = 58.2063
-margin_bottom = 13.1575
+[node name="TextureButton" type="TextureRect" parent="SelectPanel/Button4"]
+margin_left = 15.881
+margin_top = -21.1784
+margin_right = 47.881
+margin_bottom = 12.8216
 rect_scale = Vector2( 3, 3 )
-disabled = true
-texture_normal = ExtResource( 2 )
+texture = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
