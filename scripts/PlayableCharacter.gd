@@ -31,6 +31,7 @@ var sprite_char_selection = {
 	3 : 'AnimatedSprite3',
 }
 
+var is_dead = false
 var camera
 var interactables = []
 
@@ -286,11 +287,13 @@ func switch_weapon():
 
 
 func on_take_damage(direction, impulse_force):
+	if is_dead:
+		return 1
 	$AnimatedSprite.set_material(flash_material)
 	$HealthLabel.text = String(stats['health'])
 	if stats['health'] > 0:
 		get_tree().call_group("hud", "update_healthbar")
-	yield(get_tree().create_timer(0.15), "timeout")
+		yield(get_tree().create_timer(0.15), "timeout")
 	$AnimatedSprite.set_material(null)
 	if not key_has_value(animation_dict, "animation", "hit"):
 		animation_dict["animation"] = "hit"
@@ -299,6 +302,7 @@ func on_take_damage(direction, impulse_force):
 	animation_play = true
 	animation_play_what = ""
 	if stats['health'] <= 0:
+		is_dead = true
 		get_node("/root/MainScene/").remove_player(self.name, $DebugAction.text)
 	
 

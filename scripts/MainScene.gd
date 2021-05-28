@@ -102,7 +102,7 @@ func treat_revival():
 
 
 func restart_game():
-	print("TODO: Create a short timer here")
+	yield(get_tree().create_timer(0.15), "timeout")
 	rpc("do_restart_game", dead_players)
 	dead_players = {}
 	respawn_queue = []
