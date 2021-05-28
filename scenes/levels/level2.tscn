@@ -201,7 +201,10 @@ position = Vector2( 27.622, 688.062 )
 [node name="DynamicSpawner" type="Node2D" parent="."]
 script = ExtResource( 2 )
 enemyscene = SubResource( 8 )
+mob_type = ""
 max_spawns = 10
+total_spawns = 0
+start_enabled = true
 spawn_delay = 3
 spawn_continously = true
 spawn_list = {

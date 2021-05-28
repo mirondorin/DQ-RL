@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/Kauzz Cave/Background/Background A2.png" type="Texture" id=1]
+[ext_resource path="res://assets/Kauzz Cave/Background/Background A.png" type="Texture" id=2]
+[ext_resource path="res://assets/Kauzz Cave/Background/Background B.png" type="Texture" id=3]
+[ext_resource path="res://assets/Kauzz Cave/Background/Background C.png" type="Texture" id=4]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.124495, 0.105743, 0.214844, 1, 0.242035, 0.458313, 0.601563, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[node name="ParallaxBackground2" type="ParallaxBackground"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1017.5, 343.356 )
+rotation = 1.5708
+scale = Vector2( 0.777307, 2019 )
+texture = SubResource( 2 )
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.2, 1 )
+motion_mirroring = Vector2( 960, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer4"]
+scale = Vector2( 2.41732, 2.5 )
+texture = ExtResource( 4 )
+centered = false
+region_rect = Rect2( 0, 0, 0, 2880 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.1, 1 )
+motion_mirroring = Vector2( 960, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer3"]
+scale = Vector2( 2.68639, 2.5 )
+texture = ExtResource( 3 )
+centered = false
+region_rect = Rect2( 0, 0, 0, 2880 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.1, 1 )
+motion_mirroring = Vector2( 960, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer2"]
+scale = Vector2( 1.85735, 2.5 )
+texture = ExtResource( 1 )
+centered = false
+region_rect = Rect2( 0, 0, 0, 2880 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.2, 1 )
+motion_mirroring = Vector2( 960, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer"]
+modulate = Color( 0.85, 0.85, 0.85, 1 )
+scale = Vector2( 2.44355, 2.5 )
+texture = ExtResource( 2 )
+centered = false
+region_rect = Rect2( 0, 0, 0, 2880 )
