@@ -93,9 +93,16 @@ func _on_find_public_ip_pressed():
 
 func _on_Button_pressed():
 	gamestate.set_character_index(gamestate.player_name, 0)
+	$SelectPanel/Button2.pressed = false
+	$SelectPanel/Button3.pressed = false
+	$SelectPanel/Button4.pressed = false
 
 func _on_Button2_pressed():
 	gamestate.set_character_index(gamestate.player_name, 1)
+	$SelectPanel/Button.pressed = false
+	$SelectPanel/Button3.pressed = false
+	$SelectPanel/Button4.pressed = false
+	
 
 func _on_Button3_pressed():
 	gamestate.set_character_index(gamestate.player_name, 2)

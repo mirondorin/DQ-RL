@@ -68,7 +68,7 @@ func _init():
 
 
 func _ready():
-	#set_player_character()
+	set_player_character()
 	if is_network_master():
 		camera = Camera2D.new()
 		self.add_child(camera)

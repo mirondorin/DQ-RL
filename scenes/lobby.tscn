@@ -162,7 +162,6 @@ custom_colors/font_color = Color( 0.820312, 0.291595, 0.291595, 1 )
 align = 1
 
 [node name="SelectPanel" type="Panel" parent="."]
-visible = false
 margin_left = 724.0
 margin_top = 148.0
 margin_right = 856.0
@@ -175,6 +174,7 @@ __meta__ = {
 margin_right = 133.0
 margin_bottom = 84.0
 toggle_mode = true
+pressed = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -216,6 +216,7 @@ __meta__ = {
 margin_top = 168.0
 margin_right = 133.0
 margin_bottom = 252.0
+disabled = true
 toggle_mode = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -237,6 +238,7 @@ __meta__ = {
 margin_top = 252.0
 margin_right = 133.0
 margin_bottom = 336.0
+disabled = true
 toggle_mode = true
 __meta__ = {
 "_edit_use_anchors_": false
