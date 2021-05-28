@@ -5,7 +5,8 @@
 [ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/items/DamageBoost.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/ParallaxBackground.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/other/ParallaxBackground.tscn" type="PackedScene" id=6]
+
 
 [sub_resource type="VisualShaderNodeColorOp" id=1]
 operator = 2

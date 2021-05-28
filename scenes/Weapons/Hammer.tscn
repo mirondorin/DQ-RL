@@ -83,7 +83,7 @@ tracks/0/keys = {
 extents = Vector2( 15.6742, 23.9482 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 56.6667, 10 )
+extents = Vector2( 53.6667, 17.5 )
 
 [node name="Hammer" type="Node2D"]
 scale = Vector2( 2, 2 )
@@ -106,7 +106,6 @@ anims/special-attack-fall = SubResource( 4 )
 [node name="Hurtbox" type="Area2D" parent="." groups=[
 "hurtbox",
 ]]
-visible = false
 scale = Vector2( 3, 3 )
 input_pickable = false
 collision_mask = 3

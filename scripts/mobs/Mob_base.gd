@@ -1,6 +1,8 @@
 extends "res://scripts/Entity.gd"
 
 const flash_material = preload("res://materials/white.tres")
+const blood_splash = preload("res://scenes/other/bloodsfx.tscn")
+
 var spawner = null
 
 export (Dictionary) var item_spawn_list = {
@@ -168,6 +170,7 @@ func _physics_process(delta):
 
 
 func on_take_damage(direction, impulse_force):
+	spawn_blood_fx()
 	if not is_dead:
 		if stats["health"] > 0:
 			$HealthLabel.text = String(stats["health"])
@@ -208,6 +211,16 @@ func _on_AttackCooldown_timeout():
 func _on_JumpCooldown_timeout():
 	can_jump = true
 
+func spawn_blood_fx():
+	var inst = blood_splash.instance()
+	var target = get_tree().get_root().get_node("MainScene/GlobalSounds")
+	inst.rotation_degrees = int(rand_range(0, 360))
+	inst.scale.x = rand_range(3, 6)
+	inst.scale.y = rand_range(3, 5)
+	
+	target.add_child(inst)
+	inst.position = self.position
+	
 
 func on_death_sfx():
 	var target = get_tree().get_root().get_node("MainScene/GlobalSounds")
@@ -215,3 +228,7 @@ func on_death_sfx():
 	self.remove_child(source)
 	target.add_child(source)
 	source.play()
+	
+
+	
+	
