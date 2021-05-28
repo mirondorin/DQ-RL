@@ -294,6 +294,8 @@ func on_take_damage(direction, impulse_force):
 	if stats['health'] > 0:
 		get_tree().call_group("hud", "update_healthbar")
 		yield(get_tree().create_timer(0.15), "timeout")
+	if is_dead: # for when it exits the timer and is_dead = true
+		return 1
 	$AnimatedSprite.set_material(null)
 	if not key_has_value(animation_dict, "animation", "hit"):
 		animation_dict["animation"] = "hit"
