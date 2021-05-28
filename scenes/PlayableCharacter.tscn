@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/knight_f_hit_anim_f0.png" type="Texture" id=7]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_run_anim_f0.png" type="Texture" id=8]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f3.png" type="Texture" id=9]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_run_anim_f3.png" type="Texture" id=10]
 [ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=11]
 [ext_resource path="res://scenes/Weapons/Weapon.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/Cooldown.tscn" type="PackedScene" id=13]
@@ -62,11 +61,6 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "land",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "land",
@@ -85,6 +79,11 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 21 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 23 ), ExtResource( 19 ), ExtResource( 24 ), ExtResource( 19 ), ExtResource( 20 ) ],
 "loop": true,
 "name": "walk",
@@ -93,11 +92,6 @@ animations = [ {
 "frames": [ ExtResource( 22 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 24 ) ],
 "loop": true,
 "name": "land",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 21 ) ],
-"loop": true,
-"name": "hit",
 "speed": 5.0
 } ]
 
@@ -113,6 +107,11 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 30 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
 "loop": true,
 "name": "walk",
@@ -122,14 +121,9 @@ animations = [ {
 "loop": true,
 "name": "land",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 7 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=12]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ ExtResource( 34 ), ExtResource( 34 ), ExtResource( 39 ), ExtResource( 39 ), ExtResource( 39 ), ExtResource( 36 ), ExtResource( 36 ), ExtResource( 34 ) ],
 "loop": true,
@@ -141,6 +135,11 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 37 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 32 ), ExtResource( 37 ), ExtResource( 33 ), ExtResource( 38 ) ],
 "loop": true,
 "name": "walk",
@@ -148,19 +147,14 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 35 ), ExtResource( 36 ), ExtResource( 34 ) ],
 "loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 37 ) ],
-"loop": true,
-"name": "hit",
+"name": "land",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 29.53, 41.5921 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Weapon/Area2D/CollisionShape2D:position")
 tracks/0/interp = 1
@@ -186,9 +180,9 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=8]
-
 [sub_resource type="Animation" id=9]
+
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Weapon/AnimatedSprite:position")
 tracks/0/interp = 1
@@ -250,10 +244,10 @@ tracks/4/keys = {
 "values": [ false, true, false, true, false, true, false, true, true ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 26.9215, 37.8014 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 225.234, 138.827 )
 
 [node name="PlayableCharacter" type="KinematicBody2D" groups=[
@@ -273,7 +267,7 @@ __meta__ = {
 scale = Vector2( 5, 5 )
 frames = SubResource( 3 )
 animation = "idle"
-frame = 3
+frame = 4
 playing = true
 flip_h = true
 
@@ -282,7 +276,6 @@ visible = false
 scale = Vector2( 5, 5 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 4
 playing = true
 flip_h = true
 
@@ -297,15 +290,15 @@ flip_h = true
 [node name="AnimatedSprite3" type="AnimatedSprite" parent="."]
 visible = false
 scale = Vector2( 5, 5 )
-frames = SubResource( 12 )
-animation = "walk"
+frames = SubResource( 6 )
+animation = "land"
 playing = true
 flip_h = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 position = Vector2( -3.51978, 28.5693 )
 scale = Vector2( 0.84, 1 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="DebugCollision" type="Label" parent="."]
 margin_left = -26.0
@@ -347,9 +340,9 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/idle = SubResource( 7 )
-anims/special-attack-staff = SubResource( 8 )
-anims/special-attack-sword = SubResource( 9 )
+anims/idle = SubResource( 8 )
+anims/special-attack-staff = SubResource( 9 )
+anims/special-attack-sword = SubResource( 10 )
 
 [node name="Weapon" parent="." instance=ExtResource( 12 )]
 position = Vector2( 46.6849, 49.3108 )
@@ -368,7 +361,7 @@ wait_time = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( -3.3371, 28.0316 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="HUD" parent="." instance=ExtResource( 14 )]
 
@@ -381,7 +374,7 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RegenArea"]
 visible = false
-shape = SubResource( 11 )
+shape = SubResource( 12 )
 
 [node name="RegenTimer" type="Timer" parent="."]
 autostart = true

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/items/MaxHealthPickup.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/ParallaxBackground2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/other/ParallaxBackground2.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/Levels/tutorial1.gd" type="Script" id=11]
 [ext_resource path="res://scenes/Mobs/Mob.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=13]
@@ -10,6 +10,7 @@
 [ext_resource path="res://scenes/items/DamageBoost.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=17]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 82.0744, 40.5701 )

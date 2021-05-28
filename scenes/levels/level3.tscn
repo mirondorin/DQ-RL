@@ -8,7 +8,8 @@
 [ext_resource path="res://scenes/BossDoor.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/Mobs/BoDBoss.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/ParallaxBackground.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/other/ParallaxBackground.tscn" type="PackedScene" id=9]
+
 
 [node name="LevelRoot" type="Node2D"]
 
