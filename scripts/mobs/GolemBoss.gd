@@ -10,8 +10,8 @@ var jump_attacking = false
 func _ready():
 	bullet = load("res://scenes/Weapons/GolemPebble.tscn")
 	stats['default_speed'] = 100
-	self.stats['health'] = 100
-	self.stats['max_health'] = 100
+	self.stats['health'] = 100 * (1 + 0.2 *GlobalSettings.level_nr)
+	self.stats['max_health'] = 100  * (1 + 0.2 *GlobalSettings.level_nr)
 	self.stats['stagger_default'] = 300
 	self.stats['stagger_health'] = 300
 	self.SPEED = stats['default_speed'] 

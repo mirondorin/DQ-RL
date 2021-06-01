@@ -160,7 +160,10 @@ max_spawns = 1
 start_enabled = false
 
 [node name="DynamicSpawner" parent="." instance=ExtResource( 2 )]
+mob_type = ""
+max_spawns = 2
 total_spawns = 2
+start_enabled = true
 spawn_delay = 2
 spawn_continously = false
 spawn_list = {

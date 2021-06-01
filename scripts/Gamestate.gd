@@ -153,8 +153,11 @@ remote func peer_change_level(spawn_points):
 	get_tree().call_group("projectile", "queue_free")	
 	var world = get_tree().get_root().get_node("MainScene")
 	GlobalSettings.level_nr += 1
+	var lvl_nr = GlobalSettings.level_nr
+	if lvl_nr>=6:
+		lvl_nr= (lvl_nr-1)%5+1
 	var level = world.get_node("LevelRoot")
-	var next_level = "level" + str(GlobalSettings.level_nr) + ".tscn"
+	var next_level = "level" + str(lvl_nr) + ".tscn"
 	world.remove_child(level)
 	level.queue_free()
 	level = load("res://scenes/levels/" + next_level).instance()

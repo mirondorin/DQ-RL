@@ -7,7 +7,8 @@
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/lizard_f_idle_anim_f0.png" type="Texture" id=5]
 
 [node name="Lobby" type="Control"]
-anchor_right = 1.0
+anchor_left = -0.000736618
+anchor_right = 0.999263
 anchor_bottom = 1.0
 margin_left = 1.75989
 margin_right = 1.75989

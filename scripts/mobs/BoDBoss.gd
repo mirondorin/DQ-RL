@@ -9,8 +9,8 @@ var players_in_sight = 0
 	
 func _ready():
 	stats['default_speed'] = 100
-	self.stats['health'] = 800
-	self.stats['max_health'] = 800
+	self.stats['health'] = 500  * (1 + 0.2 *GlobalSettings.level_nr)
+	self.stats['max_health'] = 500  * (1 + 0.2 *GlobalSettings.level_nr)
 	self.stats['stagger_default'] = 800
 	self.stats['stagger_health'] = 800
 	self.SPEED = stats['default_speed'] 

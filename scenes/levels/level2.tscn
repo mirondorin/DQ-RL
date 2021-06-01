@@ -195,11 +195,15 @@ position = Vector2( 8.08713, 688.115 )
 position = Vector2( 27.622, 688.062 )
 
 [node name="DynamicSpawner" type="Node2D" parent="."]
+scale = Vector2( 0.998993, 1 )
 script = ExtResource( 2 )
 enemyscene = SubResource( 8 )
+mob_type = ""
 max_spawns = 5
-total_spawns = 5
+total_spawns = 10
+start_enabled = true
 spawn_delay = 3
+spawn_continously = false
 spawn_list = {
 "res://scenes/Mobs/Mob.tscn": 70,
 "res://scenes/Mobs/MobHomingProjectile.tscn": 10,

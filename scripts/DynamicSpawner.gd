@@ -6,13 +6,13 @@ func _get_tool_buttons(): return ["new_area"]
 export (Dictionary) var spawn_list = {
 	'res://scenes/Mobs/Mob.tscn' : 70,
 	'res://scenes/Mobs/MobHomingProjectile.tscn' : 10,
-	'res://scenes/Mobs/MobProjectile.tscn' : 30
+	'res://scenes/Mobs/MobProjectile.tscn' : 30,
 }
 
 var spawn_list_name : Dictionary = {
 	"Mob" : 70,
 	"MobHomingProjectile" : 10,
-	"MobProjectile" :30,
+	"MobProjectile" : 30,
 }
 
 var area_list = []
@@ -29,8 +29,6 @@ func new_area():
 func _init():
 	self.cleanup = false
 	self.start_enabled = true
-	self.spawn_continously = true
-	self.spawn_delay = 3
 	
 func _ready():
 	randomize()

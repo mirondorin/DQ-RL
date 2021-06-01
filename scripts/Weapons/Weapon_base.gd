@@ -21,10 +21,15 @@ func _init():
 	LightAttack_CD.connect("timeout",self,"_on_LightAttack_CD_timeout") 
 	add_child(LightAttack_CD)
 	SpecialAttack_CD = Timer.new()
-	SpecialAttack_CD.connect("timeout",self,"_on_SpecialAttack_CD_timeout") 
+	SpecialAttack_CD.connect("timeout",self,"_on_SpecialAttack_CD_timeout")
 	add_child(SpecialAttack_CD)
+	can_special_attack = false
 
 
+func _ready():
+	SpecialAttack_CD.start()
+	
+	
 func _on_LightAttack_CD_timeout():
 	LightAttack_CD.stop()
 	can_attack = true

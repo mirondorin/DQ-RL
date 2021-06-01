@@ -26,6 +26,9 @@ func look_at_player():
 		$Sprite.flip_h = true
 		
 func _physics_process(delta):
+	if !is_instance_valid(to_follow):
+		queue_free()
+		return 
 	change_direction(to_follow.position,delta)
 	
 	var direction_vector = Vector2(1,0).rotated(self.rotation)

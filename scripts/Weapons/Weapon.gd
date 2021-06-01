@@ -8,6 +8,7 @@ func _init():
 	attack_anim_names['attack'] = 'attack'
 	attack_anim_names['special-attack'] = 'special-attack'
 	LightAttack_CD.wait_time = 0.4
+	SpecialAttack_CD.wait_time = 3
 
 func _ready():
 	position = Vector2(50, 40)
