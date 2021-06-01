@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/weapon_red_magic_staff.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Weapons/WeaponProjectile.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/spritesfx/beam-2.png" type="Texture" id=5]
 [ext_resource path="res://assets/spritesfx/beam-3.png" type="Texture" id=6]
 [ext_resource path="res://assets/spritesfx/beam-4.png" type="Texture" id=7]
+[ext_resource path="res://sounds/staff_special_attack.wav" type="AudioStream" id=8]
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack"
@@ -188,4 +189,6 @@ frame = 3
 stream = ExtResource( 3 )
 
 [node name="BeamSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -10.0
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]

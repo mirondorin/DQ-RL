@@ -58,10 +58,20 @@ animations = [ {
 "name": "idle",
 "speed": 10.0
 }, {
+"frames": [ ExtResource( 11 ), ExtResource( 15 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 3 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "walk",
+"speed": 10.0
+}, {
 "frames": [ ExtResource( 30 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 27 ), ExtResource( 36 ), ExtResource( 26 ), ExtResource( 37 ), ExtResource( 23 ), ExtResource( 28 ) ],
 "loop": true,
 "name": "cast",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 41 ), ExtResource( 42 ), ExtResource( 38 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 8.0
 }, {
 "frames": [ ExtResource( 21 ), ExtResource( 31 ), ExtResource( 25 ), ExtResource( 20 ), ExtResource( 29 ), ExtResource( 22 ), ExtResource( 32 ), ExtResource( 19 ), ExtResource( 33 ), ExtResource( 24 ) ],
 "loop": true,
@@ -72,23 +82,13 @@ animations = [ {
 "loop": true,
 "name": "death",
 "speed": 10.0
-}, {
-"frames": [ ExtResource( 41 ), ExtResource( 42 ), ExtResource( 38 ) ],
-"loop": true,
-"name": "hurt",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 11 ), ExtResource( 15 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 3 ), ExtResource( 18 ) ],
-"loop": true,
-"name": "walk",
-"speed": 10.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 33.805, 63.408 )
+extents = Vector2( 33.805, 59.5231 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 32.8914, 68.1644 )
+extents = Vector2( 32.8914, 52.9033 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 71.8943, 58.4079 )
@@ -97,10 +97,10 @@ extents = Vector2( 71.8943, 58.4079 )
 radius = 100.0
 height = 735.528
 
-[sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 59.678, 60.4191 )
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 72.3018, 56.5156 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=7]
 resource_name = "slash_attack"
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -117,10 +117,10 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.733333, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.219608, 0.219608, 0.219608, 1 )
 
 [node name="BoDBoss" type="KinematicBody2D" groups=[
@@ -135,8 +135,8 @@ script = ExtResource( 4 )
 position = Vector2( 52.6123, -19.5136 )
 scale = Vector2( -1.486, 1.774 )
 frames = SubResource( 1 )
-animation = "attack"
-frame = 7
+animation = "walk"
+frame = 1
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
@@ -146,9 +146,11 @@ shape = SubResource( 2 )
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "hitbox",
 ]]
+visible = false
 collision_layer = 2147483650
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -0.707108, 12.0208 )
 shape = SubResource( 3 )
 
 [node name="Hurtbox" type="Area2D" parent="." groups=[
@@ -161,6 +163,7 @@ collision_layer = 2147483649
 light_mask = -2147483647
 position = Vector2( 42.8527, 1.54246 )
 shape = SubResource( 4 )
+disabled = true
 
 [node name="DetectArea" type="Area2D" parent="."]
 visible = false
@@ -176,8 +179,8 @@ shape = SubResource( 5 )
 scale = Vector2( 1.146, 1.128 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 68.5943, 0.212471 )
-shape = SubResource( 8 )
+position = Vector2( 41.7957, 0.525902 )
+shape = SubResource( 6 )
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 10.0
@@ -192,7 +195,7 @@ wait_time = 5.0
 wait_time = 5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/slash_attack = SubResource( 9 )
+anims/slash_attack = SubResource( 7 )
 
 [node name="DeathSfx" type="AudioStreamPlayer" parent="."]
 
@@ -201,8 +204,8 @@ margin_left = -40.0
 margin_top = -79.75
 margin_right = 41.0
 margin_bottom = -69.75
-custom_styles/fg = SubResource( 6 )
-custom_styles/bg = SubResource( 7 )
+custom_styles/fg = SubResource( 8 )
+custom_styles/bg = SubResource( 9 )
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -228,5 +231,6 @@ __meta__ = {
 [connection signal="body_entered" from="DetectArea" to="." method="_on_DetectArea_body_entered"]
 [connection signal="body_exited" from="DetectArea" to="." method="_on_DetectArea_body_exited"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="." method="_on_AttackArea_body_exited"]
 [connection signal="timeout" from="SlashAttackCooldown" to="." method="_on_SlashAttackCooldown_timeout"]
 [connection signal="timeout" from="JumpCooldown" to="." method="_on_JumpCooldown_timeout"]

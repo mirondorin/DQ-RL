@@ -68,6 +68,7 @@ sync func do_spawn():
 
 	var position = get_rand_pos(area)
 	current_spawns += 1
+	total_spawns -= 1
 
 	mob_type = get_weighted_mob_name()
 	get_parent().get_parent().add_new_mob(mob_type, mob_health, position, self)	
@@ -81,8 +82,7 @@ sync func do_spawn():
 func _on_Timer_timeout():
 	if is_network_master():
 		spawn()
-	
-	if spawn_continously:
+	if spawn_continously or total_spawns > 0:
 		$Timer.start()
 	else:
 		$Timer.stop()

@@ -35,7 +35,11 @@ func on_attack_sfx():
 func special_attack():
 	if is_network_master():
 		rpc_unreliable("play_animation", attack_anim_names['special-attack'])
+		on_special_attack_sfx()
 
+func on_special_attack_sfx():
+	$BeamSfx.play()
+	
 
 func _on_Hurtbox_area_entered(area):
 	if area.is_in_group("hitbox"):

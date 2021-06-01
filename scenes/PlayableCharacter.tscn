@@ -51,11 +51,6 @@ animations = [ {
 "name": "idle",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 5 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "walk",
@@ -64,6 +59,11 @@ animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "land",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 5 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -74,14 +74,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 20 ), ExtResource( 17 ), ExtResource( 19 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 23 ), ExtResource( 19 ), ExtResource( 24 ), ExtResource( 19 ), ExtResource( 20 ) ],
 "loop": true,
 "name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 21 ) ],
+"loop": true,
+"name": "hit",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 22 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 24 ) ],
@@ -89,9 +89,9 @@ animations = [ {
 "name": "land",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 21 ) ],
+"frames": [ ExtResource( 20 ), ExtResource( 17 ), ExtResource( 19 ) ],
 "loop": true,
-"name": "hit",
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -102,14 +102,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 26 ), ExtResource( 30 ), ExtResource( 27 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 30 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
 "loop": true,
 "name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "hit",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 18 ), ExtResource( 26 ), ExtResource( 30 ) ],
@@ -117,9 +117,9 @@ animations = [ {
 "name": "land",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 7 ) ],
+"frames": [ ExtResource( 26 ), ExtResource( 30 ), ExtResource( 27 ) ],
 "loop": true,
-"name": "hit",
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -130,14 +130,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 36 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 38 ), ExtResource( 36 ), ExtResource( 39 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 33 ) ],
+"loop": true,
+"name": "hit",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 37 ), ExtResource( 35 ) ],
@@ -145,9 +145,9 @@ animations = [ {
 "name": "land",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 33 ) ],
+"frames": [ ExtResource( 36 ) ],
 "loop": true,
-"name": "hit",
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -267,7 +267,7 @@ __meta__ = {
 scale = Vector2( 5, 5 )
 frames = SubResource( 3 )
 animation = "walk"
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -276,7 +276,7 @@ visible = false
 scale = Vector2( 5, 5 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -285,6 +285,7 @@ visible = false
 scale = Vector2( 5, 5 )
 frames = SubResource( 5 )
 animation = "walk"
+frame = 3
 playing = true
 flip_h = true
 
@@ -293,7 +294,7 @@ visible = false
 scale = Vector2( 5, 5 )
 frames = SubResource( 6 )
 animation = "walk"
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 

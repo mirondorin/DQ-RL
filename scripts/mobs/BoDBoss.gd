@@ -4,6 +4,7 @@ var can_slash_attack = true
 var slash_attacking = false
 var can_cast_attack = true
 var cast_attacking = false
+var players_in_sight = 0
 
 	
 func _ready():
@@ -20,7 +21,8 @@ func _ready():
 
 
 func _process(delta):
-	pass
+	if players_in_sight > 0:
+		rpc_unreliable("slash_attack")
 
 
 func flip_sprite():
@@ -88,7 +90,6 @@ func _on_Hurtbox_area_entered(area):
 	if area.is_in_group('hitbox'): #  and is_network_master()
 		var owner = area.get_owner()
 		if owner.is_in_group('players'):
-			print("Hurtbox entered plz work")
 			rpc_unreliable("attack_player", owner.name)
 
 
@@ -107,5 +108,9 @@ func _on_SlashAttackCooldown_timeout():
 func _on_AttackArea_body_entered(body):
 	if body in in_area:
 		if body.is_in_group("players"):
-			print("Haduken")
-			rpc_unreliable("slash_attack")
+			players_in_sight += 1
+
+
+func _on_AttackArea_body_exited(body):
+	if body.is_in_group("players"):
+		players_in_sight -= 1

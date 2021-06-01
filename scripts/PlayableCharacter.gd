@@ -126,7 +126,6 @@ sync func play_special_attack():
 
 
 func solve_animation(velocity,delta):
-	print($AnimatedSprite.animation.get_basename())
 	if not is_network_master():
 		return 1
 	if current_weapon.get_node("AnimationPlayer").current_animation != 'special-attack':

@@ -17,12 +17,15 @@ func _init():
 	LightAttack_CD.wait_time = 1
 	SpecialAttack_CD.wait_time = 3
 	
+
 func _ready():
 	position = Vector2(50, 40)
+
 
 func _process(_delta):
 	if in_special:
 		if get_parent().is_on_floor():
+			on_special_attack_sfx()
 			$Hurtbox2/CollisionShapeSpecial.disabled = false
 			in_special = false
 			yield(get_tree().create_timer(0.1), "timeout")
@@ -30,11 +33,17 @@ func _process(_delta):
 			can_attack = true
 			rpc_unreliable("play_animation", attack_anim_names['idle'])
 
+
 func attack():
 	var player_orientation = get_parent().current_orientation
 	get_parent().impulse(300, Vector2(player_orientation, -1), 10, false)
 	on_emptyhit_sfx()
 	rpc_unreliable("play_animation", attack_anim_names['attack'])
+
+
+func on_special_attack_sfx():
+	$HammerSpecialSfx.play()
+
 
 func special_attack():
 	rpc_unreliable("play_animation", attack_anim_names['special-attack'])
@@ -45,6 +54,7 @@ func special_attack():
 	in_special = true
 	get_parent().impulse(700, Vector2(0, 1), 10, false)
 	rpc_unreliable("play_animation", attack_anim_names['special-attack-fall'])
+
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("hitbox"):
@@ -91,12 +101,10 @@ sync func do_update_orientation(orientation):
 			self.position.x = -self.position.x
 	update_weapon_postion(self.position.x, self.rotation_degrees)
 
+
 func on_emptyhit_sfx():
 	$EmptyHit.play()
 
 
 func on_enemyhit_sfx():
 	$EnemyHit.play()
-
-
-

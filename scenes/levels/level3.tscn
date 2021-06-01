@@ -10,7 +10,6 @@
 [ext_resource path="res://scenes/Mobs/BoDBoss.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/other/ParallaxBackground.tscn" type="PackedScene" id=9]
 
-
 [node name="LevelRoot" type="Node2D"]
 
 [node name="Background" type="TileMap" parent="."]
@@ -39,36 +38,28 @@ __meta__ = {
 [node name="Spawn" type="Node2D" parent="."]
 
 [node name="0" type="Position2D" parent="Spawn"]
-position = Vector2( 152.057, 445.286 )
+position = Vector2( 2542.21, 799.147 )
 
 [node name="1" type="Position2D" parent="Spawn"]
-position = Vector2( 170.838, 445.092 )
+position = Vector2( 2560.99, 798.953 )
 
 [node name="2" type="Position2D" parent="Spawn"]
-position = Vector2( 190.995, 445.402 )
+position = Vector2( 2581.14, 799.263 )
 
 [node name="3" type="Position2D" parent="Spawn"]
-position = Vector2( 213.244, 445.767 )
+position = Vector2( 2603.39, 799.628 )
 
 [node name="EnemySpawnerMelee" parent="." instance=ExtResource( 4 )]
 position = Vector2( 758.337, 636.586 )
 enemyscene = ExtResource( 3 )
 mob_type = "Mob"
-max_spawns = 2
 total_spawns = 2
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerMelee2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 708.39, 768.137 )
 enemyscene = ExtResource( 3 )
 mob_type = "Mob"
-max_spawns = 2
 total_spawns = 2
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerMelee3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 2088.88, 639.308 )
@@ -76,9 +67,6 @@ enemyscene = ExtResource( 3 )
 mob_type = "Mob"
 max_spawns = 1
 total_spawns = 1
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerMelee4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1682.17, 879.484 )
@@ -86,9 +74,6 @@ enemyscene = ExtResource( 3 )
 mob_type = "Mob"
 max_spawns = 1
 total_spawns = 4
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerMelee5" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1410.44, 704.868 )
@@ -96,9 +81,7 @@ enemyscene = ExtResource( 3 )
 mob_type = "Mob"
 max_spawns = 1
 total_spawns = 4
-start_enabled = true
 spawn_delay = 3
-spawn_continously = false
 
 [node name="EnemySpawnerMelee6" parent="." instance=ExtResource( 4 )]
 position = Vector2( 916.884, 704.402 )
@@ -106,19 +89,12 @@ enemyscene = ExtResource( 3 )
 mob_type = "Mob"
 max_spawns = 1
 total_spawns = 4
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerMelee7" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1062.87, 480.855 )
 enemyscene = ExtResource( 3 )
 mob_type = "Mob"
-max_spawns = 2
 total_spawns = 4
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerRanged" parent="." instance=ExtResource( 4 )]
 position = Vector2( 695.632, 767.36 )
@@ -126,9 +102,6 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerRanged2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 317.995, 920.595 )
@@ -136,9 +109,6 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerRanged3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1184.49, 1057.12 )
@@ -146,9 +116,6 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerRanged4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1504.1, 881.97 )
@@ -156,9 +123,6 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
-start_enabled = true
-spawn_delay = 1
-spawn_continously = false
 
 [node name="EnemySpawnerRanged5" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1087.92, 702.472 )
@@ -166,9 +130,7 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 2
-start_enabled = true
 spawn_delay = 2
-spawn_continously = false
 
 [node name="Pickups" type="Node2D" parent="."]
 
@@ -195,16 +157,10 @@ position = Vector2( 3158.08, 796.576 )
 enemyscene = ExtResource( 8 )
 mob_type = "BoDBoss"
 max_spawns = 1
-total_spawns = 0
 start_enabled = false
-spawn_delay = 1
-spawn_continously = false
 
 [node name="DynamicSpawner" parent="." instance=ExtResource( 2 )]
-mob_type = ""
-max_spawns = 2
-total_spawns = 0
-start_enabled = true
+total_spawns = 2
 spawn_delay = 2
 spawn_continously = false
 spawn_list = {
