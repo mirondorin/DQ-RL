@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f0.png" type="Texture" id=2]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/knight_f_idle_anim_f0.png" type="Texture" id=3]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/wizzard_f_idle_anim_f0.png" type="Texture" id=4]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/big_zombie_idle_anim_f0.png" type="Texture" id=5]
+[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/lizard_f_idle_anim_f0.png" type="Texture" id=5]
 
 [node name="Lobby" type="Control"]
 anchor_right = 1.0
@@ -234,10 +234,10 @@ __meta__ = {
 }
 
 [node name="TextureButton" type="TextureRect" parent="SelectPanel/Button4"]
-margin_left = 15.881
-margin_top = -21.1784
-margin_right = 47.881
-margin_bottom = 12.8216
+margin_left = 39.2971
+margin_top = -8.0
+margin_right = 60.2971
+margin_bottom = 22.0
 rect_scale = Vector2( 3, 3 )
 texture = ExtResource( 5 )
 __meta__ = {
