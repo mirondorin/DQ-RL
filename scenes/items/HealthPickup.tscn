@@ -12,9 +12,9 @@ script = ExtResource( 2 )
 [node name="AnimatedSprite" parent="Item" index="0"]
 position = Vector2( -0.625, -0.5 )
 animation = "green"
-frame = 7
 
 [node name="Sprite" parent="Item" index="1"]
+modulate = Color( 1, 1, 1, 0.87451 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" parent="Item/Area2D" index="0"]

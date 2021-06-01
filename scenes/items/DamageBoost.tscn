@@ -15,6 +15,11 @@ animation = "red"
 frame = 2
 
 [node name="Sprite" parent="Item" index="1"]
-scale = Vector2( 2, 2 )
+modulate = Color( 1, 1, 1, 0.94902 )
+position = Vector2( -0.756235, 1.22855 )
+scale = Vector2( 1.60512, 1.63654 )
+
+[node name="CollisionShape2D" parent="Item/Area2D" index="0"]
+visible = false
 
 [editable path="Item"]

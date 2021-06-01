@@ -213,7 +213,7 @@ func _on_JumpCooldown_timeout():
 
 func spawn_blood_fx():
 	var inst = blood_splash.instance()
-	var target = get_tree().get_root().get_node("MainScene/GlobalSounds")
+	var target = get_tree().get_root().get_node("MainScene/GlobalFX")
 	inst.rotation_degrees = int(rand_range(0, 360))
 	inst.scale.x = rand_range(3, 6)
 	inst.scale.y = rand_range(3, 5)

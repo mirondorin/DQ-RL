@@ -11,7 +11,6 @@
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/NewLevelDoor.tscn" type="PackedScene" id=17]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 82.0744, 40.5701 )
 
@@ -308,10 +307,10 @@ __meta__ = {
 }
 
 [node name="Label8" type="Label" parent="Labels"]
-margin_left = 1089.0
-margin_top = 622.0
-margin_right = 1199.0
-margin_bottom = 670.0
+margin_left = 1090.0
+margin_top = 626.5
+margin_right = 1200.0
+margin_bottom = 674.5
 text = "Hitting enemies
 multiple times
 will stagger them"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://scripts/PlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_hit_anim_f0.png" type="Texture" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f0.png" type="Texture" id=6]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/knight_f_hit_anim_f0.png" type="Texture" id=7]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_run_anim_f0.png" type="Texture" id=8]
-[ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/elf_f_idle_anim_f3.png" type="Texture" id=9]
 [ext_resource path="res://assets/0x72_DungeonTilesetII_v1.3.1/frames/lizard_f_run_anim_f3.png" type="Texture" id=10]
 [ext_resource path="res://assets/fonts/segoeui.tres" type="DynamicFont" id=11]
 [ext_resource path="res://scenes/Weapons/Weapon.tscn" type="PackedScene" id=12]
@@ -47,19 +46,19 @@ shader = SubResource( 1 )
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "idle",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 5 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 5 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ) ],
@@ -75,14 +74,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 20 ), ExtResource( 17 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 23 ), ExtResource( 19 ), ExtResource( 24 ), ExtResource( 19 ), ExtResource( 20 ) ],
 "loop": true,
 "name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 19 ), ExtResource( 20 ) ],
-"loop": true,
-"name": "jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 22 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 24 ) ],
@@ -103,14 +102,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 30 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 26 ), ExtResource( 30 ), ExtResource( 27 ) ],
 "loop": true,
 "name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 30 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ],
+"loop": true,
+"name": "walk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 18 ), ExtResource( 26 ), ExtResource( 30 ) ],
@@ -131,14 +130,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 36 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 38 ), ExtResource( 36 ), ExtResource( 39 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 37 ), ExtResource( 36 ) ],
-"loop": true,
-"name": "jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 37 ), ExtResource( 35 ) ],
@@ -277,7 +276,7 @@ visible = false
 scale = Vector2( 5, 5 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 2
+frame = 3
 playing = true
 flip_h = true
 
@@ -286,7 +285,6 @@ visible = false
 scale = Vector2( 5, 5 )
 frames = SubResource( 5 )
 animation = "walk"
-frame = 1
 playing = true
 flip_h = true
 
@@ -295,6 +293,7 @@ visible = false
 scale = Vector2( 5, 5 )
 frames = SubResource( 6 )
 animation = "walk"
+frame = 3
 playing = true
 flip_h = true
 

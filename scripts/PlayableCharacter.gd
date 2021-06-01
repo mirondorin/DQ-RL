@@ -126,6 +126,7 @@ sync func play_special_attack():
 
 
 func solve_animation(velocity,delta):
+	print($AnimatedSprite.animation.get_basename())
 	if not is_network_master():
 		return 1
 	if current_weapon.get_node("AnimationPlayer").current_animation != 'special-attack':
@@ -145,16 +146,15 @@ func solve_animation(velocity,delta):
 			animation_change = true
 		landing = false
 	elif is_on_floor():
-		if $AnimatedSprite.animation == 'jump':
-			animation_play = true
-			animation_play_what = "land"
-			if not key_has_value(animation_dict, "animation", "land"):
-				animation_change = true
-			landing = true
-		else:
+		if velocity.x != 0:
 			if not key_has_value(animation_dict, "animation", "walk"):
 				animation_dict["animation"] = "walk"
 				new_animation_dict["animation"] = "walk"
+				animation_change = true
+		else:
+			if not key_has_value(animation_dict, "animation", "idle"):
+				animation_dict["animation"] = "idle"
+				new_animation_dict["animation"] = "idle"
 				animation_change = true
 	if velocity.length() != 0:
 		if $AnimatedSprite.animation == 'jump' and $AnimatedSprite.frame == 2:
