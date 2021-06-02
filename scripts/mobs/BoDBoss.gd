@@ -5,7 +5,6 @@ var slash_attacking = false
 var can_cast_attack = true
 var cast_attacking = false
 var players_in_sight = 0
-
 	
 func _ready():
 	stats['default_speed'] = 100
@@ -18,11 +17,12 @@ func _ready():
 	$HealthLabel.text = str(self.stats['health'])
 	$HealthBar.max_value = self.stats['health']
 	$HealthBar.value = self.stats['health']
+	$Hurtbox.monitoring = false
 
 
 func _process(delta):
 	if players_in_sight > 0:
-		rpc_unreliable("slash_attack")
+		$AnimationPlayer.play("slash_attack")
 
 
 func flip_sprite():
@@ -38,6 +38,7 @@ func flip_sprite():
 		animation_change = true
 		$Hurtbox.scale.x = abs($Hurtbox.scale.x)
 		$AttackArea.scale.x = abs($AttackArea.scale.x)
+
 
 func solve_animation(velocity):
 	if x_direction != 0:
@@ -64,7 +65,6 @@ func solve_animation(velocity):
 				animation_change = true
 
 
-
 sync func attack_player(player_name):
 	print("Entered attacking player")
 	var player = get_node("/root/MainScene/Players/" + player_name)
@@ -75,15 +75,15 @@ sync func slash_attack():
 	if can_slash_attack:
 		follow = false
 		slash_attacking = true
-		$AnimationPlayer.play("slash_attack")
-		$Hurtbox/CollisionShape2D.set_deferred("disabled", false)
+		$Hurtbox.set_deferred("monitoring", true)
 		can_slash_attack = false
 		$SlashAttackCooldown.start()
+
 		
 func slash_attack_reset():
 	follow = true
 	slash_attacking = false
-	$Hurtbox/CollisionShape2D.set_deferred("disabled", true)
+	$Hurtbox.set_deferred("monitoring", false)
 
 
 func _on_Hurtbox_area_entered(area):

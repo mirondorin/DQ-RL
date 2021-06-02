@@ -58,7 +58,7 @@ animations = [ {
 "name": "idle",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 21 ), ExtResource( 31 ), ExtResource( 25 ), ExtResource( 20 ), ExtResource( 29 ), ExtResource( 22 ), ExtResource( 32 ), ExtResource( 19 ), ExtResource( 33 ), ExtResource( 24 ) ],
+"frames": [ ExtResource( 21 ), ExtResource( 31 ), ExtResource( 25 ), ExtResource( 25 ), ExtResource( 20 ), ExtResource( 29 ), ExtResource( 22 ), ExtResource( 32 ), ExtResource( 19 ), ExtResource( 33 ), ExtResource( 24 ) ],
 "loop": true,
 "name": "attack",
 "speed": 10.0
@@ -109,12 +109,39 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.7 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "slash_attack"
+}, {
 "args": [  ],
 "method": "slash_attack_reset"
 } ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 1,
+"values": [  ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
 [sub_resource type="StyleBoxFlat" id=8]
@@ -135,9 +162,8 @@ script = ExtResource( 4 )
 position = Vector2( 52.6123, -19.5136 )
 scale = Vector2( -1.486, 1.774 )
 frames = SubResource( 1 )
-animation = "walk"
-frame = 1
-playing = true
+animation = "attack"
+frame = 5
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3.374 )
@@ -157,13 +183,14 @@ shape = SubResource( 3 )
 "hurtbox",
 ]]
 scale = Vector2( 1.146, 1.128 )
+monitoring = false
+monitorable = false
 collision_layer = 2147483649
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 light_mask = -2147483647
 position = Vector2( 42.8527, 1.54246 )
 shape = SubResource( 4 )
-disabled = true
 
 [node name="DetectArea" type="Area2D" parent="."]
 visible = false
@@ -179,11 +206,12 @@ shape = SubResource( 5 )
 scale = Vector2( 1.146, 1.128 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+modulate = Color( 0.101961, 0, 0.996078, 1 )
 position = Vector2( 41.7957, 0.525902 )
 shape = SubResource( 6 )
 
 [node name="AttackCooldown" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
 
 [node name="CastAttackCooldown" type="Timer" parent="."]
 wait_time = 3.0
