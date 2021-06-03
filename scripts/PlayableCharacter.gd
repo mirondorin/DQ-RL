@@ -278,11 +278,12 @@ sync func do_switch_weapon():
 	var inst = wep.instance()
 	current_weapon = inst
 	add_child(inst)
-	$HUD.update_icons()
+	
 
 
 func switch_weapon():
 	rpc("do_switch_weapon")
+	$HUD.update_icons()
 
 
 func on_take_damage(direction, impulse_force):

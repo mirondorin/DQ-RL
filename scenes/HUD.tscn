@@ -11,35 +11,35 @@ bg_color = Color( 0.0156863, 0.694118, 0, 1 )
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.192157, 0.192157, 0.192157, 1 )
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=3]
 offsets = PoolRealArray( 0, 0.0327103, 0.490654, 0.957944, 1 )
 colors = PoolColorArray( 0.0901961, 0.501961, 0.745098, 1, 0.207843, 0.388235, 0.882353, 1, 0.515625, 0.750244, 1, 1, 0.207843, 0.388235, 0.882353, 1, 0.0901961, 0.501961, 0.745098, 1 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="NoiseTexture" id=3]
+[sub_resource type="NoiseTexture" id=5]
 
-[sub_resource type="Gradient" id=8]
+[sub_resource type="Gradient" id=6]
 offsets = PoolRealArray( 0, 0.0327103, 0.490654, 0.96729, 1 )
 colors = PoolColorArray( 0.745098, 0.443137, 0.0901961, 1, 0.882353, 0.337255, 0.14902, 1, 0.996094, 0.598726, 0.404663, 1, 0.882353, 0.337255, 0.14902, 1, 0.745098, 0.443137, 0.0901961, 1 )
 
 [sub_resource type="GradientTexture" id=7]
-gradient = SubResource( 8 )
+gradient = SubResource( 6 )
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=8]
 offsets = PoolRealArray( 0.0327103, 0.490654, 0.976636 )
 colors = PoolColorArray( 0.584314, 0.14902, 0.882353, 1, 0.72298, 0.340576, 0.9375, 1, 0.584314, 0.14902, 0.882353, 1 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
 
-[sub_resource type="Gradient" id=11]
+[sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0.0327103, 0.490654, 0.976636 )
 colors = PoolColorArray( 0.882353, 0.2, 0.14902, 1, 0.898438, 0.533831, 0.5159, 1, 0.882353, 0.2, 0.14902, 1 )
 
-[sub_resource type="GradientTexture" id=12]
-gradient = SubResource( 11 )
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -54,16 +54,16 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="AbilitiesBox"]
-margin_right = 1024.0
+margin_right = 1920.0
 margin_bottom = 137.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="AbilitiesBox/CenterContainer"]
-margin_left = 386.0
+margin_left = 834.0
 margin_top = 17.0
-margin_right = 638.0
+margin_right = 1086.0
 margin_bottom = 119.0
 alignment = 1
 
@@ -108,7 +108,7 @@ margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
 rect_pivot_offset = Vector2( 30, 30 )
-texture = SubResource( 5 )
+texture = SubResource( 4 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -130,8 +130,7 @@ modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-max_value = 100.0
-texture_progress = SubResource( 3 )
+texture_progress = SubResource( 5 )
 fill_mode = 5
 nine_patch_stretch = true
 
@@ -167,8 +166,7 @@ modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-max_value = 100.0
-texture_progress = SubResource( 3 )
+texture_progress = SubResource( 5 )
 fill_mode = 5
 nine_patch_stretch = true
 
@@ -182,7 +180,7 @@ margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
 rect_pivot_offset = Vector2( 30, 30 )
-texture = SubResource( 10 )
+texture = SubResource( 9 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -204,8 +202,7 @@ modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-max_value = 100.0
-texture_progress = SubResource( 3 )
+texture_progress = SubResource( 5 )
 fill_mode = 5
 nine_patch_stretch = true
 
@@ -219,7 +216,7 @@ margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
 rect_pivot_offset = Vector2( 30, 30 )
-texture = SubResource( 12 )
+texture = SubResource( 11 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -241,8 +238,7 @@ modulate = Color( 0.372549, 0.372549, 0.372549, 0.592157 )
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
-max_value = 100.0
-texture_progress = SubResource( 3 )
+texture_progress = SubResource( 5 )
 fill_mode = 5
 nine_patch_stretch = true
 
