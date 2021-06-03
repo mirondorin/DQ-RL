@@ -23,8 +23,6 @@ func _ready():
 func _process(delta):
 	if players_in_sight > 0 and can_slash_attack:
 		$AnimationPlayer.play("slash_attack")
-	elif players_in_sight > 0:
-		follow = true
 
 
 func flip_sprite():
@@ -73,7 +71,7 @@ sync func attack_player(player_name):
 
 
 func slash_attack_toggle():
-	slash_attacking = !slash_attacking
+	slash_attacking = true
 	follow = false
 
 
@@ -85,8 +83,8 @@ sync func slash_attack():
 
 		
 func slash_attack_reset():
+	slash_attacking = false
 	follow = true
-	slash_attack_toggle()
 	$Hurtbox.set_deferred("monitoring", false)
 
 
