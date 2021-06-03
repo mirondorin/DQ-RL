@@ -157,6 +157,9 @@ enemyscene = SubResource( 8 )
 mob_type = "GolemBoss"
 max_spawns = 1
 total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawner2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 479.688, 685.854 )
@@ -164,6 +167,9 @@ enemyscene = SubResource( 9 )
 mob_type = "BoDBoss"
 max_spawns = 1
 total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="Label" type="Label" parent="."]
 margin_left = -76.4137

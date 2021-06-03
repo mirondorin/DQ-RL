@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://tilesets/Terrain.tres" type="TileSet" id=1]
-[ext_resource path="res://scenes/DynamicSpawner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/DynamicSpawner.gd" type="Script" id=2]
 [ext_resource path="res://scenes/Mobs/Mob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/EnemySpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Mobs/MobProjectile.tscn" type="PackedScene" id=5]
@@ -9,6 +9,28 @@
 [ext_resource path="res://scenes/items/HealthPickup.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/Mobs/BoDBoss.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/other/ParallaxBackground.tscn" type="PackedScene" id=9]
+
+[sub_resource type="PackedScene" id=1]
+_bundled = {
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray(  ),
+"node_count": 0,
+"node_paths": [  ],
+"nodes": PoolIntArray(  ),
+"variants": [  ],
+"version": 2
+}
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 347.993, 15.5711 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 19.1372, 15.5711 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 344.814, 15.5711 )
 
 [node name="LevelRoot" type="Node2D"]
 
@@ -38,70 +60,66 @@ __meta__ = {
 [node name="Spawn" type="Node2D" parent="."]
 
 [node name="0" type="Position2D" parent="Spawn"]
-position = Vector2( 2542.21, 799.147 )
+position = Vector2( 216.396, 451.409 )
 
 [node name="1" type="Position2D" parent="Spawn"]
-position = Vector2( 2560.99, 798.953 )
+position = Vector2( 235.176, 451.215 )
 
 [node name="2" type="Position2D" parent="Spawn"]
-position = Vector2( 2581.14, 799.263 )
+position = Vector2( 255.325, 451.525 )
 
 [node name="3" type="Position2D" parent="Spawn"]
-position = Vector2( 2603.39, 799.628 )
+position = Vector2( 277.575, 451.89 )
 
 [node name="EnemySpawnerMelee" parent="." instance=ExtResource( 4 )]
 position = Vector2( 758.337, 636.586 )
 enemyscene = ExtResource( 3 )
 mob_type = "Mob"
+max_spawns = 2
 total_spawns = 2
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawnerMelee2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 708.39, 768.137 )
 enemyscene = ExtResource( 3 )
 mob_type = "Mob"
-total_spawns = 2
+max_spawns = 1
+total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawnerMelee3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 2088.88, 639.308 )
+position = Vector2( 2088.88, 638.248 )
 enemyscene = ExtResource( 3 )
 mob_type = "Mob"
 max_spawns = 1
 total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawnerMelee4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1682.17, 879.484 )
 enemyscene = ExtResource( 3 )
 mob_type = "Mob"
 max_spawns = 1
-total_spawns = 4
-
-[node name="EnemySpawnerMelee5" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1410.44, 704.868 )
-enemyscene = ExtResource( 3 )
-mob_type = "Mob"
-max_spawns = 1
-total_spawns = 4
-spawn_delay = 3
-
-[node name="EnemySpawnerMelee6" parent="." instance=ExtResource( 4 )]
-position = Vector2( 916.884, 704.402 )
-enemyscene = ExtResource( 3 )
-mob_type = "Mob"
-max_spawns = 1
-total_spawns = 4
-
-[node name="EnemySpawnerMelee7" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1062.87, 480.855 )
-enemyscene = ExtResource( 3 )
-mob_type = "Mob"
-total_spawns = 4
+total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawnerRanged" parent="." instance=ExtResource( 4 )]
-position = Vector2( 695.632, 767.36 )
+position = Vector2( 680.787, 767.482 )
 enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawnerRanged2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 317.995, 920.595 )
@@ -109,6 +127,9 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawnerRanged3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1184.49, 1057.12 )
@@ -116,6 +137,9 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="EnemySpawnerRanged4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1504.1, 881.97 )
@@ -123,14 +147,9 @@ enemyscene = ExtResource( 5 )
 mob_type = "MobProjectile"
 max_spawns = 1
 total_spawns = 1
-
-[node name="EnemySpawnerRanged5" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1087.92, 702.472 )
-enemyscene = ExtResource( 5 )
-mob_type = "MobProjectile"
-max_spawns = 1
-total_spawns = 2
-spawn_delay = 2
+start_enabled = true
+spawn_delay = 1
+spawn_continously = false
 
 [node name="Pickups" type="Node2D" parent="."]
 
@@ -157,12 +176,17 @@ position = Vector2( 3158.08, 796.576 )
 enemyscene = ExtResource( 8 )
 mob_type = "BoDBoss"
 max_spawns = 1
+total_spawns = 0
 start_enabled = false
+spawn_delay = 1
+spawn_continously = false
 
-[node name="DynamicSpawner" parent="." instance=ExtResource( 2 )]
+[node name="DynamicSpawner" type="Node2D" parent="."]
+script = ExtResource( 2 )
+enemyscene = SubResource( 1 )
 mob_type = ""
-max_spawns = 2
-total_spawns = 2
+max_spawns = 4
+total_spawns = 7
 start_enabled = true
 spawn_delay = 2
 spawn_continously = false
@@ -172,10 +196,34 @@ spawn_list = {
 "res://scenes/Mobs/MobProjectile.tscn": 40
 }
 
-[node name="CollisionShape2D" parent="DynamicSpawner/Area2D" index="0"]
-position = Vector2( 1399.23, 471.694 )
+[node name="Area2D" type="Area2D" parent="DynamicSpawner"]
 
-[node name="Timer" parent="DynamicSpawner" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D"]
+modulate = Color( 1, 0.0156863, 0.568627, 1 )
+position = Vector2( 1399.23, 465.694 )
+shape = SubResource( 2 )
+
+[node name="Area2D3" type="Area2D" parent="DynamicSpawner"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D3"]
+modulate = Color( 1, 0.0156863, 0.568627, 1 )
+position = Vector2( 1477.86, 244.322 )
+shape = SubResource( 3 )
+
+[node name="Area2D2" type="Area2D" parent="DynamicSpawner"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DynamicSpawner/Area2D2"]
+modulate = Color( 1, 0.0156863, 0.568627, 1 )
+position = Vector2( 1236.07, 689.419 )
+shape = SubResource( 4 )
+
+[node name="Timer" type="Timer" parent="DynamicSpawner"]
 wait_time = 2.0
 
-[editable path="DynamicSpawner"]
+[node name="Label" type="Label" parent="DynamicSpawner"]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="timeout" from="DynamicSpawner/Timer" to="DynamicSpawner" method="_on_Timer_timeout"]
