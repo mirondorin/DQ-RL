@@ -67,7 +67,8 @@ func solve_animation(velocity):
 
 sync func attack_player(player_name):
 	var player = get_node("/root/MainScene/Players/" + player_name)
-	player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
+	if player != null:
+		player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 
 
 func slash_attack_toggle():

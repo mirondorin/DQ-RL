@@ -91,7 +91,7 @@ extents = Vector2( 33.805, 59.5231 )
 extents = Vector2( 32.8914, 52.9033 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 71.8943, 58.4079 )
+extents = Vector2( 67.6733, 58.4079 )
 
 [sub_resource type="CapsuleShape2D" id=5]
 radius = 100.0
@@ -166,7 +166,7 @@ position = Vector2( 52.6123, -19.5136 )
 scale = Vector2( -1.486, 1.774 )
 frames = SubResource( 1 )
 animation = "walk"
-frame = 2
+frame = 4
 playing = true
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
@@ -193,7 +193,7 @@ collision_layer = 2147483649
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 light_mask = -2147483647
-position = Vector2( 42.8527, 1.54246 )
+position = Vector2( 54.5137, 0.752654 )
 shape = SubResource( 4 )
 
 [node name="DetectArea" type="Area2D" parent="."]
@@ -210,7 +210,7 @@ shape = SubResource( 5 )
 scale = Vector2( 1.146, 1.128 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-modulate = Color( 0.101961, 0, 0.996078, 1 )
+modulate = Color( 0, 0.12549, 0.933333, 1 )
 position = Vector2( 41.7957, 0.525902 )
 shape = SubResource( 6 )
 
