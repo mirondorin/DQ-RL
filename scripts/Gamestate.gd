@@ -165,7 +165,8 @@ remote func peer_change_level(spawn_points):
 	for p_id in spawn_points:
 		var spawn_pos = world.get_node("LevelRoot/Spawn/" + str(spawn_points[p_id])).position
 		var player = world.get_node("Players/" + str(p_id))
-		player.modify_stats("health",player.stats["max_health"] - player.stats["health"])
+		if player != null:
+			player.modify_stats("health",player.stats["max_health"] - player.stats["health"])
 		player.position = spawn_pos
 	world.move_child(world.get_node("Players"), world.get_child_count())
 	if not get_tree().is_network_server():
