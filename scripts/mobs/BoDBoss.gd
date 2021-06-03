@@ -21,8 +21,10 @@ func _ready():
 
 
 func _process(delta):
-	if players_in_sight > 0:
+	if players_in_sight > 0 and can_slash_attack:
 		$AnimationPlayer.play("slash_attack")
+	elif players_in_sight > 0:
+		follow = true
 
 
 func flip_sprite():
@@ -66,15 +68,17 @@ func solve_animation(velocity):
 
 
 sync func attack_player(player_name):
-	print("Entered attacking player")
 	var player = get_node("/root/MainScene/Players/" + player_name)
 	player.take_damage(attack_damage, 0, Vector2(x_direction, 0), 10)  # TODO: ensure that player takes damage only once, and takes it everywhere
 
 
+func slash_attack_toggle():
+	slash_attacking = !slash_attacking
+	follow = false
+
+
 sync func slash_attack():
 	if can_slash_attack:
-		follow = false
-		slash_attacking = true
 		$Hurtbox.set_deferred("monitoring", true)
 		can_slash_attack = false
 		$SlashAttackCooldown.start()
@@ -82,7 +86,7 @@ sync func slash_attack():
 		
 func slash_attack_reset():
 	follow = true
-	slash_attacking = false
+	slash_attack_toggle()
 	$Hurtbox.set_deferred("monitoring", false)
 
 

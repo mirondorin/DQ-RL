@@ -68,11 +68,6 @@ animations = [ {
 "name": "walk",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 41 ), ExtResource( 42 ), ExtResource( 38 ) ],
-"loop": true,
-"name": "hurt",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 30 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 27 ), ExtResource( 36 ), ExtResource( 26 ), ExtResource( 37 ), ExtResource( 23 ), ExtResource( 28 ) ],
 "loop": true,
 "name": "cast",
@@ -82,6 +77,11 @@ animations = [ {
 "loop": true,
 "name": "death",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 41 ), ExtResource( 42 ), ExtResource( 38 ) ],
+"loop": true,
+"name": "hurt",
+"speed": 8.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -109,9 +109,12 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.6, 0.9 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "slash_attack_toggle"
+}, {
 "args": [  ],
 "method": "slash_attack"
 }, {
@@ -163,7 +166,7 @@ position = Vector2( 52.6123, -19.5136 )
 scale = Vector2( -1.486, 1.774 )
 frames = SubResource( 1 )
 animation = "attack"
-frame = 5
+frame = 9
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3.374 )
