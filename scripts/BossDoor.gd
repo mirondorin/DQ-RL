@@ -19,8 +19,10 @@ sync func do_interact(initiator):
 #			!! This is so laggy for peer in multiplayer. See what can be done!
 #			!! This is so laggy for peer in multiplayer. See what can be done!
 #			!! This is so laggy for peer in multiplayer. See what can be done!
-	else:
+	elif voted_list.size() == player_num:
 		boss_spawner.start_spawn()
+		voted_list = []
+		$VotesLabel.text = String(voted_list.size())
 
 func interact(initiator):
 	rpc("do_interact", initiator)
