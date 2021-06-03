@@ -13,9 +13,14 @@ func _ready():
 	label.visible=false
 	pass
 
+sync func reveal():
+	door.visible=true
+	label.visible=true
+
 func _process(delta):
 	for i in range(0,nr_bosses):
 		if(boss[i].current_spawns!=0 or boss[i].total_spawns!=0):
 			return 
-	door.visible=true
-	label.visible=true
+			
+	rpc('reveal')
+	
