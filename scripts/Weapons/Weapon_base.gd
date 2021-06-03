@@ -30,7 +30,7 @@ func _ready():
 	SpecialAttack_CD.start()
 	
 	
-sync func _on_LightAttack_CD_timeout():
+func _on_LightAttack_CD_timeout():
 	LightAttack_CD.stop()
 	can_attack = true
 
