@@ -190,14 +190,14 @@ func on_take_damage(direction, impulse_force):
 		$HealthBar.value = stats["health"]
 
 
-func _on_DetectArea_body_entered(body):
+sync func _on_DetectArea_body_entered(body):
 	if not body in in_area:
 		if body.is_in_group("players"):
 			in_area.append(body)
 			follow = true
 
 
-func _on_DetectArea_body_exited(body):
+sync func _on_DetectArea_body_exited(body):
 	if body in in_area:
 		if body.is_in_group("players"):
 			in_area.erase(body)
